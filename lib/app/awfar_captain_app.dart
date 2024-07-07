@@ -1,4 +1,4 @@
-import 'package:awfar_captain/core/routing/routes.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -17,6 +17,7 @@ class AwfarCaptainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context,designSize: const Size(375, 812));
     return ScreenUtilInit(
       minTextAdapt: true,
       designSize: const Size(375, 812),

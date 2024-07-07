@@ -1,7 +1,11 @@
+import 'package:awfar_captain/core/helpers/extensions.dart';
+import 'package:awfar_captain/core/helpers/spacing.dart';
+import 'package:awfar_captain/core/routing/routes.dart';
 import 'package:awfar_captain/features/authentication/ui/widgets/custom_card_auth.dart';
 import 'package:awfar_captain/features/authentication/ui/widgets/custom_text_form.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../core/theming/text_style_manager.dart';
 import '../../../core/widgets/app_text_button.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -12,26 +16,45 @@ class RegisterScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: ListView(
+          padding:  EdgeInsets.only(top: 100.h, right: 10.0, left: 10.0),
           children: <Widget>[
             CustomCardAuth(
                 widget: Column(
                   children: [
                     CustomTextForm(
+
                       validator: (value) {
                         return null ;
                       },
                       obscureText: false,
                       text: 'رقم الموبايل',
-                      suffixIcon: Text(generateCountryFlag()),
+                      suffixIcon: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text("${generateCountryFlag()} +02", style: TextStyleManager.font17blackBold,),
+                      ),
+                      inputType: TextInputType.phone,
                     ),
-                    const SizedBox(height: 30.0,),
+                    verticalSpace(30.h),
                     AppTextButton (
                       appText: 'التالي',
-                      onTap: () {},
+                      onTap: () => context.pushNamed(Routes.otpVerifyAccount),
                     ),
                   ],
                 ),
-                text: 'سجل برقم تليفونك')
+                text: 'سجل برقم تليفونك'),
+            verticalSpace(20.h),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(' لديك حساب بالفعل ؟ ', style: TextStyleManager.font17black400,),
+                TextButton(
+                    style:  const ButtonStyle(
+                        padding: WidgetStatePropertyAll(EdgeInsets.all(0.0))
+                    ),
+                    onPressed: () => context.pushReplacementNamed(Routes.login),
+                    child: Text('سجل دخول الآن', style: TextStyleManager.font17blackBold,))
+              ],
+            ),
           ],
         ),
       ),
@@ -39,7 +62,6 @@ class RegisterScreen extends StatelessWidget {
   }
   String generateCountryFlag() {
     String countryCode = 'eg';
-
     String flag = countryCode.toUpperCase().replaceAllMapped(RegExp(r'[A-Z]'),
             (match) => String.fromCharCode(match.group(0)!.codeUnitAt(0) + 127397));
 

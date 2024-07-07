@@ -1,8 +1,10 @@
+import 'package:awfar_captain/core/helpers/spacing.dart';
 import 'package:awfar_captain/core/theming/text_style_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/theming/color_manager.dart';
-import '../../../../core/widgets/app_text_button.dart';
+
 import 'custom_text_form.dart';
 
 class LoginForm extends StatelessWidget {
@@ -14,16 +16,18 @@ class LoginForm extends StatelessWidget {
         child: Column(
             children: [
               CustomTextForm(
+                inputType: TextInputType.phone,
                 validator: (value) {
                   return null ;
                 },
                 obscureText: false,
                 text: 'رقم الموبايل',
-                suffixIcon: Text(generateCountryFlag(), style: TextStyleManager.font17TextColor600,),
+                suffixIcon: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Text("${generateCountryFlag()} +02", style: TextStyleManager.font17TextColor600,textAlign: TextAlign.center,),
+                ),
               ),
-              const SizedBox(
-                height: 15.0,
-              ),
+              verticalSpace(15.h),
               CustomTextForm(
                 validator: (value) {
                   return null ;
@@ -36,7 +40,7 @@ class LoginForm extends StatelessWidget {
                     Icons.remove_red_eye,
                     color: ColorManager.lighterGrey,
                   ),
-                ),
+                ), inputType: TextInputType.visiblePassword,
               ),
               const SizedBox(
                 height: 30.0,

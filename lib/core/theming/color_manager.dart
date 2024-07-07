@@ -4,6 +4,7 @@ class ColorManager {
   static const Color transparent = Color(0x00000000);
   static const Color originalBlack = Color(0xFF000000);
   static const Color originalWhite = Color(0xFFFFFFFF);
+  static const Color scaffold = Color(0xFFF7F8FA);
 
   static const Color textColor = Color(0xFF242A37);
   static const Color lightGrey = Color(0xFFEFEFF4);

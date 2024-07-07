@@ -4,7 +4,8 @@ import 'package:awfar_captain/core/widgets/app_text_button.dart';
 import 'package:awfar_captain/features/authentication/ui/widgets/custom_card_auth.dart';
 import 'package:awfar_captain/features/authentication/ui/widgets/login_form.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../core/helpers/spacing.dart';
 import '../../../core/routing/routes.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -14,12 +15,9 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        // child: SvgPicture.asset(
-        //   'assets/icons/ic_awfar_logo.svg',
-        //   height: 400,
-        // ),
        child: ListView(
-         padding: const EdgeInsets.only(top: 40.0, right: 10.0, left: 10.0),
+         physics: const BouncingScrollPhysics(),
+         padding:  EdgeInsets.only(top: 100.h, right: 10.0, left: 10.0),
          children: <Widget>[
            CustomCardAuth(
                widget: Column (
@@ -33,9 +31,7 @@ class LoginScreen extends StatelessWidget {
                ),
                text: 'تسجيل الدخول',
            ),
-           const SizedBox(
-             height: 50,
-           ),
+         verticalSpace(20.h),
            Row(
              mainAxisAlignment: MainAxisAlignment.center,
              children: [

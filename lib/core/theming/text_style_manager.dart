@@ -54,4 +54,57 @@ class TextStyleManager {
     fontSize: 17.sp,
     fontWeight: FontWeight.w600,
   );
+  static TextStyle font34TextColor600 = TextStyle(
+    fontFamily: VariableManager.fontFamily,
+    color: ColorManager.textColor,
+    fontSize: 34.sp,
+    fontWeight: FontWeight.w600,
+  );
+
+  static TextStyle font32TextColor600 = TextStyle(
+    fontFamily: VariableManager.fontFamily,
+    color: ColorManager.textColor,
+    fontSize: 32.sp,
+    fontWeight: FontWeight.w600,
+  );
+  static TextStyle font17DarkGrey400 = TextStyle(
+    fontFamily: VariableManager.fontFamily,
+    color: ColorManager.darkGrey,
+    fontSize: 17.sp,
+    fontWeight: FontWeight.w400,
+  );
+
+  static TextStyle font17TextColor400 = TextStyle(
+    fontFamily: VariableManager.fontFamily,
+    color: ColorManager.textColor,
+    fontSize: 17.sp,
+    fontWeight: FontWeight.w400,
+  );
+
+  static TextStyle font17Black700 = TextStyle(
+    fontFamily: VariableManager.fontFamily,
+    color: ColorManager.originalBlack,
+    fontSize: 17.sp,
+    fontWeight: FontWeight.w700,
+  );
+
+  static TextStyle font13TextColor400 = TextStyle(
+    fontFamily: VariableManager.fontFamily,
+    color: ColorManager.textColor,
+    fontSize: 13.sp,
+    fontWeight: FontWeight.w400,
+  );
+  static TextStyle font13Black600 = TextStyle(
+    fontFamily: VariableManager.fontFamily,
+    color: ColorManager.originalBlack,
+    fontSize: 13.sp,
+    fontWeight: FontWeight.w600,
+  );
+  static TextStyle font13Black50OP600 = TextStyle(
+    fontFamily: VariableManager.fontFamily,
+    color: ColorManager.originalBlack.withOpacity(0.5),
+    fontSize: 13.sp,
+    fontWeight: FontWeight.w600,
+  );
+
 }
