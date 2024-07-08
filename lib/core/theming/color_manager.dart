@@ -20,4 +20,9 @@ class ColorManager {
     Color(0x5EEFEFF4),
     Color(0x4FEFEFF4),
   ];
+
+  static const List<Color> bordersColor = [
+    Color(0xFF2034EA),
+    Color(0xFFF3F3F3)
+];
 }

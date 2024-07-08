@@ -7,6 +7,7 @@ class Routes {
   static const String register = "register";
   static const String otpVerifyAccount = "otpVerifyAccount";
   static const String completeRegister = "completeRegister";
+  static const String addDecuments = "addDecuments";
 
   // Home
   static const String home = "home";
