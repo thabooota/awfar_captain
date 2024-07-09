@@ -3,6 +3,8 @@ import 'package:awfar_captain/core/theming/text_style_manager.dart';
 import 'package:awfar_captain/core/widgets/app_text_button.dart';
 import 'package:awfar_captain/features/authentication/ui/widgets/custom_card_auth.dart';
 import 'package:awfar_captain/features/authentication/ui/widgets/login_form.dart';
+import 'package:awfar_captain/lang/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../core/helpers/spacing.dart';
@@ -24,36 +26,36 @@ class LoginScreen extends StatelessWidget {
                    children: [
                      const LoginForm (),
                      AppTextButton (
-                         appText: 'التالي',
+                         appText: LocaleKeys.btnSend.tr(),
                          onTap: () {},
                      ),
                    ],
                ),
-               text: 'تسجيل الدخول',
+               text: LocaleKeys.loginHeader.tr(),
            ),
          verticalSpace(20.h),
            Row(
              mainAxisAlignment: MainAxisAlignment.center,
              children: [
-               Text('نسيت كلمة المرور ؟ ', style: TextStyleManager.font17black400,),
+               Text(LocaleKeys.forgetPassword.tr(), style: TextStyleManager.font17black400,),
                TextButton(
                    onPressed: () {},
                    style: const ButtonStyle(
                        padding: WidgetStatePropertyAll(EdgeInsets.all(0.0))
                    ),
-                   child: Text('اضغط هنا', style: TextStyleManager.font17blackBold,))
+                   child: Text(LocaleKeys.clickHere.tr(), style: TextStyleManager.font17blackBold,))
              ],
            ),
            Row(
              mainAxisAlignment: MainAxisAlignment.center,
              children: [
-               Text('ليس لديك حساب ؟ ', style: TextStyleManager.font17black400,),
+               Text(LocaleKeys.noAccount.tr(), style: TextStyleManager.font17black400,),
                TextButton(
                  style:  const ButtonStyle(
                    padding: WidgetStatePropertyAll(EdgeInsets.all(0.0))
                  ),
                    onPressed: () => context.pushReplacementNamed(Routes.register),
-                   child: Text('اشترك الآن', style: TextStyleManager.font17blackBold,))
+                   child: Text(LocaleKeys.subscription.tr(), style: TextStyleManager.font17blackBold,))
              ],
            ),
          ],

@@ -60,7 +60,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
-    - assets/icons/ic_awfar_logo.svg
+    - assets/lang/
 
   fonts:
     - family: OpenSans

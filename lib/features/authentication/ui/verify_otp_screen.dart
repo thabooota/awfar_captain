@@ -1,15 +1,14 @@
 import 'package:awfar_captain/core/helpers/extensions.dart';
+import 'package:awfar_captain/lang/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-
 import '../../../core/helpers/spacing.dart';
 import '../../../core/routing/routes.dart';
 import '../../../core/theming/color_manager.dart';
 import '../../../core/theming/text_style_manager.dart';
-import '../../../core/utils/assets_manager.dart';
 import '../../../core/widgets/app_text_button.dart';
 
 class VerifyOTPScreen extends StatefulWidget {
@@ -40,10 +39,7 @@ class _VerifyOTPScreenState extends State<VerifyOTPScreen> {
             bottom: BorderSide(color: ColorManager.transparent, width: 0.0)),
         leading: IconButton(
           onPressed: () => context.pop(),
-          icon: Transform.rotate(
-            angle: 3.14,
-            child: SvgPicture.asset(AssetsManager.icArrowLeft),
-          ),
+          icon: const BackButtonIcon(),
         ),
       ),
       body: SafeArea(
@@ -53,12 +49,12 @@ class _VerifyOTPScreenState extends State<VerifyOTPScreen> {
             children: [
               verticalSpace(50.0),
               Text(
-                "ادخل كود التحقق",
+                LocaleKeys.enterOTPCode.tr(),
                 style: TextStyleManager.font34TextColor600,
               ),
               verticalSpace(22.0),
               Text(
-                "تم ارسال كود تحقق الى رقم تلفونك ",
+                LocaleKeys.OTPMessage.tr(),
                 style: TextStyleManager.font17TextColor400,
               ),
               verticalSpace(65.0),
@@ -96,7 +92,7 @@ class _VerifyOTPScreenState extends State<VerifyOTPScreen> {
               ),
               verticalSpace(65.0),
               AppTextButton(
-                appText: "التالي",
+                appText: LocaleKeys.btnNext.tr(),
                 onTap: () => context.pushNamed(Routes.completeRegister),
               ),
             ],

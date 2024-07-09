@@ -1,15 +1,14 @@
 import 'package:awfar_captain/core/helpers/extensions.dart';
 import 'package:awfar_captain/core/helpers/spacing.dart';
+import 'package:awfar_captain/core/routing/routes.dart';
 import 'package:awfar_captain/core/theming/color_manager.dart';
 import 'package:awfar_captain/core/widgets/app_text_button.dart';
 import 'package:awfar_captain/features/authentication/ui/widgets/add_decuments_widget.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gradient_borders/gradient_borders.dart';
 import 'package:awfar_captain/core/theming/text_style_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-
-import '../../../core/utils/assets_manager.dart';
+import '../../../lang/locale_keys.g.dart';
 
 class AddDecumentsScreen extends StatelessWidget {
   const AddDecumentsScreen({super.key});
@@ -18,24 +17,21 @@ class AddDecumentsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return  Scaffold(
       appBar: AppBar(
-        title:  Text("ارفع مستنداتك", style: TextStyleManager.font17blackBold,),
-        leading: IconButton(
-          onPressed: () => context.pop(),
-          icon: Transform.rotate(
-            angle: 3.14,
-            child: SvgPicture.asset(AssetsManager.icArrowLeft),
-          ),
-        ),
+        forceMaterialTransparency: true,
+        title:  Text(
+          LocaleKeys.addDecuments.tr(),
+          style: TextStyleManager.font17blackBold,),
+        leading: const BackButtonIcon(),
       ),
       body: SafeArea(
         child: ListView(
-          padding: EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(10.0),
           children: [
             Expanded(
               child: ListView.separated(
                 shrinkWrap: true,
-                itemCount: decu.length,
-                itemBuilder: (context, index) =>  AddDecumentsWidget(text: decu[index],),
+                itemCount: decuments.length,
+                itemBuilder: (context, index) =>  AddDecumentsWidget(text: decuments[index],),
                 separatorBuilder: (context, index) => Divider(
                   color: ColorManager.darkGrey,
                   endIndent: 20.h,
@@ -45,7 +41,11 @@ class AddDecumentsScreen extends StatelessWidget {
               ),
             ),
             verticalSpace(20.h),
-            AppTextButton(appText: 'ارسال', onTap: () {})
+            AppTextButton(appText: LocaleKeys.btnSend.tr(), onTap: () {
+              context.pushNamedAndRemoveUntil(
+                  Routes.home,
+                  predicate:(_) => false );
+            })
           ],
         ),
 
@@ -53,7 +53,7 @@ class AddDecumentsScreen extends StatelessWidget {
     );
   }
 }
-List <String> decu = [
+List <String> decuments = [
   'الصورة الشخصية',
     ' البطاقة الشخصية ( وجه )',
     ' البطاقة الشخصية ( ظهر البطاقة ) ',

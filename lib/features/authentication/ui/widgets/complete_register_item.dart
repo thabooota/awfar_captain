@@ -33,7 +33,7 @@ class CompleteRegisterItem extends StatelessWidget {
         verticalSpace(12.0),
         CustomTextForm(
           inputType: inputType,
-          text: label,
+          text: hintText,
           suffixIcon: suffixIcon,
           obscureText: hidePassword,
           validator: (value) {

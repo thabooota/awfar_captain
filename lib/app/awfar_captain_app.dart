@@ -1,4 +1,5 @@
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -17,7 +18,6 @@ class AwfarCaptainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init(context,designSize: const Size(375, 812));
     return ScreenUtilInit(
       minTextAdapt: true,
       designSize: const Size(375, 812),
@@ -29,6 +29,9 @@ class AwfarCaptainApp extends StatelessWidget {
         theme: ThemeManager.getLightTheme(),
         darkTheme: ThemeManager.getDarkTheme(),
         themeMode: ThemeMode.light,
+        supportedLocales: context.supportedLocales,
+        localizationsDelegates: context.localizationDelegates,
+        locale: context.locale,
         onGenerateRoute: appRouter.generateRoute,
       ),
     );

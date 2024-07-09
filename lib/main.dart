@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:awfar_captain/core/routing/routes.dart';
+import 'package:awfar_captain/lang/codegen_loader.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,6 +14,7 @@ import 'core/networking/local/prefs_manager.dart';
 import 'core/networking/local/shared_preferences.dart';
 import 'core/routing/app_router.dart';
 import 'core/theming/color_manager.dart';
+import 'core/utils/method_manager.dart';
 
 Future<void> main() async {
   await runZonedGuarded(
@@ -21,6 +24,7 @@ Future<void> main() async {
       Bloc.observer = MyBlocObserver();
       SharedPreferencesManager.init();
       await ScreenUtil.ensureScreenSize();
+      await EasyLocalization.ensureInitialized();
       await setupGetIt();
       await Hive.initFlutter();
 
@@ -47,9 +51,20 @@ Future<void> main() async {
         }
       }
 
-      runApp(AwfarCaptainApp(
-        appRouter: AppRouter(),
-        initialRoute: initialRoute,
+      Locale locale = MethodsManager.getLocate();
+      runApp(EasyLocalization(
+        path: 'assets/locales',
+        supportedLocales: const[
+          Locale('en'),
+          Locale('ar'),
+        ],
+        fallbackLocale:locale,
+        startLocale: locale,
+        assetLoader: const CodegenLoader(),
+        child: AwfarCaptainApp(
+          appRouter: AppRouter(),
+          initialRoute: initialRoute,
+        ),
       ));
     },
     (error, stackTrace) async {

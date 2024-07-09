@@ -1,6 +1,7 @@
 import 'package:awfar_captain/core/helpers/extensions.dart';
 import 'package:awfar_captain/core/theming/text_style_manager.dart';
 import 'package:awfar_captain/features/authentication/ui/widgets/complete_register_item.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -8,6 +9,7 @@ import '../../../core/helpers/spacing.dart';
 import '../../../core/routing/routes.dart';
 import '../../../core/utils/assets_manager.dart';
 import '../../../core/widgets/app_text_button.dart';
+import '../../../lang/locale_keys.g.dart';
 
 class CompleteRegisterScreen extends StatefulWidget {
   const CompleteRegisterScreen({super.key});
@@ -29,14 +31,9 @@ class _CompleteRegisterScreenState extends State<CompleteRegisterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:  Text("اضف بياناتك",style:  TextStyleManager.font17blackBold, ),
-        leading: IconButton(
-          onPressed: () => context.pop(),
-          icon: Transform.rotate(
-            angle: 3.14,
-            child: SvgPicture.asset(AssetsManager.icArrowLeft),
-          ),
-        ),
+        title:  Text(
+         LocaleKeys.addData.tr(),style:  TextStyleManager.font17blackBold, ),
+        leading: const BackButtonIcon(),
       ),
       body: SafeArea(
         child: Padding(
@@ -45,22 +42,22 @@ class _CompleteRegisterScreenState extends State<CompleteRegisterScreen> {
             physics: const BouncingScrollPhysics(),
             children: [
               CompleteRegisterItem(
-                label: "الاسم",
-                hintText: "اضف اسمك بالكامل",
+                label: LocaleKeys.name.tr(),
+                hintText: LocaleKeys.enterYourName.tr(),
                 controller: nameController,
                 inputType: TextInputType.name, hidePassword: false,
               ),
               verticalSpace(28.0),
               CompleteRegisterItem(
-                label: "البريد الالكتروني",
-                hintText: "اضف بريدك الالكتروني",
+                label: LocaleKeys.email.tr(),
+                hintText: LocaleKeys.enterYourEmail.tr(),
                 controller: emailController,
                 inputType: TextInputType.emailAddress, hidePassword: false,
               ),
               verticalSpace(28.0),
               CompleteRegisterItem(
-                label: "الرقم السري",
-                hintText: "اضف الرقم السري",
+                label: LocaleKeys.password.tr(),
+                hintText:LocaleKeys.enterPassword.tr(),
                 controller: passwordController,
                 inputType: TextInputType.visiblePassword,
                 hidePassword: hidePassword,
@@ -77,8 +74,8 @@ class _CompleteRegisterScreenState extends State<CompleteRegisterScreen> {
               ),
               verticalSpace(28.0),
               CompleteRegisterItem(
-                label: "اعادة الرقم السري",
-                hintText: "اعادة الرقم السري",
+                label: LocaleKeys.confirmPassword.tr(),
+                hintText: LocaleKeys.enterConfirmPassword.tr(),
                 controller: confirmPasswordController,
                 inputType: TextInputType.visiblePassword,
                 hidePassword: hideConfirmPassword,
@@ -97,7 +94,7 @@ class _CompleteRegisterScreenState extends State<CompleteRegisterScreen> {
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: AppTextButton(
-                  appText: "ارسال",
+                  appText: LocaleKeys.btnSend.tr(),
                   onTap: () => context.pushNamed(Routes.addDecuments),
                 ),
               ),
