@@ -1,4 +1,5 @@
 import 'package:awfar_captain/core/helpers/extensions.dart';
+import 'package:awfar_captain/core/theming/color_manager.dart';
 import 'package:awfar_captain/core/theming/text_style_manager.dart';
 import 'package:awfar_captain/core/widgets/app_text_button.dart';
 import 'package:awfar_captain/features/authentication/ui/widgets/custom_card_auth.dart';
@@ -16,6 +17,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorManager.scaffold,
       body: SafeArea(
        child: ListView(
          physics: const BouncingScrollPhysics(),
@@ -39,7 +41,9 @@ class LoginScreen extends StatelessWidget {
              children: [
                Text(LocaleKeys.forgetPassword.tr(), style: TextStyleManager.font17black400,),
                TextButton(
-                   onPressed: () {},
+                   onPressed: () {
+                     context.pushNamed(Routes.forgetPassword);
+                   },
                    style: const ButtonStyle(
                        padding: WidgetStatePropertyAll(EdgeInsets.all(0.0))
                    ),

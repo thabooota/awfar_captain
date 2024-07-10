@@ -2,47 +2,28 @@ import 'package:awfar_captain/core/helpers/extensions.dart';
 import 'package:awfar_captain/lang/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import '../../../core/helpers/spacing.dart';
-import '../../../core/routing/routes.dart';
-import '../../../core/theming/color_manager.dart';
-import '../../../core/theming/text_style_manager.dart';
-import '../../../core/widgets/app_text_button.dart';
+import '../../../../core/helpers/spacing.dart';
+import '../../../../core/theming/color_manager.dart';
+import '../../../../core/theming/text_style_manager.dart';
+import '../../../../core/widgets/app_text_button.dart';
 
-class VerifyOTPScreen extends StatefulWidget {
-  const VerifyOTPScreen({super.key});
+class VerifyOTPWidget extends StatefulWidget {
+  final String route;
+  const VerifyOTPWidget({super.key, required this.route});
 
   @override
-  State<VerifyOTPScreen> createState() => _VerifyOTPScreenState();
+  State<VerifyOTPWidget> createState() => _VerifyOTPWidgetState();
 }
 
-class _VerifyOTPScreenState extends State<VerifyOTPScreen> {
+class _VerifyOTPWidgetState extends State<VerifyOTPWidget> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ColorManager.scaffold,
-      appBar: AppBar(
-        backgroundColor: ColorManager.scaffold,
-        systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarIconBrightness: Brightness.dark,
-          statusBarColor: ColorManager.scaffold,
-          systemNavigationBarColor: ColorManager.scaffold,
-          systemNavigationBarIconBrightness: Brightness.dark,
-        ),
-        elevation: 0.0,
-        shape: const Border(
-            bottom: BorderSide(color: ColorManager.transparent, width: 0.0)),
-        leading: IconButton(
-          onPressed: () => context.pop(),
-          icon: const BackButtonIcon(),
-        ),
-      ),
-      body: SafeArea(
+    return SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 28.0),
           child: Column(
@@ -93,12 +74,11 @@ class _VerifyOTPScreenState extends State<VerifyOTPScreen> {
               verticalSpace(65.0),
               AppTextButton(
                 appText: LocaleKeys.btnNext.tr(),
-                onTap: () => context.pushNamed(Routes.completeRegister),
+                onTap: () => context.pushNamed(widget.route),
               ),
             ],
           ),
         ),
-      ),
     );
   }
 }

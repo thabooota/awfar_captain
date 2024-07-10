@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/theming/text_style_manager.dart';
@@ -15,10 +16,10 @@ class PageViewItem extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Image.asset(
+        SvgPicture.asset(
           item.image,
-          width: 250.0.w,
-          height: 250.0.h,
+          width: 250.w,
+          height: 250.h,
         ),
         verticalSpace(110.0.h),
         Text(

@@ -39,13 +39,17 @@ class CustomCardAuth extends StatelessWidget {
             const SizedBox(
               height: 15.0,
             ),
-            Text(
-              text,
-              style: TextStyleManager.font30Black600,
+            Center(
+              child: Text(
+                text,
+                style: TextStyleManager.font30Black600,
+                textAlign: TextAlign.center,
+              ),
             ),
             SvgPicture.asset(AssetsManager.icAwfarLogo),
            verticalSpace(150.h),
             Container(
+              width: double.infinity,
               padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20),
               decoration: const BoxDecoration(
                 color: ColorManager.originalWhite,

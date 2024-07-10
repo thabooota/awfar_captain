@@ -1,9 +1,9 @@
 {
   "btnNext": "التالي",
-  "onboardingTitleOne": "اطلب مشوارك بسهولة وبأقل وقت",
-  "onboardingTitleTwo": "مشاويرك بأقل تكلفة",
+  "onboardingScreenOneTitle" : "ابدأ العمل بخطوات بسيطة",
+  "onboardingScreenTwoTitle" : "زود دخلك بأقل وقت",
   "loginHeader": "تسجيل الدخول",
-  "phoneHintText": "ؤقم الموبايل",
+  "phoneHintText": "رقم الموبايل",
   "passwordHintText": "الرقم السري",
   "forgetPassword": "نسيت كلمه المرور؟",
   "clickHere": "اضغط هنا",
@@ -24,5 +24,7 @@
   "confirmPassword": "اعاده الرقم السري",
   "enterConfirmPassword": "اعاده الرقم السري",
   "btnSend": "ارسال",
-  "addDecuments": "ارفع مستنداتك"
+  "addDecuments": "ارفع مستنداتك",
+  "enterPhoneNumber": "ادخل رقم هاتفك"
+
 }

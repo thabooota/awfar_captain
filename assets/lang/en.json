@@ -1,7 +1,7 @@
 {
   "btnNext": "Next",
-  "onboardingTitleOne": "Onboarding One",
-  "onboardingTitleTwo": "Onboarding Two",
+  "onboardingScreenOneTitle" : "Start working in simple steps",
+  "onboardingScreenTwoTitle" : "Increase your income in less time",
   "loginHeader": "Login",
   "phoneHintText": "Phone Number",
   "passwordHintText": "Password",
@@ -24,5 +24,7 @@
   "confirmPassword": "Confirm password ",
   "enterConfirmPassword": "Enter password again",
   "btnSend": "Send",
-  "addDecuments": "Add decuments"
+  "addDecuments": "Add decuments",
+  "enterPhoneNumber": "Enter your phone number"
+
 }

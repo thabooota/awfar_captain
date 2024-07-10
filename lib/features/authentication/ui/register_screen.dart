@@ -1,6 +1,7 @@
 import 'package:awfar_captain/core/helpers/extensions.dart';
 import 'package:awfar_captain/core/helpers/spacing.dart';
 import 'package:awfar_captain/core/routing/routes.dart';
+import 'package:awfar_captain/core/theming/color_manager.dart';
 import 'package:awfar_captain/features/authentication/ui/widgets/custom_card_auth.dart';
 import 'package:awfar_captain/features/authentication/ui/widgets/custom_text_form.dart';
 import 'package:awfar_captain/lang/locale_keys.g.dart';
@@ -16,6 +17,7 @@ class RegisterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorManager.scaffold,
       body: SafeArea(
         child: ListView(
           padding:  EdgeInsets.only(top: 100.h, right: 10.0, left: 10.0),
@@ -39,7 +41,7 @@ class RegisterScreen extends StatelessWidget {
                     verticalSpace(30.h),
                     AppTextButton (
                       appText: LocaleKeys.btnNext.tr(),
-                      onTap: () => context.pushNamed(Routes.otpVerifyAccount),
+                      onTap: () => context.pushNamed(Routes.otpVerifyAccountRegister),
                     ),
                   ],
                 ),

@@ -1,5 +1,6 @@
 import 'package:awfar_captain/core/helpers/extensions.dart';
 import 'package:awfar_captain/core/theming/text_style_manager.dart';
+import 'package:awfar_captain/core/widgets/back_icon_button.dart';
 import 'package:awfar_captain/features/authentication/ui/widgets/complete_register_item.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
@@ -33,7 +34,7 @@ class _CompleteRegisterScreenState extends State<CompleteRegisterScreen> {
       appBar: AppBar(
         title:  Text(
          LocaleKeys.addData.tr(),style:  TextStyleManager.font17blackBold, ),
-        leading: const BackButtonIcon(),
+        leading: const BackIconButton(),
       ),
       body: SafeArea(
         child: Padding(
