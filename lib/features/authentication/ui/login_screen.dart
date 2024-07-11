@@ -29,7 +29,9 @@ class LoginScreen extends StatelessWidget {
                      const LoginForm (),
                      AppTextButton (
                          appText: LocaleKeys.btnSend.tr(),
-                         onTap: () {},
+                         onTap: () {
+                           context.pushReplacementNamed(Routes.captainGate);
+                         },
                      ),
                    ],
                ),

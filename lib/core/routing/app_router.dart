@@ -7,6 +7,7 @@ import '../../features/authentication/ui/forget_password_screen.dart';
 import '../../features/authentication/ui/login_screen.dart';
 import '../../features/authentication/ui/register_screen.dart';
 import '../../features/authentication/ui/complete_register_screen.dart';
+import '../../features/captain_gate/ui/captain_gate_screen.dart';
 import '../../features/onboarding/ui/onboarding_screen.dart';
 import 'animation_route.dart';
 import 'routes.dart';
@@ -36,6 +37,9 @@ class AppRouter {
         return AnimationRoute(page: const ForgetPasswordScreen());
       case Routes.otpVerifyAccountForgetPassword:
         return AnimationRoute(page: const VerifyOtpForgetPassword());
+      case Routes.captainGate:
+        return AnimationRoute(page: const CaptainGateScreen());
+
       // undefined
       default:
         return unDefinitionRoute(settings);

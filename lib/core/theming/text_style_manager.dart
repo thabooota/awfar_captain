@@ -35,6 +35,12 @@ class TextStyleManager {
     fontSize: 20.sp,
     fontWeight: FontWeight.w400,
   );
+  static TextStyle font20BlackBold = TextStyle(
+    fontFamily: VariableManager.fontFamily,
+    color: ColorManager.originalBlack,
+    fontSize: 20.sp,
+    fontWeight: FontWeight.bold,
+  );
 
   static TextStyle font17black400 = TextStyle(
     fontFamily: VariableManager.fontFamily,
@@ -53,6 +59,7 @@ class TextStyleManager {
     color: ColorManager.textColor,
     fontSize: 17.sp,
     fontWeight: FontWeight.w600,
+    overflow: TextOverflow.fade
   );
   static TextStyle font34TextColor600 = TextStyle(
     fontFamily: VariableManager.fontFamily,
@@ -106,5 +113,10 @@ class TextStyleManager {
     fontSize: 13.sp,
     fontWeight: FontWeight.w600,
   );
-
+  static TextStyle font15Black600 = TextStyle(
+    fontFamily: VariableManager.fontFamily,
+    color: ColorManager.originalBlack,
+    fontSize: 15.sp,
+    fontWeight: FontWeight.w600,
+  );
 }

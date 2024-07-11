@@ -13,4 +13,7 @@ class Routes {
 
   // Home
   static const String home = "home";
+
+  // Drawer
+static const String captainGate = "captainGate";
 }

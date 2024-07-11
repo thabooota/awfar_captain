@@ -25,6 +25,15 @@
   "enterConfirmPassword": "اعاده الرقم السري",
   "btnSend": "ارسال",
   "addDecuments": "ارفع مستنداتك",
-  "enterPhoneNumber": "ادخل رقم هاتفك"
-
+  "enterPhoneNumber": "ادخل رقم هاتفك",
+  "captainGate" : "بوابة الكابتن",
+  "currency" : "جنية مصري",
+  "withDrawMyBalance": "سحب رصيدي",
+  "yourQualityReport" : "تقرير الجوده الخاص بك",
+  "generalStatus" : "الوضع العام",
+  "customerExperience": "تجربة العميل",
+  "acceptanceRate" : "نسبة القبول",
+  "percentageOfCompletedTrips": "نسبة المشاوير المكتملة ",
+  "workingHours": "عدد ساعات العمل",
+  "myRides": "مشاويري"
 }

@@ -12,4 +12,5 @@ class AssetsManager {
   static const String icShow = "${_icPath}ic_eye.svg";
   static const String icHide = "${_icPath}ic_eye_closed.svg";
   static const String icArrowLeft = "${_icPath}ic_arrow_left.svg";
+  static const String icMoney = "${_icPath}ic_money.svg";
 }

@@ -25,6 +25,16 @@
   "enterConfirmPassword": "Enter password again",
   "btnSend": "Send",
   "addDecuments": "Add decuments",
-  "enterPhoneNumber": "Enter your phone number"
-
+  "enterPhoneNumber": "Enter your phone number",
+  "captainGate" : "Captain's gate",
+  "currency" : "EGP",
+  "withDrawMyBalance": "Withdraw my balance",
+  "yourQualityReport" : "Your quality report",
+  "generalStatus" : "General status",
+  "customerExperience": "Customer experience",
+  "acceptanceRate" : "Acceptance rate",
+  "completedTrips": "Completed trips",
+  "percentageOfCompletedTrips": "Percentage of completed trips",
+  "workingHours": "Working hours",
+  "myRides": "My rides"
 }
