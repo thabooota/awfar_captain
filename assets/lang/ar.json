@@ -35,5 +35,14 @@
   "acceptanceRate" : "نسبة القبول",
   "percentageOfCompletedTrips": "نسبة المشاوير المكتملة ",
   "workingHours": "عدد ساعات العمل",
-  "myRides": "مشاويري"
+  "myRides": "مشاويري",
+  "changePasswordDone": "شكرا لك تم تغيير الرقم السري بنجاح",
+  "drawerItemHome": "الصفحه الرئيسية",
+  "drawerItemLang": "اللغة",
+  "drawerItemNotifications": "صندوق الوارد",
+  "drawerItemSupport": "الدعم الفني",
+  "drawerItemSettings": "اعدادات الحساب",
+  "drawerItemLogout": "تسجيل الخروج",
+  "drawerItemFiles": "المستندات",
+  "drawerItemCaptainGate" : "بوابة الكابتن"
 }

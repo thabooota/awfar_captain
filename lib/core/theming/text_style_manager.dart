@@ -16,6 +16,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 */
 
 class TextStyleManager {
+  static TextStyle font17Black600 = TextStyle(
+    fontFamily: VariableManager.fontFamily,
+    color: ColorManager.originalBlack,
+    fontSize: 17.sp,
+    fontWeight: FontWeight.w600,
+  );
+
   static TextStyle font30Black600 = TextStyle(
     fontFamily: VariableManager.fontFamily,
     color: ColorManager.originalBlack,
@@ -117,6 +124,24 @@ class TextStyleManager {
     fontFamily: VariableManager.fontFamily,
     color: ColorManager.originalBlack,
     fontSize: 15.sp,
+    fontWeight: FontWeight.w600,
+  );
+  static TextStyle font10Black600 = TextStyle(
+    fontFamily: VariableManager.fontFamily,
+    color: ColorManager.originalBlack,
+    fontSize: 10.sp,
+    fontWeight: FontWeight.w600,
+  );
+  static TextStyle font13Black700 = TextStyle(
+    fontFamily: VariableManager.fontFamily,
+    color: ColorManager.originalBlack,
+    fontSize: 13.sp,
+    fontWeight: FontWeight.w700,
+  );
+  static TextStyle font20TextColor600 = TextStyle(
+    fontFamily: VariableManager.fontFamily,
+    color: ColorManager.textColor,
+    fontSize: 20.sp,
     fontWeight: FontWeight.w600,
   );
 }

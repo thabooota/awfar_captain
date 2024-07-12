@@ -36,5 +36,13 @@
   "completedTrips": "Completed trips",
   "percentageOfCompletedTrips": "Percentage of completed trips",
   "workingHours": "Working hours",
-  "myRides": "My rides"
+  "myRides": "My rides",
+  "changePasswordDone" : "Change password done",
+  "drawerItemHome": "Home",
+  "drawerItemLang": "Language",
+  "drawerItemNotifications": "Notification",
+  "drawerItemSupport": "Technical Support",
+  "drawerItemSettings": "Settings",
+  "drawerItemLogout": "Logout",
+  "drawerItemFiles": "Files"
 }

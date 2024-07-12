@@ -10,10 +10,11 @@ class Routes {
   static const String completeRegister = "completeRegister";
   static const String addDecuments = "addDecuments";
   static const String forgetPassword = "forgetPassword";
-
+  static const String changePasswordDone = "changePasswordDone";
   // Home
   static const String home = "home";
 
   // Drawer
 static const String captainGate = "captainGate";
+static const String notification = "notification";
 }

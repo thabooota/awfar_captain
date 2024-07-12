@@ -3,11 +3,13 @@ import 'package:awfar_captain/features/authentication/ui/verify_otp_forget_passw
 import 'package:awfar_captain/features/authentication/ui/verify_otp_register.dart';
 import 'package:awfar_captain/features/home/ui/home_screen.dart';
 import 'package:flutter/material.dart';
+import '../../features/authentication/ui/change_password_done_screen.dart';
 import '../../features/authentication/ui/forget_password_screen.dart';
 import '../../features/authentication/ui/login_screen.dart';
 import '../../features/authentication/ui/register_screen.dart';
 import '../../features/authentication/ui/complete_register_screen.dart';
 import '../../features/captain_gate/ui/captain_gate_screen.dart';
+import '../../features/notification/ui/notification_screen.dart';
 import '../../features/onboarding/ui/onboarding_screen.dart';
 import 'animation_route.dart';
 import 'routes.dart';
@@ -30,6 +32,9 @@ class AppRouter {
         return AnimationRoute(page: const CompleteRegisterScreen());
       case Routes.addDecuments:
         return AnimationRoute(page: const AddDecumentsScreen());
+      case Routes.changePasswordDone:
+        return AnimationRoute(page: const ChangePasswordDoneScreen());
+
       // Home
       case Routes.home:
         return AnimationRoute(page: const HomeScreen());
@@ -39,6 +44,8 @@ class AppRouter {
         return AnimationRoute(page: const VerifyOtpForgetPassword());
       case Routes.captainGate:
         return AnimationRoute(page: const CaptainGateScreen());
+      case Routes.notification:
+        return AnimationRoute(page: const NotificationScreen());
 
       // undefined
       default:
