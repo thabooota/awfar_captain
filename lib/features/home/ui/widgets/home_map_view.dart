@@ -1,5 +1,7 @@
+import 'package:awfar_captain/core/utils/location_service.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 
 class HomeMapView extends StatefulWidget {
   const HomeMapView({super.key});
@@ -9,18 +11,60 @@ class HomeMapView extends StatefulWidget {
 }
 
 class _HomeMapViewState extends State<HomeMapView> {
-  final CameraPosition _cameraPosition = const CameraPosition(target:
-  LatLng(30.04519863429622, 31.238212986786966), zoom: 14.4746);
+  late CameraPosition _cameraPosition;
+  LocationService locationService = LocationService();
 
-  late GoogleMapController googleMapController;
+
+  @override
+  void initState() {
+    _cameraPosition = const CameraPosition(
+        target: LatLng(30.167125838855537, 31.244386917367265), zoom: 7.56);
+    super.initState();
+  }
+
+  bool isFirstCall = true;
+  GoogleMapController? googleMapController;
+  Set<Marker> markers = {};
   @override
   Widget build(BuildContext context) {
     return GoogleMap(
+      markers: markers,
       onMapCreated: (GoogleMapController controller) {
         googleMapController = controller;
+        getMyCurrentLocation();
       },
       initialCameraPosition: _cameraPosition,
       zoomControlsEnabled: false,
     );
+  }
+
+  void getMyCurrentLocation() async {
+    try {
+      LocationData locationData = await locationService.getLocation();
+      setCameraPosition(locationData);
+      Marker myLocationMarker = Marker(markerId: const MarkerId('my-location-marker'), position: LatLng(locationData.latitude!, locationData.longitude!));
+      markers.add(myLocationMarker);
+      setState(() {});
+    } on LocationServiceException catch (locationServiceException) {
+    } on LocationPermissionException catch (locationPermissionException) {
+    } catch (e) {}
+  }
+
+  void setCameraPosition(LocationData locationData) {
+    if (isFirstCall) {
+      CameraPosition cameraPosition = CameraPosition(
+          target: LatLng(
+            locationData.latitude!,
+            locationData.longitude!,
+          ),
+          zoom: 16.2);
+      googleMapController
+          ?.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+      isFirstCall = false;
+    } else {
+      googleMapController?.animateCamera(CameraUpdate.newLatLng(
+        LatLng(locationData.latitude!, locationData.longitude!),
+      ));
+    }
   }
 }

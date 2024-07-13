@@ -1,4 +1,6 @@
 import 'package:awfar_captain/features/notification/ui/widgets/notification_item.dart';
+import 'package:awfar_captain/lang/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/theming/color_manager.dart';
@@ -30,7 +32,7 @@ class NotificationScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: ColorManager.scaffold,
       appBar: AppBar(
-        title: const Text("الاشعارات"),
+        title:  Text(LocaleKeys.notifications.tr()),
         leading: const BackIconButton(),
       ),
       body: ListView.builder(

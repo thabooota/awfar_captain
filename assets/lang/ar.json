@@ -44,5 +44,8 @@
   "drawerItemSettings": "اعدادات الحساب",
   "drawerItemLogout": "تسجيل الخروج",
   "drawerItemFiles": "المستندات",
-  "drawerItemCaptainGate" : "بوابة الكابتن"
+  "drawerItemCaptainGate" : "بوابة الكابتن",
+  "notifications" : "الأشعارات",
+  "homeAppBarTitle1" : "متصل",
+  "homeAppBarTitle2" : "غير متصل"
 }

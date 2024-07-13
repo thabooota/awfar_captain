@@ -86,7 +86,9 @@ class DrawerView extends StatelessWidget {
             DrawerItem(
               title: LocaleKeys.drawerItemHome.tr(),
               icon: AssetsManager.icHome,
-              onTap: () {},
+              onTap: () {
+                context.pushReplacementNamed(Routes.home);
+              },
             ),
             DrawerItem(
               title: LocaleKeys.drawerItemFiles.tr(),
@@ -102,11 +104,20 @@ class DrawerView extends StatelessWidget {
               title: LocaleKeys.drawerItemLang.tr(),
               icon: AssetsManager.icLang,
               onTap: () {
-                SharedPreferencesManager.saveData(
-                        key: PrefsManager.lang, value: "ar")
-                    .then((_) async {
-                  await context.setLocale(const Locale('ar'));
-                });
+                if (SharedPreferencesManager.getData(key: PrefsManager.lang) ==
+                    "en") {
+                  SharedPreferencesManager.saveData(
+                          key: PrefsManager.lang, value: "ar")
+                      .then((_) async {
+                    await context.setLocale(const Locale('ar'));
+                  });
+                } else {
+                  SharedPreferencesManager.saveData(
+                          key: PrefsManager.lang, value: "en")
+                      .then((_) async {
+                    await context.setLocale(const Locale('en'));
+                  });
+                }
               },
             ),
             DrawerItem(

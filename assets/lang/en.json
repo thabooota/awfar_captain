@@ -12,7 +12,7 @@
   "registerHeader": "Register by phone",
   "haveAccount": "Have account? ",
   "loginNow": "Login now",
-  "enterOTPCode": "Enter OPT code",
+  "enterOTPCode": "Enter verification code",
   "OTPMessage": "send otp message to your phone",
   "addData": "Add your information",
   "name": "Name",
@@ -44,5 +44,9 @@
   "drawerItemSupport": "Technical Support",
   "drawerItemSettings": "Settings",
   "drawerItemLogout": "Logout",
-  "drawerItemFiles": "Files"
+  "drawerItemFiles": "Files",
+  "notifications" : "Notifications",
+  "homeAppBarTitle1" : "Online",
+  "homeAppBarTitle2" : "Offline"
+
 }

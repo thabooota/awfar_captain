@@ -9,13 +9,15 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../home/ui/widgets/drawer_view.dart';
+
 class CaptainGateScreen extends StatelessWidget {
   const CaptainGateScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(),
+      drawer: const DrawerView(),
       appBar: AppBar(
         scrolledUnderElevation: 0.0,
         shape: const Border(
