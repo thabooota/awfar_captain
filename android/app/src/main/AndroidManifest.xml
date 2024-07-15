@@ -5,6 +5,10 @@
         android:icon="@mipmap/ic_launcher">
         <meta-data android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDQMsO8nHw-LmS2C9ZTuvu-7_ceY49rhl4"/>
+        <meta-data
+            android:name="io.flutter.embedding.android.SplashScreenDrawable"
+            android:resource="@drawable/launch_background"
+            />
         <activity
             android:name=".MainActivity"
             android:exported="true"

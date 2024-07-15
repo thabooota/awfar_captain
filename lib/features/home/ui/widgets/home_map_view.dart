@@ -13,12 +13,20 @@ class HomeMapView extends StatefulWidget {
 class _HomeMapViewState extends State<HomeMapView> {
   late CameraPosition _cameraPosition;
   LocationService locationService = LocationService();
+BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
 
-
+  void addCustomIcon() {
+        BitmapDescriptor.fromAssetImage(const ImageConfiguration(), "assets/icons/ic_my_location.png").then((icon) {
+          setState(() {
+            markerIcon = icon;
+          });
+        });
+  }
   @override
   void initState() {
     _cameraPosition = const CameraPosition(
         target: LatLng(30.167125838855537, 31.244386917367265), zoom: 7.56);
+    addCustomIcon();
     super.initState();
   }
 
@@ -42,7 +50,7 @@ class _HomeMapViewState extends State<HomeMapView> {
     try {
       LocationData locationData = await locationService.getLocation();
       setCameraPosition(locationData);
-      Marker myLocationMarker = Marker(markerId: const MarkerId('my-location-marker'), position: LatLng(locationData.latitude!, locationData.longitude!));
+      Marker myLocationMarker = Marker(markerId: const MarkerId('my-location-marker'), position: LatLng(locationData.latitude!, locationData.longitude!), icon: markerIcon);
       markers.add(myLocationMarker);
       setState(() {});
     } on LocationServiceException catch (locationServiceException) {
@@ -67,4 +75,5 @@ class _HomeMapViewState extends State<HomeMapView> {
       ));
     }
   }
+
 }

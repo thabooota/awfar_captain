@@ -9,7 +9,7 @@ class AssetsManager {
   static const String imgChangePasswordDone = "${_imgPath}img_change_password_done.svg";
 
   // icons
-  static const String icAwfarLogo = "${_icPath}img_logo.svg";
+  static const String icAwfarLogo = "${_icPath}ic_awfar_logo.svg";
   static const String icShow = "${_icPath}ic_eye.svg";
   static const String icHide = "${_icPath}ic_eye_closed.svg";
   static const String icArrowLeft = "${_icPath}ic_arrow_left.svg";

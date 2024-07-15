@@ -39,6 +39,8 @@ class CustomCardAuth extends StatelessWidget {
             const SizedBox(
               height: 15.0,
             ),
+            SvgPicture.asset(AssetsManager.icAwfarLogo, width: 160.0,),
+            verticalSpace(30.h),
             Center(
               child: Text(
                 text,
@@ -46,8 +48,7 @@ class CustomCardAuth extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            SvgPicture.asset(AssetsManager.icAwfarLogo),
-           verticalSpace(150.h),
+           verticalSpace(70.h),
             Container(
               width: double.infinity,
               padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20),
