@@ -1,7 +1,7 @@
 flutter_native_splash:
 
-  color: "#ffffff"
-  image: assets/images/img_splash_screen.png
+  color: "#F7F8FA"
+  image: assets/images/awfar-logo-1 1 (Traced).png
 
   android_12:
     color: "#ffffff"

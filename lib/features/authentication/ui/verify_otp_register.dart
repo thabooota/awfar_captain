@@ -25,7 +25,7 @@ class VerifyOtpRegister extends StatelessWidget {
             bottom: BorderSide(color: ColorManager.transparent, width: 0.0)),
         leading: const BackIconButton(),
       ),
-      body: const VerifyOTPWidget(route: Routes.home,),
+      body: const VerifyOTPWidget(route: Routes.completeRegister,),
     );
   }
 }

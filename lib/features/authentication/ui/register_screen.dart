@@ -56,7 +56,7 @@ class RegisterScreen extends StatelessWidget {
                         padding: WidgetStatePropertyAll(EdgeInsets.all(0.0))
                     ),
                     onPressed: () => context.pushReplacementNamed(Routes.login),
-                    child: Text(LocaleKeys.loginNow, style: TextStyleManager.font17blackBold,))
+                    child: Text(LocaleKeys.loginNow.tr(), style: TextStyleManager.font17blackBold,))
               ],
             ),
           ],

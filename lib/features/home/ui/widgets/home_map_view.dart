@@ -50,7 +50,7 @@ BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
     try {
       LocationData locationData = await locationService.getLocation();
       setCameraPosition(locationData);
-      Marker myLocationMarker = Marker(markerId: const MarkerId('my-location-marker'), position: LatLng(locationData.latitude!, locationData.longitude!), icon: markerIcon);
+      Marker myLocationMarker = Marker(markerId: const MarkerId('my-location-marker'), position: LatLng(locationData.latitude!, locationData.longitude!), icon: markerIcon,);
       markers.add(myLocationMarker);
       setState(() {});
     } on LocationServiceException catch (locationServiceException) {

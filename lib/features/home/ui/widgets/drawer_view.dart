@@ -128,12 +128,15 @@ class DrawerView extends StatelessWidget {
             DrawerItem(
               title: LocaleKeys.drawerItemSupport.tr(),
               icon: AssetsManager.icSupport,
-              onTap: () {},
+              onTap: () {
+                context.pushNamed(Routes.finishTrip);
+              },
             ),
             DrawerItem(
               title: LocaleKeys.drawerItemSettings.tr(),
               icon: AssetsManager.icSettings,
-              onTap: () {},
+              onTap: () {
+              },
             ),
             DrawerItem(
               title: LocaleKeys.drawerItemLogout.tr(),
