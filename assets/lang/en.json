@@ -71,5 +71,10 @@
   "meetingClientIn" : "Meeting client in",
   "arriveLocation" : "Arrive meeting location",
   "startTrip" : "Start trip",
-  "finishTrip" : "Finish trip"
+  "finishTrip" : "Finish trip",
+  "technicalSupport": "Technical support",
+  "technicalSupportMessage1": "Welcome to the technical support page. You can contact us through the following means of communication.",
+  "technicalSupportMessage2": "You can contact us via email",
+  "technicalSupportMessage3": "You can contact us via WhatsApp or call the following number",
+  "btnBack" : "Back"
 }

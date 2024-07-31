@@ -144,4 +144,11 @@ class TextStyleManager {
     fontSize: 20.sp,
     fontWeight: FontWeight.w600,
   );
+
+  static TextStyle font17White500 = TextStyle(
+    fontFamily: VariableManager.fontFamily,
+    color: ColorManager.originalWhite,
+    fontSize: 17.sp,
+    fontWeight: FontWeight.w500,
+  );
 }

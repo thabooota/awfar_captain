@@ -71,5 +71,10 @@
   "meetingClientIn" : "الالتقاء بالعميل في ",
   "arriveLocation" : "وصلت مكان الالتقاء",
   "startTrip" : "بدأ الرحلة",
-  "finishTrip" : "انهاء الرحلة"
+  "finishTrip" : "انهاء الرحلة",
+  "technicalSupport": "الدعم الفني",
+  "technicalSupportMessage1": "اهلا وسهلا  بك فى صفحة الدعم الفني يمكنك التواصل معنا من خلال وسائل التواصل التالية",
+  "technicalSupportMessage2": "يمكنك التواصل معنا من خلال البريد الالكتروني",
+  "technicalSupportMessage3": "يمكنك التواصل معنا من خلال الواتساب او الاتصال على الرقم التالي",
+  "btnBack" : "العودة"
 }

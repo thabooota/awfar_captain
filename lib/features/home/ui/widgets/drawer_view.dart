@@ -130,7 +130,7 @@ class DrawerView extends StatelessWidget {
                 title: LocaleKeys.drawerItemSupport.tr(),
                 icon: AssetsManager.icSupport,
                 onTap: () {
-                  context.pushNamed(Routes.finishTrip);
+                  context.pushNamed(Routes.technicalSupport);
                 },
               ),
               DrawerItem(

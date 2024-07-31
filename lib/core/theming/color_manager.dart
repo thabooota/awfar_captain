@@ -16,6 +16,8 @@ class ColorManager {
   static const Color orange = Color(0xFFFF8900);
   static const Color yellow = Color(0xFFE9C122);
   static const Color cyan = Color(0xFF4CE5B1);
+  static const Color babyBlue = Color(0xFF46C2CB);
+  static const Color purple = Color(0xFF6D67E4);
 
   static const List<Color> blueColor = [
     Color(0xCCEFEFF4),
