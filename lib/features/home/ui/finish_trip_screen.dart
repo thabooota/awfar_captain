@@ -3,6 +3,7 @@ import 'package:awfar_captain/core/routing/routes.dart';
 import 'package:awfar_captain/core/theming/color_manager.dart';
 import 'package:awfar_captain/core/theming/text_style_manager.dart';
 import 'package:awfar_captain/core/widgets/app_text_button.dart';
+import 'package:awfar_captain/core/widgets/back_icon_button.dart';
 import 'package:awfar_captain/lang/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -57,7 +58,7 @@ class FinishTripScreen extends StatelessWidget {
           ),
           child: Column(
             children: [
-              Text(LocaleKeys.completeTripHeader.tr(),style: TextStyleManager.font30Black600,),
+              Text(LocaleKeys.completeTripHeader.tr(),style: TextStyleManager.font30Black600,textAlign: TextAlign.center,),
               verticalSpace(30.0.h),
               Text('Yussef ${LocaleKeys.willGiveYou.tr()}',style: TextStyleManager.font20BlackBold,),
               verticalSpace(8.0.h),

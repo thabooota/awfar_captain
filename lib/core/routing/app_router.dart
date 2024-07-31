@@ -1,9 +1,14 @@
+import 'package:awfar_captain/core/di/dependency_injection.dart';
 import 'package:awfar_captain/features/authentication/ui/add_decuments_screen.dart';
 import 'package:awfar_captain/features/authentication/ui/verify_otp_forget_password.dart';
 import 'package:awfar_captain/features/authentication/ui/verify_otp_register.dart';
+import 'package:awfar_captain/features/chat/ui/chat_screen_view.dart';
+import 'package:awfar_captain/features/home/logic/home_cubit.dart';
 import 'package:awfar_captain/features/home/ui/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../features/authentication/ui/change_password_done_screen.dart';
+import '../../features/authentication/ui/complete_forget_password_screen.dart';
 import '../../features/authentication/ui/forget_password_screen.dart';
 import '../../features/authentication/ui/login_screen.dart';
 import '../../features/authentication/ui/register_screen.dart';
@@ -34,16 +39,20 @@ class AppRouter {
         return AnimationRoute(page: const CompleteRegisterScreen());
       case Routes.addDecuments:
         return AnimationRoute(page: const AddDecumentsScreen());
+      case Routes.completeForgetPassword:
+        return AnimationRoute(page: const CompleteForgetPasswordScreen());
       case Routes.changePasswordDone:
         return AnimationRoute(page: const ChangePasswordDoneScreen());
-
-      // Home
-      case Routes.home:
-        return AnimationRoute(page: const HomeScreen());
       case Routes.forgetPassword:
         return AnimationRoute(page: const ForgetPasswordScreen());
       case Routes.otpVerifyAccountForgetPassword:
         return AnimationRoute(page: const VerifyOtpForgetPassword());
+
+      // Home
+      case Routes.home:
+        return AnimationRoute(page: BlocProvider<HomeCubit>(
+            create: (context) => getIt<HomeCubit>()..bottomSheets(),
+            child: const HomeScreen()));
       case Routes.captainGate:
         return AnimationRoute(page: const CaptainGateScreen());
       case Routes.notification:
@@ -52,6 +61,8 @@ class AppRouter {
         return AnimationRoute(page: const RatingScreen());
       case Routes.finishTrip:
         return AnimationRoute(page: const FinishTripScreen());
+      case Routes.chat:
+        return AnimationRoute(page: const ChatScreenView());
       // undefined
       default:
         return unDefinitionRoute(settings);

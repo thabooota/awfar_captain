@@ -23,4 +23,7 @@ class AssetsManager {
   static const String icSupport = "${_icPath}ic_support.svg";
   static const String icSystemNotification = "${_icPath}ic_system_notification.svg";
   static const String icCouponNotification = "${_icPath}ic_coupon_notification.svg";
+  static const String icSearch = "${_icPath}ic_search.png";
+  static const String icCall = "${_icPath}ic_telephone-call.png";
+  static const String icChat = "${_icPath}ic_chat.png";
 }
