@@ -14,6 +14,7 @@ import '../../features/authentication/ui/login_screen.dart';
 import '../../features/authentication/ui/register_screen.dart';
 import '../../features/authentication/ui/complete_register_screen.dart';
 import '../../features/captain_gate/ui/captain_gate_screen.dart';
+import '../../features/home/ui/account_settings.dart';
 import '../../features/home/ui/finish_trip_screen.dart';
 import '../../features/home/ui/rating_screen.dart';
 import '../../features/home/ui/technical_support.dart';
@@ -66,6 +67,8 @@ class AppRouter {
         return AnimationRoute(page: const ChatScreenView());
       case Routes.technicalSupport:
         return AnimationRoute(page: const TechnicalSupport());
+      case Routes.accountSettings:
+        return AnimationRoute(page: const AccountSettings());
       // undefined
       default:
         return unDefinitionRoute(settings);

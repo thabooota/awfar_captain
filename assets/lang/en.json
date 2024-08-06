@@ -43,7 +43,6 @@
   "drawerItemLang": "Language",
   "drawerItemNotifications": "Notification",
   "drawerItemSupport": "Technical Support",
-  "drawerItemSettings": "Settings",
   "drawerItemLogout": "Logout",
   "drawerItemFiles": "Files",
   "notifications": "Notifications",
@@ -76,5 +75,11 @@
   "technicalSupportMessage1": "Welcome to the technical support page. You can contact us through the following means of communication.",
   "technicalSupportMessage2": "You can contact us via email",
   "technicalSupportMessage3": "You can contact us via WhatsApp or call the following number",
-  "btnBack" : "Back"
+  "btnBack" : "Back",
+  "editAccount" : "Edit Account",
+  "changePassword" : "Change Password",
+"more" : "More",
+  "aboutApp" : "About Application" ,
+  "privacyPolicy" : "Privacy Policy",
+  "accountSettings" : "Account Settings"
 }

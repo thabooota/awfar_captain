@@ -42,7 +42,6 @@
   "drawerItemLang": "اللغة",
   "drawerItemNotifications": "صندوق الوارد",
   "drawerItemSupport": "الدعم الفني",
-  "drawerItemSettings": "اعدادات الحساب",
   "drawerItemLogout": "تسجيل الخروج",
   "drawerItemFiles": "المستندات",
   "drawerItemCaptainGate" : "بوابة الكابتن",
@@ -76,5 +75,11 @@
   "technicalSupportMessage1": "اهلا وسهلا  بك فى صفحة الدعم الفني يمكنك التواصل معنا من خلال وسائل التواصل التالية",
   "technicalSupportMessage2": "يمكنك التواصل معنا من خلال البريد الالكتروني",
   "technicalSupportMessage3": "يمكنك التواصل معنا من خلال الواتساب او الاتصال على الرقم التالي",
-  "btnBack" : "العودة"
+  "btnBack" : "العودة",
+  "editAccount" : "تعديل الحساب",
+  "changePassword" : "تغيير كلمة السر",
+  "more" : "المزيد",
+  "aboutApp" : "عن التطبيق" ,
+  "privacyPolicy" : "سياسة الخصوصية",
+  "accountSettings" : "اعدادات الحساب"
 }

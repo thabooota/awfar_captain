@@ -37,13 +37,30 @@ class TechnicalSupport extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: ListView(
           children: [
-            TechnicalSupportContainer(color: ColorManager.darkGrey,text:  LocaleKeys.technicalSupportMessage3.tr(),),
-            verticalSpace(10.h),
-            TechnicalSupportContainer(color: ColorManager.purple,text:  LocaleKeys.technicalSupportMessage2.tr(),),
-            verticalSpace(10.h),
-            TechnicalSupportContainer(color: ColorManager.babyBlue,text: LocaleKeys.technicalSupportMessage3.tr(),),
-            verticalSpace(60.h),
-            AppTextButton(appText: LocaleKeys.btnBack.tr(), onTap: () => context.pop()),
+            TechnicalSupportContainer(
+              color: ColorManager.darkGrey,
+              text: LocaleKeys.technicalSupportMessage3.tr(),
+            ),
+            verticalSpace(
+                10.h,
+            ),
+            TechnicalSupportContainer(
+              color: ColorManager.purple,
+              text: LocaleKeys.technicalSupportMessage2.tr(),
+            ),
+            verticalSpace(
+                10.h,
+            ),
+            TechnicalSupportContainer(
+              color: ColorManager.babyBlue,
+              text: LocaleKeys.technicalSupportMessage3.tr(),
+            ),
+            verticalSpace(
+                60.h
+            ),
+            AppTextButton(
+                appText: LocaleKeys.btnBack.tr(), onTap: () => context.pop()
+            ),
           ],
         ),
       ),
