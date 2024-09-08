@@ -2,6 +2,7 @@ import 'package:awfar_captain/core/networking/remote/api_error_handler.dart';
 import 'package:awfar_captain/core/networking/remote/services/auth_api_service.dart';
 import 'package:awfar_captain/features/authentication/data/models/responses/upload_file_response.dart';
 import 'package:dio/dio.dart';
+
 import '../../../../core/networking/remote/api_result.dart';
 import '../models/requests/add_details_request_body.dart';
 import '../models/requests/register_request_body.dart';
@@ -20,7 +21,7 @@ class RegisterRepo {
   }) async {
     try {
       final registerResponse = await _authApiService.register(
-      requiredRegisterRequest: registerRequestBody,
+        requiredRegisterRequest: registerRequestBody,
       );
 
       return ApiResult.success(registerResponse);
@@ -61,8 +62,7 @@ class RegisterRepo {
   Future<ApiResult<UploadFileResponse>> uploadFiles({
     required String token,
     required FormData files,
-
-}) async {
+  }) async {
     try {
       final uploadFileResponse = await _authApiService.uploadFiles(
         token: 'Bearer $token',
@@ -73,5 +73,4 @@ class RegisterRepo {
       return ApiResult.failure(ErrorHandler.handle(error));
     }
   }
-
 }

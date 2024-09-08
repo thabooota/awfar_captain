@@ -6,11 +6,11 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+
 import '../../../../core/routing/routes.dart';
 import '../../../../core/theming/color_manager.dart';
 import '../../../../core/widgets/app_text_button.dart';
 import '../../../../lang/locale_keys.g.dart';
-import '../../logic/forget_password/forget_password_cubit.dart';
 import '../../logic/forget_password/forget_password_state.dart';
 
 class UploadFilesListener extends StatelessWidget {
@@ -38,30 +38,33 @@ class UploadFilesListener extends StatelessWidget {
           ).show(context);
         }
       },
-      builder: (context, state) => AnimatedCrossFade(
-        firstChild: AppTextButton(
-          appText: LocaleKeys.btnNext.tr(),
-          onTap: () => context.read<RegisterCubit>().emitUploadFiles(),
+      builder: (context, state) => Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 22.0),
+        child: AnimatedCrossFade(
+          firstChild: AppTextButton(
+            appText: LocaleKeys.btnNext.tr(),
+            onTap: () => context.read<RegisterCubit>().emitUploadFiles(),
+          ),
+          secondChild: Container(
+            height: 50.0,
+            decoration: BoxDecoration(
+              color: ColorManager.green,
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+            padding: const EdgeInsets.symmetric(
+              vertical: 8.0,
+              horizontal: 12.0,
+            ),
+            child: Center(
+              child: LoadingAnimationWidget.fourRotatingDots(
+                  color: ColorManager.originalWhite, size: 35.0),
+            ),
+          ),
+          crossFadeState: state is CheckCodeLoadingState
+              ? CrossFadeState.showSecond
+              : CrossFadeState.showFirst,
+          duration: const Duration(milliseconds: 700),
         ),
-        secondChild: Container(
-          height: 50.0,
-          decoration: BoxDecoration(
-            color: ColorManager.green,
-            borderRadius: BorderRadius.circular(8.0),
-          ),
-          padding: const EdgeInsets.symmetric(
-            vertical: 8.0,
-            horizontal: 12.0,
-          ),
-          child: Center(
-            child: LoadingAnimationWidget.fourRotatingDots(
-                color: ColorManager.originalWhite, size: 35.0),
-          ),
-        ),
-        crossFadeState: state is CheckCodeLoadingState
-            ? CrossFadeState.showSecond
-            : CrossFadeState.showFirst,
-        duration: const Duration(milliseconds: 700),
       ),
     );
   }

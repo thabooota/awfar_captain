@@ -1,7 +1,7 @@
 import 'package:awfar_captain/core/di/dependency_injection.dart';
 import 'package:awfar_captain/features/authentication/logic/login/login_cubit.dart';
 import 'package:awfar_captain/features/authentication/logic/register/register_cubit.dart';
-import 'package:awfar_captain/features/authentication/ui/add_decuments_screen.dart';
+import 'package:awfar_captain/features/authentication/ui/add_documents_screen.dart';
 import 'package:awfar_captain/features/authentication/ui/verify_otp_forget_password.dart';
 import 'package:awfar_captain/features/authentication/ui/verify_otp_register.dart';
 import 'package:awfar_captain/features/chat/ui/chat_screen_view.dart';
@@ -62,7 +62,7 @@ class AppRouter {
         return AnimationRoute(
             page: BlocProvider.value(
                 value: getIt<RegisterCubit>(),
-                child: const AddDecumentsScreen()));
+                child: const AddDocumentsScreen()));
       case Routes.completeForgetPassword:
         return AnimationRoute(
             page: BlocProvider<ForgotPasswordCubit>(

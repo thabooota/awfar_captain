@@ -6,6 +6,7 @@ import 'package:awfar_captain/features/authentication/data/models/responses/uplo
 import 'package:awfar_captain/features/authentication/data/models/responses/verify_phone_response.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/http.dart';
+
 import '../../../../features/authentication/data/models/requests/add_details_request_body.dart';
 import '../../../../features/authentication/data/models/requests/check_code_request_body.dart';
 import '../../../../features/authentication/data/models/requests/forgot_password_request_body.dart';
@@ -16,6 +17,7 @@ import '../../../../features/authentication/data/models/requests/verify_phone_re
 import '../../../../features/authentication/data/models/responses/check_code_response.dart';
 import '../../../../features/authentication/data/models/responses/forgot_password_response.dart';
 import '../../../../features/authentication/data/models/responses/reset_password_response.dart';
+
 part 'auth_api_service.g.dart';
 
 @RestApi(baseUrl: ApiConstants.apiBaseURL)
@@ -30,27 +32,27 @@ abstract class AuthApiService {
 
   @POST(ApiConstants.verifyPhoneEndPoint)
   Future<VerifyPhoneResponse> verifyPhone({
-    @Body() required VerifyPhoneRequestBody verifyPhoneRequestBody}
-      );
+    @Body() required VerifyPhoneRequestBody verifyPhoneRequestBody,
+  });
 
   @POST(ApiConstants.addDetailsEndPoint)
   Future<AddDetailsResponse> addDetails({
     @Header('Authorization') required String token,
-    @Body() required AddDetailsRequestBody addDetailsRequestBody
+    @Body() required AddDetailsRequestBody addDetailsRequestBody,
   });
 
   @POST(ApiConstants.uploadFilesEndPoint)
-  Future<UploadFileResponse> uploadFiles({
-    @Header('Authorization') required String token,
-    @Body() required FormData files
-});
+  Future<UploadFileResponse> uploadFiles(
+      {@Header('Authorization') required String token,
+      @Body() required FormData files});
+
   // login service
   @POST(ApiConstants.loginEndPoint)
   Future<LoginResponse> loginUser({
     @Body() required LoginRequestBody loginRequestBody,
   });
-  
- // forget password service
+
+  // forget password service
   @POST(ApiConstants.forgotPasswordEndPoint)
   Future<ForgotPasswordResponse> forgotPassword({
     @Body() required ForgotPasswordRequestBody forgotPasswordRequestBody,
