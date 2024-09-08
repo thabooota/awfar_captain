@@ -39,7 +39,7 @@ class EditProfileListener extends StatelessWidget {
       builder: (context, state) => AnimatedCrossFade(
         firstChild: AppTextButton(
           appText: LocaleKeys.btnSend.tr(),
-          onTap: () =>{}
+          onTap: () => context.read<HomeCubit>().emitUpdateProfile()
         ),
         secondChild: Container(
           height: 50.0,

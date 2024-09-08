@@ -15,6 +15,7 @@ class ApiConstants {
 
   // home end points
  static const String getProfile = 'profile';
+ static const String updateProfileEndPoint = 'profile';
 }
 
 class ApiErrors {
