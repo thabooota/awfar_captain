@@ -1,6 +1,7 @@
 import 'package:awfar_captain/core/networking/local/prefs_manager.dart';
 import 'package:awfar_captain/core/networking/local/shared_preferences.dart';
 import 'package:awfar_captain/core/utils/enums.dart';
+import 'package:awfar_captain/features/home/data/models/requests/upload_profile_request_body.dart';
 import 'package:awfar_captain/features/home/data/models/response/get_profile_response.dart';
 import 'package:awfar_captain/features/home/logic/home_state.dart';
 import 'package:awfar_captain/features/home/ui/widgets/arrived_meeting_place_bottom_sheet.dart';
@@ -78,4 +79,31 @@ class HomeCubit extends Cubit<HomeStates> {
   }
 
   TextEditingController editingNameController = TextEditingController();
+  TextEditingController editingEmailController = TextEditingController();
+  TextEditingController editingPhoneController = TextEditingController();
+  TextEditingController editingAddressController = TextEditingController();
+  TextEditingController editingWorkAreaController = TextEditingController();
+
+  void emitUpdateProfile() async {
+    emit(EditProfileLoading());
+    final response = await _homeRepo.updateProfile(
+        token: token,
+      updateRequestBody: UpdateProfileRequestBody(
+          name: editingNameController.text == '' ? myProfile!.name : editingNameController.text,
+          email: editingEmailController.text == '' ? myProfile!.email : editingEmailController.text,
+          phone:editingPhoneController.text == '' ? myProfile!.phone : editingPhoneController.text,
+          address: editingAddressController.text == '' ? myProfile!.address! : editingAddressController.text,
+          workArea: editingWorkAreaController.text == '' ? myProfile!.workArea! : editingWorkAreaController.text,
+      ),
+    );
+        response.when(
+            success: (data) {
+              print('Profile updated successfully');
+              emit(EditProfileSuccess(profile: data));
+            },
+            failure: (error) {
+              print(error.toString());
+              emit(EditProfileError(error: error.apiErrorModel.message));
+            });
+  }
 }
