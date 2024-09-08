@@ -22,7 +22,7 @@ class CustomCardAuth extends StatelessWidget {
                 color: ColorManager.lighterGrey,
                 blurRadius: 8,
                 blurStyle: BlurStyle.normal,
-                spreadRadius: 10,
+                spreadRadius: 7,
                 offset: Offset( 0, -5,)
             )
           ],

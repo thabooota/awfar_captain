@@ -10,6 +10,7 @@ class CompleteRegisterItem extends StatelessWidget {
   final TextInputType inputType;
   final bool hidePassword;
   final Widget? suffixIcon;
+  final FormFieldValidator validator;
 
   const CompleteRegisterItem({
     super.key,
@@ -19,6 +20,7 @@ class CompleteRegisterItem extends StatelessWidget {
     required this.inputType,
     required this.hidePassword,
     this.suffixIcon,
+    required this.validator,
   });
 
   @override
@@ -32,13 +34,12 @@ class CompleteRegisterItem extends StatelessWidget {
         ),
         verticalSpace(12.0),
         CustomTextForm(
+          controller: controller,
           inputType: inputType,
           text: hintText,
           suffixIcon: suffixIcon,
           obscureText: hidePassword,
-          validator: (value) {
-            return value;
-          },
+          validator: validator,
         ),
       ],
     );

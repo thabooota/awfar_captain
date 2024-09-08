@@ -1,12 +1,16 @@
 import 'package:awfar_captain/core/di/dependency_injection.dart';
+import 'package:awfar_captain/features/authentication/logic/login/login_cubit.dart';
+import 'package:awfar_captain/features/authentication/logic/register/register_cubit.dart';
 import 'package:awfar_captain/features/authentication/ui/add_decuments_screen.dart';
 import 'package:awfar_captain/features/authentication/ui/verify_otp_forget_password.dart';
 import 'package:awfar_captain/features/authentication/ui/verify_otp_register.dart';
 import 'package:awfar_captain/features/chat/ui/chat_screen_view.dart';
 import 'package:awfar_captain/features/home/logic/home_cubit.dart';
+import 'package:awfar_captain/features/home/ui/edit_account_screen.dart';
 import 'package:awfar_captain/features/home/ui/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../features/authentication/logic/forget_password/forget_password_cubit.dart';
 import '../../features/authentication/ui/change_password_done_screen.dart';
 import '../../features/authentication/ui/complete_forget_password_screen.dart';
 import '../../features/authentication/ui/forget_password_screen.dart';
@@ -18,6 +22,7 @@ import '../../features/home/ui/account_settings.dart';
 import '../../features/home/ui/finish_trip_screen.dart';
 import '../../features/home/ui/rating_screen.dart';
 import '../../features/home/ui/technical_support.dart';
+import '../../features/home/ui/withdraw_balance.dart';
 import '../../features/notification/ui/notification_screen.dart';
 import '../../features/onboarding/ui/onboarding_screen.dart';
 import 'animation_route.dart';
@@ -32,29 +37,61 @@ class AppRouter {
 
       // Authentication
       case Routes.login:
-        return AnimationRoute(page: const LoginScreen());
+        return AnimationRoute(
+            page: BlocProvider<LoginCubit>(
+                create: (context) => getIt<LoginCubit>(),
+                child: const LoginScreen()));
       case Routes.register:
-        return AnimationRoute(page: const RegisterScreen());
+        return AnimationRoute(
+            page: BlocProvider<RegisterCubit>(
+                create: (context) => getIt<RegisterCubit>(),
+                child: const RegisterScreen()));
       case Routes.otpVerifyAccountRegister:
-        return AnimationRoute(page: const VerifyOtpRegister());
+        return AnimationRoute(
+            page: BlocProvider.value(
+                value: getIt<RegisterCubit>(),
+                child: VerifyOtpRegister(
+                  phone: settings.arguments as String,
+                )));
       case Routes.completeRegister:
-        return AnimationRoute(page: const CompleteRegisterScreen());
+        return AnimationRoute(
+            page: BlocProvider.value(
+                value: getIt<RegisterCubit>(),
+                child: const CompleteRegisterScreen()));
       case Routes.addDecuments:
-        return AnimationRoute(page: const AddDecumentsScreen());
+        return AnimationRoute(
+            page: BlocProvider.value(
+                value: getIt<RegisterCubit>(),
+                child: const AddDecumentsScreen()));
       case Routes.completeForgetPassword:
-        return AnimationRoute(page: const CompleteForgetPasswordScreen());
+        return AnimationRoute(
+            page: BlocProvider<ForgotPasswordCubit>(
+                create: (context) => getIt<ForgotPasswordCubit>(),
+                child: CompleteForgetPasswordScreen(
+                  phone: settings.arguments as String,
+                )));
       case Routes.changePasswordDone:
         return AnimationRoute(page: const ChangePasswordDoneScreen());
       case Routes.forgetPassword:
-        return AnimationRoute(page: const ForgetPasswordScreen());
+        return AnimationRoute(
+            page: BlocProvider<ForgotPasswordCubit>(
+                create: (context) => getIt<ForgotPasswordCubit>(),
+                child: const ForgetPasswordScreen()));
       case Routes.otpVerifyAccountForgetPassword:
-        return AnimationRoute(page: const VerifyOtpForgetPassword());
+        return AnimationRoute(
+            page: BlocProvider.value(
+                value: getIt<ForgotPasswordCubit>(),
+                child: VerifyOtpForgetPassword(
+                    phone: settings.arguments as String)));
 
       // Home
       case Routes.home:
-        return AnimationRoute(page: BlocProvider<HomeCubit>(
-            create: (context) => getIt<HomeCubit>()..bottomSheets(),
-            child: const HomeScreen()));
+        return AnimationRoute(
+            page: BlocProvider<HomeCubit>(
+                create: (context) => getIt<HomeCubit>()
+                  ..bottomSheets()
+                  ..emitGetProfileStates(),
+                child: const HomeScreen()));
       case Routes.captainGate:
         return AnimationRoute(page: const CaptainGateScreen());
       case Routes.notification:
@@ -68,7 +105,15 @@ class AppRouter {
       case Routes.technicalSupport:
         return AnimationRoute(page: const TechnicalSupport());
       case Routes.accountSettings:
-        return AnimationRoute(page: const AccountSettings());
+        return AnimationRoute(
+            page: BlocProvider.value(
+                value: getIt<HomeCubit>(), child: const AccountSettings()));
+      case Routes.editAccount:
+        return AnimationRoute(
+            page: BlocProvider.value(
+                value: getIt<HomeCubit>(), child: const EditAccountScreen()));
+      case Routes.withdrawBalance:
+        return AnimationRoute(page: const WithdrawBalance());
       // undefined
       default:
         return unDefinitionRoute(settings);

@@ -1,4 +1,6 @@
+import 'package:awfar_captain/core/helpers/extensions.dart';
 import 'package:awfar_captain/core/helpers/spacing.dart';
+import 'package:awfar_captain/core/routing/routes.dart';
 import 'package:awfar_captain/core/theming/color_manager.dart';
 import 'package:awfar_captain/core/theming/text_style_manager.dart';
 import 'package:awfar_captain/core/utils/assets_manager.dart';
@@ -45,7 +47,7 @@ class AccountSettings extends StatelessWidget {
               ),
             ),
             verticalSpace(10.h),
-            AccountSettingsItem(onPressed: () {}, text: LocaleKeys.editAccount.tr(),),
+            AccountSettingsItem(onPressed: () => context.pushNamed(Routes.editAccount), text: LocaleKeys.editAccount.tr(),),
             AccountSettingsItem(onPressed: () {}, text: LocaleKeys.changePassword.tr(),),
             Padding(
               padding:  EdgeInsets.symmetric(horizontal: 10.w),

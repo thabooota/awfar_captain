@@ -3,7 +3,6 @@ import 'package:dio/dio.dart';
 import '../../utils/variable_manager.dart';
 import 'api_error_model.dart';
 
-// TODO: wallahy I will refactor this .. Omar Ahmed
 enum DataSource {
   NO_CONTENT,
   BAD_REQUEST,
@@ -74,81 +73,55 @@ extension DataSourceExtension on DataSource {
   ApiErrorModel getFailure() {
     switch (this) {
       case DataSource.NO_CONTENT:
-        return ApiErrorModel(
-          status: ResponseStatus.getStatus(ResponseCode.NO_CONTENT),
-          code: ResponseCode.NO_CONTENT,
+        return const ApiErrorModel(
           message: ResponseMessage.NO_CONTENT,
         );
       case DataSource.BAD_REQUEST:
-        return ApiErrorModel(
-          status: ResponseStatus.getStatus(ResponseCode.BAD_REQUEST),
-          code: ResponseCode.BAD_REQUEST,
+        return const ApiErrorModel(
           message: ResponseMessage.BAD_REQUEST,
         );
       case DataSource.FORBIDDEN:
-        return ApiErrorModel(
-          status: ResponseStatus.getStatus(ResponseCode.FORBIDDEN),
-          code: ResponseCode.FORBIDDEN,
+        return const ApiErrorModel(
           message: ResponseMessage.FORBIDDEN,
         );
       case DataSource.UNAUTORISED:
-        return ApiErrorModel(
-          status: ResponseStatus.getStatus(ResponseCode.UNAUTORISED),
-          code: ResponseCode.UNAUTORISED,
+        return const ApiErrorModel(
           message: ResponseMessage.UNAUTORISED,
         );
       case DataSource.NOT_FOUND:
-        return ApiErrorModel(
-          status: ResponseStatus.getStatus(ResponseCode.NOT_FOUND),
-          code: ResponseCode.NOT_FOUND,
+        return const ApiErrorModel(
           message: ResponseMessage.NOT_FOUND,
         );
       case DataSource.INTERNAL_SERVER_ERROR:
-        return ApiErrorModel(
-          status: ResponseStatus.getStatus(ResponseCode.INTERNAL_SERVER_ERROR),
-          code: ResponseCode.INTERNAL_SERVER_ERROR,
+        return const ApiErrorModel(
           message: ResponseMessage.INTERNAL_SERVER_ERROR,
         );
       case DataSource.CONNECT_TIMEOUT:
         return ApiErrorModel(
-          status: ResponseStatus.getStatus(ResponseCode.CONNECT_TIMEOUT),
-          code: ResponseCode.CONNECT_TIMEOUT,
           message: ResponseMessage.CONNECT_TIMEOUT,
         );
       case DataSource.CANCEL:
         return ApiErrorModel(
-          status: ResponseStatus.getStatus(ResponseCode.CANCEL),
-          code: ResponseCode.CANCEL,
           message: ResponseMessage.CANCEL,
         );
       case DataSource.RECIEVE_TIMEOUT:
         return ApiErrorModel(
-          status: ResponseStatus.getStatus(ResponseCode.RECIEVE_TIMEOUT),
-          code: ResponseCode.RECIEVE_TIMEOUT,
           message: ResponseMessage.RECIEVE_TIMEOUT,
         );
       case DataSource.SEND_TIMEOUT:
         return ApiErrorModel(
-          status: ResponseStatus.getStatus(ResponseCode.SEND_TIMEOUT),
-          code: ResponseCode.SEND_TIMEOUT,
           message: ResponseMessage.SEND_TIMEOUT,
         );
       case DataSource.CACHE_ERROR:
         return ApiErrorModel(
-          status: ResponseStatus.getStatus(ResponseCode.CACHE_ERROR),
-          code: ResponseCode.CACHE_ERROR,
           message: ResponseMessage.CACHE_ERROR,
         );
       case DataSource.NO_INTERNET_CONNECTION:
         return ApiErrorModel(
-          status: ResponseStatus.getStatus(ResponseCode.NO_INTERNET_CONNECTION),
-          code: ResponseCode.NO_INTERNET_CONNECTION,
           message: ResponseMessage.NO_INTERNET_CONNECTION,
         );
       case DataSource.DEFAULT:
         return ApiErrorModel(
-          status: ResponseStatus.getStatus(ResponseCode.DEFAULT),
-          code: ResponseCode.DEFAULT,
           message: ResponseMessage.DEFAULT,
         );
     }

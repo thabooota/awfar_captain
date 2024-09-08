@@ -1,4 +1,6 @@
+import 'package:awfar_captain/features/home/logic/home_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../core/helpers/spacing.dart';
@@ -28,7 +30,7 @@ class CustomAccountViewRow extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Youssef Thabet",
+              context.read<HomeCubit>().myProfile!.name,
               style: TextStyleManager.font20TextColor600,
             ),
             verticalSpace(8.0),

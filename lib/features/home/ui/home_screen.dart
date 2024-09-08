@@ -22,7 +22,14 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<HomeCubit, HomeStates>(
       builder: (context, state) {
-        return Scaffold(
+        if(state is GetProfileLoading)
+          {
+            return const Scaffold(body: Center(child: CircularProgressIndicator(
+              color: ColorManager.green,
+            )));
+          }
+        if(context.read<HomeCubit>().myProfile != null) {
+          return Scaffold(
           appBar: AppBar(
             centerTitle: true,
             title: Row(
@@ -90,6 +97,9 @@ class HomeScreen extends StatelessWidget {
             ],
           ),
         );
+        } else {
+          return const Scaffold(body: Center(child: Text('An error occurred!')));
+        }
       },
     );
   }

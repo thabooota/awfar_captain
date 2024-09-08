@@ -5,6 +5,7 @@ import '../../../../core/theming/text_style_manager.dart';
 
 class CustomTextForm extends StatelessWidget {
   final FormFieldValidator validator;
+  final TextEditingController controller;
   final TextInputType inputType;
   final bool obscureText;
   final Widget? suffixIcon;
@@ -16,14 +17,17 @@ class CustomTextForm extends StatelessWidget {
       this.suffixIcon,
       required this.text,
       required this.inputType,
+        required this.controller,
       });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
       obscureText: obscureText,
       validator: validator,
       keyboardType: inputType,
+      cursorColor: ColorManager.green,
       decoration: InputDecoration(
           suffixIcon: suffixIcon,
           labelText: text,

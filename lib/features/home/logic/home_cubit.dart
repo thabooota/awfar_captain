@@ -1,4 +1,7 @@
+import 'package:awfar_captain/core/networking/local/prefs_manager.dart';
+import 'package:awfar_captain/core/networking/local/shared_preferences.dart';
 import 'package:awfar_captain/core/utils/enums.dart';
+import 'package:awfar_captain/features/home/data/models/response/get_profile_response.dart';
 import 'package:awfar_captain/features/home/logic/home_state.dart';
 import 'package:awfar_captain/features/home/ui/widgets/arrived_meeting_place_bottom_sheet.dart';
 import 'package:awfar_captain/features/home/ui/widgets/finish_trip_bottom_sheet.dart';
@@ -8,11 +11,12 @@ import 'package:awfar_captain/features/home/ui/widgets/ride_request_bottom_sheet
 import 'package:awfar_captain/features/home/ui/widgets/start_trip_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import '../data/repo/home_repo.dart';
 import '../ui/widgets/search_for_rides_bottom_sheet.dart';
 
 class HomeCubit extends Cubit<HomeStates> {
-  HomeCubit() : super(InitialHomeState());
+  final HomeRepo _homeRepo;
+  HomeCubit(this._homeRepo) : super(InitialHomeState());
 
   bool isOnline = true;
   BottomSheetStates bottomSheetStates = BottomSheetStates.searchForRides;
@@ -52,4 +56,26 @@ class HomeCubit extends Cubit<HomeStates> {
     bottomSheetStates = state;
     emit(ChangeBottomSheetState());
   }
+
+  String token = SharedPreferencesManager.getData(key: PrefsManager.token);
+  ProfileInfo ?myProfile;
+
+  void emitGetProfileStates() async {
+    emit(GetProfileLoading());
+    final response = await _homeRepo.getProfile(
+        token: token);
+
+    response.when(
+        success: (data) {
+          myProfile = data.profileInfo;
+          emit(GetProfileSuccess(profile: data));
+        },
+        failure: (error) {
+          print('Errrrrrrrrrrrrorrrrrrrrrrr');
+          print(error.toString());
+          emit(GetProfileError(error:error.apiErrorModel.message));
+        });
+  }
+
+  TextEditingController editingNameController = TextEditingController();
 }

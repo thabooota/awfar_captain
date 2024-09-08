@@ -1,0 +1,83 @@
+import 'package:animated_snack_bar/animated_snack_bar.dart';
+import 'package:awfar_captain/core/helpers/extensions.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import '../../../../core/networking/local/prefs_manager.dart';
+import '../../../../core/networking/local/shared_preferences.dart';
+import '../../../../core/routing/routes.dart';
+import '../../../../core/theming/color_manager.dart';
+import '../../../../core/widgets/app_text_button.dart';
+import '../../../../lang/locale_keys.g.dart';
+import '../../logic/register/register_cubit.dart';
+import '../../logic/register/register_state.dart';
+
+class VerifyOtpBlocListener extends StatelessWidget {
+  final String phone;
+
+  const VerifyOtpBlocListener({super.key, required this.phone});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<RegisterCubit, RegisterStates>(
+      listener: (context, state) {
+        if (state is VerifyPhoneSuccessState) {
+          SharedPreferencesManager.saveData(
+            key: PrefsManager.token,
+            value: state.verifyPhoneResponse.token,
+          ).then(
+            (_) => context.pushReplacementNamed(
+              Routes.completeRegister,
+            ),
+          );
+          AnimatedSnackBar.material(
+            state.verifyPhoneResponse.message,
+            type: AnimatedSnackBarType.success,
+            animationCurve: Curves.fastEaseInToSlowEaseOut,
+            mobileSnackBarPosition: MobileSnackBarPosition.bottom,
+          ).show(context);
+        }
+        if (state is VerifyPhoneFailureState) {
+          AnimatedSnackBar.material(
+            state.error,
+            type: AnimatedSnackBarType.error,
+            animationCurve: Curves.fastEaseInToSlowEaseOut,
+            mobileSnackBarPosition: MobileSnackBarPosition.bottom,
+          ).show(context);
+        }
+      },
+      builder: (context, state) => AnimatedCrossFade(
+        firstChild: AppTextButton(
+          appText: LocaleKeys.btnNext.tr(),
+          onTap: () => validateThenDoVerifyPhone(context.read<RegisterCubit>()),
+        ),
+        secondChild: Container(
+          height: 50.0,
+          decoration: BoxDecoration(
+            color: ColorManager.green,
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          padding: const EdgeInsets.symmetric(
+            vertical: 8.0,
+            horizontal: 12.0,
+          ),
+          child: Center(
+            child: LoadingAnimationWidget.fourRotatingDots(
+                color: ColorManager.originalWhite, size: 35.0),
+          ),
+        ),
+        crossFadeState: state is VerifyPhoneLoadingState
+            ? CrossFadeState.showSecond
+            : CrossFadeState.showFirst,
+        duration: const Duration(milliseconds: 700),
+      ),
+    );
+  }
+
+  void validateThenDoVerifyPhone(RegisterCubit cubit) {
+    if (cubit.otpFormKey.currentState!.validate()) {
+      cubit.emitVerifyPhoneState(phone: phone);
+    }
+  }
+}

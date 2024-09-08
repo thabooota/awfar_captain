@@ -144,11 +144,22 @@ class TextStyleManager {
     fontSize: 20.sp,
     fontWeight: FontWeight.w600,
   );
-
   static TextStyle font17White500 = TextStyle(
     fontFamily: VariableManager.fontFamily,
     color: ColorManager.originalWhite,
     fontSize: 17.sp,
     fontWeight: FontWeight.w500,
+  );
+  static TextStyle font15Black500 = TextStyle(
+    fontFamily: VariableManager.fontFamily,
+    color: ColorManager.originalBlack,
+    fontSize: 14.sp,
+    fontWeight: FontWeight.w500,
+  );
+  static TextStyle font20OriginalWhiteSemiBold = TextStyle(
+    fontSize: 20.sp,
+    color: ColorManager.originalWhite,
+    fontWeight: FontWeight.w600,
+    fontFamily: VariableManager.fontFamily,
   );
 }

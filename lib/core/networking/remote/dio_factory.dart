@@ -1,6 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
+import '../../di/dependency_injection.dart';
+import '../../helpers/navigation_service.dart';
+import '../../helpers/snackbar_service.dart';
+import '../../routing/routes.dart';
+import '../local/prefs_manager.dart';
+import '../local/shared_preferences.dart';
+
 class DioFactory {
   DioFactory._();
 
@@ -15,9 +22,11 @@ class DioFactory {
         ..options.connectTimeout = timeOut
         ..options.receiveTimeout = timeOut
         ..options.headers = {
+          'Accept': 'application/json',
           'Content-Type': 'application/json',
         };
       addDioInterceptor();
+      handleUnauthorized();
       return dio!;
     } else {
       return dio!;
@@ -30,6 +39,37 @@ class DioFactory {
         requestBody: true,
         requestHeader: true,
         responseHeader: true,
+      ),
+    );
+  }
+
+
+  static void handleUnauthorized() {
+    dio?.interceptors.add(
+      InterceptorsWrapper(
+        onResponse: (response, handler) {
+          return handler.next(response);
+        },
+        onError: (DioException error, handler) {
+          if (error.response?.statusCode == 401) {
+            SharedPreferencesManager.removeData(key: PrefsManager.token).then(
+                  (_) => getIt.reset().then(
+                    (_) {
+                  setupGetIt().then(
+                        (value) {
+                      SnackBarService.showSnackBar(
+                          error.response?.data["message"]);
+
+                      return NavigationService.navigateToAndRemoveAll(
+                          Routes.login);
+                    },
+                  );
+                },
+              ),
+            );
+          }
+          return handler.next(error);
+        },
       ),
     );
   }
