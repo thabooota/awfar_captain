@@ -1,7 +1,5 @@
-import 'package:awfar_captain/core/helpers/extensions.dart';
 import 'package:awfar_captain/features/authentication/logic/register/register_cubit.dart';
 import 'package:awfar_captain/features/authentication/logic/register/register_state.dart';
-import 'package:awfar_captain/features/authentication/ui/widgets/login_bloc_listener.dart';
 import 'package:awfar_captain/features/authentication/ui/widgets/register_bloc_listener.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/helpers/app_regex.dart';
 import '../../../../core/helpers/spacing.dart';
-import '../../../../core/routing/routes.dart';
 import '../../../../core/theming/text_style_manager.dart';
 import '../../../../lang/locale_keys.g.dart';
 import '../forget_password_screen.dart';

@@ -7,6 +7,7 @@ class AssetsManager {
   static const String imgOnboardingTwo = "${_imgPath}img_onboarding2.svg";
   static const String imgLogo = "${_imgPath}img_logo.svg";
   static const String imgChangePasswordDone = "${_imgPath}img_change_password_done.svg";
+  static const String imgLogoPNG = "${_imgPath}awfar-logo-1 1 (Traced).png";
 
   // icons
   static const String icAwfarLogo = "${_icPath}ic_awfar_logo.svg";
@@ -20,7 +21,8 @@ class AssetsManager {
   static const String icLang = "${_icPath}ic_lang.svg";
   static const String icLogout = "${_icPath}ic_logout.svg";
   static const String icSettings = "${_icPath}ic_settings.svg";
-  static const String icSupport = "${_icPath}ic_support.svg";
+  static const String icFiles = "${_icPath}doc-file 1.png";
+  static const String icSupport = "${_icPath}ssdad 1.png";
   static const String icSystemNotification = "${_icPath}ic_system_notification.svg";
   static const String icCouponNotification = "${_icPath}ic_coupon_notification.svg";
   static const String icSearch = "${_icPath}ic_search.png";

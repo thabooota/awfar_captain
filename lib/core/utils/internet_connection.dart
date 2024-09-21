@@ -3,7 +3,6 @@ import 'package:awfar_captain/core/theming/text_style_manager.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
 import '../theming/color_manager.dart';
 import 'assets_manager.dart';
 

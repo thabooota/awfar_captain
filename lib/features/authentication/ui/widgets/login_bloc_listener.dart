@@ -22,7 +22,7 @@ class LoginBlocListener extends StatelessWidget {
     return BlocConsumer<LoginCubit, LoginStates>(
       listener: (context, state) {
         if (state is LoginSuccessState) {
-          SharedPreferencesManager.saveData(
+          SharedPreferencesManager.setSecuredString(
             key: PrefsManager.token,
             value: state.response.token,
           ).then(

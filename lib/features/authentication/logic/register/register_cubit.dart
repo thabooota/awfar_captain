@@ -90,7 +90,7 @@ class RegisterCubit extends Cubit<RegisterStates> {
 
     print(nameController.text);
     final registerResponse = await _registerRepo.addDetails(
-      token: SharedPreferencesManager.getData(key: PrefsManager.token),
+      token: SharedPreferencesManager.getSecuredString(PrefsManager.token),
       addDetailsRequestBody: AddDetailsRequestBody(
         email: emailController.text,
         password: passwordController.text,
@@ -295,7 +295,7 @@ class RegisterCubit extends Cubit<RegisterStates> {
     );
 
     final response = await _registerRepo.uploadFiles(
-      token: SharedPreferencesManager.getData(key: PrefsManager.token),
+      token: SharedPreferencesManager.getSecuredString(PrefsManager.token),
       files: data,
     );
     response.when(

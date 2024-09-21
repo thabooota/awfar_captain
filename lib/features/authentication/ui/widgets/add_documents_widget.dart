@@ -1,12 +1,6 @@
 import 'dart:io';
-
-import 'package:awfar_captain/core/helpers/spacing.dart';
-import 'package:awfar_captain/features/authentication/logic/register/register_cubit.dart';
-import 'package:awfar_captain/features/authentication/logic/register/register_state.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
-
 import '../../../../core/theming/color_manager.dart';
 import '../../../../core/theming/text_style_manager.dart';
 

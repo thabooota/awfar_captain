@@ -7,13 +7,14 @@ import '../../../../core/theming/text_style_manager.dart';
 class DrawerItem extends StatelessWidget {
   final String title;
   final String icon;
+  final bool ?png;
   final void Function()? onTap;
 
   const DrawerItem({
     super.key,
     required this.title,
     required this.icon,
-    required this.onTap,
+    required this.onTap, this.png,
   });
 
   @override
@@ -25,11 +26,11 @@ class DrawerItem extends StatelessWidget {
           title.tr(),
           style: TextStyleManager.font17Black600,
         ),
-        leading: SvgPicture.asset(
+        leading: png == null ? SvgPicture.asset(
           icon,
           colorFilter:
               const ColorFilter.mode(Color(0xFFBEC2CE), BlendMode.srcIn),
-        ),
+        ) : Image.asset(icon,width: 32,),
       ),
     );
   }

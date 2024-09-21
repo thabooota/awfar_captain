@@ -1,6 +1,7 @@
 import 'package:awfar_captain/core/networking/remote/api_constants.dart';
 import 'package:awfar_captain/features/home/data/models/response/update_profile_response.dart';
 import 'package:dio/dio.dart';
+import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
 import '../../../../features/home/data/models/requests/upload_profile_request_body.dart';
 import '../../../../features/home/data/models/response/get_profile_response.dart';

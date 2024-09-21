@@ -9,7 +9,8 @@ class GetProfileResponse {
 
   GetProfileResponse({required this.message, required this.profileInfo});
 
-  factory GetProfileResponse.fromJson(Map<String, dynamic> json) => _$GetProfileResponseFromJson(json);
+  factory GetProfileResponse.fromJson(Map<String, dynamic> json) =>
+      _$GetProfileResponseFromJson(json);
 }
 
 @JsonSerializable()
@@ -19,17 +20,42 @@ class ProfileInfo {
   final String name;
   final String email;
   final String phone;
-  final String ?address;
+  final String? address;
   @JsonKey(name: 'work_area')
-  final String ?workArea;
+  final String? workArea;
   @JsonKey(name: 'car_brand')
-  final String ?carBrand;
+  final String? carBrand;
   @JsonKey(name: 'car_color')
-  final String ?carColor;
+  final String? carColor;
   @JsonKey(name: 'car_model')
-  final String ?carModel;
+  final String? carModel;
+  final List<Media>? media;
 
-  ProfileInfo(this.address, this.workArea, {required this.id, required this.name, required this.email, required this.phone,  this.carBrand,  this.carColor,  this.carModel});
+  ProfileInfo({
+    required this.id,
+      required this.name,
+      required this.email,
+      required this.phone,
+      this.carBrand,
+      this.carColor,
+      this.carModel,
+        this.address,
+        this.workArea,
+        this.media,
+      });
 
-  factory ProfileInfo.fromJson(Map<String, dynamic> json) => _$ProfileInfoFromJson(json);
+  factory ProfileInfo.fromJson(Map<String, dynamic> json) =>
+      _$ProfileInfoFromJson(json);
+}
+
+@JsonSerializable()
+class Media {
+  final int id;
+  final String name;
+  final String path;
+
+  Media({required this.id, required this.name, required this.path});
+
+  factory Media.fromJson(Map<String, dynamic> json) => _$MediaFromJson(json);
+
 }

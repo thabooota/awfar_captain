@@ -31,7 +31,7 @@ class LoginCubit extends Cubit<LoginStates> {
 
     response.when(
         success: (LoginResponse response) {
-      SharedPreferencesManager.saveData(
+      SharedPreferencesManager.setSecuredString(
           key: PrefsManager.token,
           value:response.token
       );

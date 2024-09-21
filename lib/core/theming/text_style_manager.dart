@@ -16,6 +16,55 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 */
 
 class TextStyleManager {
+  static TextStyle font10White700 = TextStyle(
+    fontFamily: VariableManager.fontFamily,
+    color: ColorManager.originalWhite,
+    fontSize: 10.sp,
+    fontWeight: FontWeight.w700,
+  );
+  static TextStyle font10Grey400 = TextStyle(
+    fontFamily: VariableManager.fontFamily,
+    color: ColorManager.grey,
+    fontSize: 10.sp,
+    fontWeight: FontWeight.w400,
+  );
+  static TextStyle font12Grey400 = TextStyle(
+    fontFamily: VariableManager.fontFamily,
+    color: ColorManager.grey,
+    fontSize: 12.sp,
+    fontWeight: FontWeight.w400,
+  );
+  static TextStyle font14TextColor500 = TextStyle(
+    fontFamily: VariableManager.fontFamily,
+    color: ColorManager.textColor,
+    fontSize: 14.sp,
+    fontWeight: FontWeight.w500,
+  );
+  static TextStyle font16White400 = TextStyle(
+    fontFamily: VariableManager.fontFamily,
+    color: ColorManager.originalWhite,
+    fontSize: 16.sp,
+    fontWeight: FontWeight.w400,
+  );
+
+  static TextStyle font16White500 = TextStyle(
+    fontFamily: VariableManager.fontFamily,
+    color: ColorManager.originalWhite,
+    fontSize: 16.sp,
+    fontWeight: FontWeight.w500,
+  );
+  static TextStyle font14TextColor700 = TextStyle(
+    fontFamily: VariableManager.fontFamily,
+    color: ColorManager.textColor,
+    fontSize: 14.sp,
+    fontWeight: FontWeight.w700,
+  );
+  static TextStyle font14Grey400 = TextStyle(
+    fontFamily: VariableManager.fontFamily,
+    color: ColorManager.grey,
+    fontSize: 14.sp,
+    fontWeight: FontWeight.w400,
+  );
   static TextStyle font17Black600 = TextStyle(
     fontFamily: VariableManager.fontFamily,
     color: ColorManager.originalBlack,

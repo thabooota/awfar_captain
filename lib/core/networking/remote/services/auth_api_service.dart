@@ -5,6 +5,7 @@ import 'package:awfar_captain/features/authentication/data/models/responses/regi
 import 'package:awfar_captain/features/authentication/data/models/responses/upload_file_response.dart';
 import 'package:awfar_captain/features/authentication/data/models/responses/verify_phone_response.dart';
 import 'package:dio/dio.dart';
+import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
 
 import '../../../../features/authentication/data/models/requests/add_details_request_body.dart';

@@ -15,12 +15,12 @@ class CustomAccountViewRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const CircleAvatar(
+         CircleAvatar(
           backgroundColor: ColorManager.originalWhite,
           radius: 37.0,
           child: CircleAvatar(
-            backgroundImage: NetworkImage(
-                "https://scontent.fcai19-6.fna.fbcdn.net/v/t39.30808-1/451371717_3869431286606994_5963826142988558334_n.jpg?stp=dst-jpg_p160x160&_nc_cat=102&ccb=1-7&_nc_sid=50d2ac&_nc_eui2=AeEOWSKKtDlYfBzd79VnEiL__SRoExsbuOz9JGgTGxu47EAxjjgmrt_YijOCAzDgS85llnRuCg0dAIONAVq0vI0r&_nc_ohc=cHUPiv7aFRIQ7kNvgGwo6-9&_nc_ht=scontent.fcai19-6.fna&oh=00_AYB1saN1E6AfWKtxV9PIKR5HPEBa8N-5WB-PYgqn2vCHQg&oe=66A48334"),
+            backgroundImage:context.read<HomeCubit>().myProfile!.media![0].path != null ? NetworkImage(
+                context.read<HomeCubit>().myProfile!.media![0].path) : const AssetImage(AssetsManager.imgLogoPNG),
             radius: 35.5,
           ),
         ),

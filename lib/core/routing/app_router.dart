@@ -8,6 +8,8 @@ import 'package:awfar_captain/features/chat/ui/chat_screen_view.dart';
 import 'package:awfar_captain/features/home/logic/home_cubit.dart';
 import 'package:awfar_captain/features/home/ui/edit_account_screen.dart';
 import 'package:awfar_captain/features/home/ui/home_screen.dart';
+import 'package:awfar_captain/features/home/ui/my_trip_screen.dart';
+import 'package:awfar_captain/features/home/ui/report_my_trips.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../features/authentication/logic/forget_password/forget_password_cubit.dart';
@@ -94,8 +96,12 @@ class AppRouter {
                 child: const HomeScreen()));
       case Routes.captainGate:
         return AnimationRoute(page: const CaptainGateScreen());
+        case Routes.reportMyTrips:
+        return AnimationRoute(page: const ReportMyTrips());
       case Routes.notification:
         return AnimationRoute(page: const NotificationScreen());
+        case Routes.myRides:
+        return AnimationRoute(page: const MyTripScreen());
       case Routes.rating:
         return AnimationRoute(page: const RatingScreen());
       case Routes.finishTrip:

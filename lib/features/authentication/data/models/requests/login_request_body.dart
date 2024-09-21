@@ -4,10 +4,13 @@ part 'login_request_body.g.dart';
 class LoginRequestBody {
   final String phone;
   final String password;
+  @JsonKey(name: 'app_device')
+  final String fcmToken;
 
   LoginRequestBody({
     required this.phone,
     required this.password,
+    required this.fcmToken,
   });
 
   Map<String, dynamic> toJson() => _$LoginRequestBodyToJson(this);

@@ -41,7 +41,8 @@ class DrawerView extends StatelessWidget {
               ),
               DrawerItem(
                 title: LocaleKeys.drawerItemFiles.tr(),
-                icon: AssetsManager.icFavorites,
+                png: true,
+                icon: AssetsManager.icFiles,
                 onTap: () {},
               ),
               DrawerItem(
@@ -77,6 +78,7 @@ class DrawerView extends StatelessWidget {
               DrawerItem(
                 title: LocaleKeys.drawerItemSupport.tr(),
                 icon: AssetsManager.icSupport,
+                png: true,
                 onTap: () {
                   context.pushNamed(Routes.technicalSupport);
                 },
@@ -92,7 +94,7 @@ class DrawerView extends StatelessWidget {
                 title: LocaleKeys.drawerItemLogout.tr(),
                 icon: AssetsManager.icLogout,
                 onTap: () {
-                  SharedPreferencesManager.removeData(key: PrefsManager.token)
+                  SharedPreferencesManager.deleteSecuredString(key: PrefsManager.token)
                       .then((_) => context.pushNamedAndRemoveUntil(Routes.login,
                           predicate: (Route<dynamic> route) => false));
                 },

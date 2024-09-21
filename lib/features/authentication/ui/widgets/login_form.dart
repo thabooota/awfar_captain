@@ -10,7 +10,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../../core/helpers/app_regex.dart';
-import '../../../../core/theming/color_manager.dart';
 import '../../../../core/utils/assets_manager.dart';
 import 'custom_text_form.dart';
 
@@ -58,7 +57,7 @@ class LoginForm extends StatelessWidget {
                   height: 30.0,
                 ),
                 const LoginBlocListener(),
-              ]
+              ],
           ),
         );
       },

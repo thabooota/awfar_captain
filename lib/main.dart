@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:awfar_captain/core/routing/routes.dart';
+import 'package:awfar_captain/core/utils/push_notifications_service.dart';
 import 'package:awfar_captain/lang/codegen_loader.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,8 @@ import 'core/networking/local/shared_preferences.dart';
 import 'core/routing/app_router.dart';
 import 'core/theming/color_manager.dart';
 import 'core/utils/method_manager.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 Future<void> main() async {
   await runZonedGuarded(
@@ -22,12 +25,20 @@ Future<void> main() async {
       WidgetsFlutterBinding.ensureInitialized();
 
       Bloc.observer = MyBlocObserver();
-      SharedPreferencesManager.init();
-      await ScreenUtil.ensureScreenSize();
-      await EasyLocalization.ensureInitialized();
-      await setupGetIt();
-      await Hive.initFlutter();
 
+      SharedPreferencesManager.init();
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
+
+      await ScreenUtil.ensureScreenSize();
+
+      await EasyLocalization.ensureInitialized();
+
+      await setupGetIt();
+
+      await Hive.initFlutter();
+      PushNotificationsService.init();
       SystemChrome.setSystemUIOverlayStyle(
         const SystemUiOverlayStyle(
           statusBarIconBrightness: Brightness.dark,
@@ -36,12 +47,17 @@ Future<void> main() async {
           systemNavigationBarIconBrightness: Brightness.dark,
         ),
       );
+
       SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
       String initialRoute = Routes.onboarding;
+
       bool? isOnboarding =
           SharedPreferencesManager.getData(key: PrefsManager.onboarding);
-      String? token = SharedPreferencesManager.getData(key: PrefsManager.token);
+
+      String? token = SharedPreferencesManager.getData(
+        key: PrefsManager.token,
+      );
 
       if (isOnboarding != null) {
         if (token != null) {
@@ -52,13 +68,14 @@ Future<void> main() async {
       }
 
       Locale locale = MethodsManager.getLocate();
+
       runApp(EasyLocalization(
         path: 'assets/locales',
-        supportedLocales: const[
+        supportedLocales: const [
           Locale('en'),
           Locale('ar'),
         ],
-        fallbackLocale:locale,
+        fallbackLocale: locale,
         startLocale: locale,
         assetLoader: const CodegenLoader(),
         child: AwfarCaptainApp(

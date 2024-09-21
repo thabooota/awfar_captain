@@ -58,7 +58,7 @@ class HomeCubit extends Cubit<HomeStates> {
     emit(ChangeBottomSheetState());
   }
 
-  String token = SharedPreferencesManager.getData(key: PrefsManager.token);
+  String token = SharedPreferencesManager.getSecuredString(PrefsManager.token);
   ProfileInfo ?myProfile;
 
   void emitGetProfileStates() async {

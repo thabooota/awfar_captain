@@ -19,6 +19,7 @@ class ColorManager {
   static const Color cyan = Color(0xFF4CE5B1);
   static const Color babyBlue = Color(0xFF46C2CB);
   static const Color purple = Color(0xFF6D67E4);
+  static const Color grey = Color(0xFF748BA0);
 
   static const List<Color> blueColor = [
     Color(0xCCEFEFF4),

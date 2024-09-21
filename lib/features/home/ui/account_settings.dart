@@ -73,7 +73,7 @@ class AccountSettings extends StatelessWidget {
                 ],
               ),
             ),
-            AccountSettingsItem(onPressed: () {}, text: LocaleKeys.myRides.tr(),),
+            AccountSettingsItem(onPressed: () => context.pushNamed(Routes.myRides), text: LocaleKeys.myRides.tr(),),
             verticalSpace(20.h),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),

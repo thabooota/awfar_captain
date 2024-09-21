@@ -1,17 +1,23 @@
-import 'package:awfar_captain/core/theming/text_style_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../theming/color_manager.dart';
+import '../theming/text_style_manager.dart';
 
 class AppTextButton extends StatelessWidget {
   final String appText;
+  final Size? minimumSize;
   final void Function()? onTap;
+  final TextStyle? textStyle;
+  final Color? backgroundColor;
+  final double? borderRadius;
 
   const AppTextButton({
     super.key,
     required this.appText,
     required this.onTap,
+    this.minimumSize,
+    this.textStyle, this.backgroundColor, this.borderRadius,
   });
 
   @override
@@ -19,14 +25,15 @@ class AppTextButton extends StatelessWidget {
     return TextButton(
       onPressed: onTap,
       style: TextButton.styleFrom(
-          backgroundColor: ColorManager.green,
-          minimumSize: Size(double.maxFinite, 45.0.h),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          )),
+        backgroundColor: backgroundColor?? ColorManager.green,
+        minimumSize: minimumSize ?? Size(double.maxFinite, 45.0.h),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(borderRadius?? 8),
+        ),
+      ),
       child: Text(
         appText,
-        style: TextStyleManager.font25White600,
+        style: textStyle ?? TextStyleManager.font25White600,
       ),
     );
   }
