@@ -27,17 +27,4 @@ class SharedPreferencesManager {
   }) async =>
       await sharedPreferences.remove(key);
 
-  static  setSecuredString({required String key, required String value}) async {
-    await flutterSecureStorage.write(key: key, value: value);
-  }
-
-  static getSecuredString(String key) async {
-    const flutterSecureStorage = FlutterSecureStorage();
-    print('${await flutterSecureStorage.read(key: key)}');
-    return await flutterSecureStorage.read(key: key) ?? '';
-  }
-
-  static deleteSecuredString({required String key}) async {
-    await flutterSecureStorage.delete(key: key);
-  }
 }

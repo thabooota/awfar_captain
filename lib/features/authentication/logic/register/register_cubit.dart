@@ -52,7 +52,7 @@ class RegisterCubit extends Cubit<RegisterStates> {
 
     final registerResponse = await _registerRepo.register(
       registerRequestBody:
-          RegisterRequestBody(phone: "+2${phoneController.text}"),
+          RegisterRequestBody(phone: "+2${phoneController.text}", fcmToken: SharedPreferencesManager.getData(key: PrefsManager.fcmToken)),
     );
 
     registerResponse.when(
@@ -90,7 +90,7 @@ class RegisterCubit extends Cubit<RegisterStates> {
 
     print(nameController.text);
     final registerResponse = await _registerRepo.addDetails(
-      token: SharedPreferencesManager.getSecuredString(PrefsManager.token),
+      token: SharedPreferencesManager.getData(key: PrefsManager.token),
       addDetailsRequestBody: AddDetailsRequestBody(
         email: emailController.text,
         password: passwordController.text,
@@ -295,7 +295,7 @@ class RegisterCubit extends Cubit<RegisterStates> {
     );
 
     final response = await _registerRepo.uploadFiles(
-      token: SharedPreferencesManager.getSecuredString(PrefsManager.token),
+      token: SharedPreferencesManager.getData( key: PrefsManager.token,),
       files: data,
     );
     response.when(

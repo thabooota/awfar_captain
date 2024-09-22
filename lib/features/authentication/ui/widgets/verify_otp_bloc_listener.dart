@@ -23,11 +23,11 @@ class VerifyOtpBlocListener extends StatelessWidget {
     return BlocConsumer<RegisterCubit, RegisterStates>(
       listener: (context, state) {
         if (state is VerifyPhoneSuccessState) {
-          SharedPreferencesManager.setSecuredString(
+          SharedPreferencesManager.saveData(
             key: PrefsManager.token,
             value: state.verifyPhoneResponse.token,
           ).then(
-            (_) => context.pushReplacementNamed(
+            (_) => context.pushNamed(
               Routes.completeRegister,
             ),
           );

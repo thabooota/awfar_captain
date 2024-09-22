@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:awfar_captain/core/routing/routes.dart';
+import 'package:awfar_captain/core/utils/local_notifications_service.dart';
 import 'package:awfar_captain/core/utils/push_notifications_service.dart';
 import 'package:awfar_captain/lang/codegen_loader.g.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -34,7 +35,7 @@ Future<void> main() async {
       await ScreenUtil.ensureScreenSize();
 
       await EasyLocalization.ensureInitialized();
-
+      await LocalNotificationsService.init();
       await setupGetIt();
 
       await Hive.initFlutter();

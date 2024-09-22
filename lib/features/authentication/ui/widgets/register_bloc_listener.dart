@@ -19,7 +19,7 @@ class RegisterBlocListener extends StatelessWidget {
     return BlocConsumer<RegisterCubit, RegisterStates>(
       listener: (context, state) {
         if (state is RegisterSuccessState) {
-          context.pushReplacementNamed(
+          context.pushNamed(
             Routes.otpVerifyAccountRegister,
             arguments: context.read<RegisterCubit>().phoneController.text,
           );

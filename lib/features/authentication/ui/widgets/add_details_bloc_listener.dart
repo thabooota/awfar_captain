@@ -19,9 +19,8 @@ class AddDetailsBlocListener extends StatelessWidget {
     return BlocConsumer<RegisterCubit, RegisterStates>(
       listener: (context, state) {
         if (state is AddDetailsSuccessState) {
-          context.pushNamedAndRemoveUntil(
+          context.pushNamed(
             Routes.addDecuments,
-            predicate: (_) => false,
           );
           AnimatedSnackBar.material(
             state.addDetailsResponse.message!,

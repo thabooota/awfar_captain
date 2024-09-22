@@ -52,7 +52,7 @@ class DioFactory {
         },
         onError: (DioException error, handler) {
           if (error.response?.statusCode == 401) {
-            SharedPreferencesManager.deleteSecuredString(key: PrefsManager.token).then(
+            SharedPreferencesManager.removeData(key: PrefsManager.token).then(
                   (_) => getIt.reset().then(
                     (_) {
                   setupGetIt().then(

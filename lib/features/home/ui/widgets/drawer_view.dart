@@ -94,7 +94,7 @@ class DrawerView extends StatelessWidget {
                 title: LocaleKeys.drawerItemLogout.tr(),
                 icon: AssetsManager.icLogout,
                 onTap: () {
-                  SharedPreferencesManager.deleteSecuredString(key: PrefsManager.token)
+                  SharedPreferencesManager.removeData(key: PrefsManager.token)
                       .then((_) => context.pushNamedAndRemoveUntil(Routes.login,
                           predicate: (Route<dynamic> route) => false));
                 },

@@ -25,7 +25,7 @@ class _ChangePasswordDoneScreenState extends State<ChangePasswordDoneScreen> {
   @override
   void initState() {
     Future.delayed(const Duration(seconds: 3), () {
-      SharedPreferencesManager.setSecuredString(
+      SharedPreferencesManager.saveData(
         key: PrefsManager.token,
         value: "test token",
       ).then(

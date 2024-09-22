@@ -26,12 +26,12 @@ class LoginCubit extends Cubit<LoginStates> {
     emit(LoginLoadingState());
     final response = await _loginRepo.login(
       LoginRequestBody(
-        phone: "+2${phoneController.text}", password: passwordController.text),
+        phone: "+2${phoneController.text}", password: passwordController.text, fcmToken: PrefsManager.fcmToken),
     );
 
     response.when(
         success: (LoginResponse response) {
-      SharedPreferencesManager.setSecuredString(
+      SharedPreferencesManager.saveData(
           key: PrefsManager.token,
           value:response.token
       );
