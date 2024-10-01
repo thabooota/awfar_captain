@@ -1,6 +1,8 @@
+import 'package:awfar_captain/app/awfar_captain_app.dart';
 import 'package:awfar_captain/features/home/logic/home_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../core/helpers/spacing.dart';
@@ -17,11 +19,11 @@ class CustomAccountViewRow extends StatelessWidget {
       children: [
          CircleAvatar(
           backgroundColor: ColorManager.originalWhite,
-          radius: 37.0,
+          radius: 37.0.h,
           child: CircleAvatar(
-            backgroundImage:context.read<HomeCubit>().myProfile!.media![0].path != null ? NetworkImage(
-                context.read<HomeCubit>().myProfile!.media![0].path) : const AssetImage(AssetsManager.imgLogoPNG),
-            radius: 35.5,
+            backgroundImage:context.read<HomeCubit>().myProfile!.media!.isNotEmpty ? NetworkImage(
+                context.read<HomeCubit>().myProfile!.media![0].path) : const AssetImage(AssetsManager.imgLogoPNG,),
+            radius: 35.5.h,
           ),
         ),
         horizontalSpace(22.0),

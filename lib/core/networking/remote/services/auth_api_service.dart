@@ -7,7 +7,6 @@ import 'package:awfar_captain/features/authentication/data/models/responses/veri
 import 'package:dio/dio.dart';
 import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
-
 import '../../../../features/authentication/data/models/requests/add_details_request_body.dart';
 import '../../../../features/authentication/data/models/requests/check_code_request_body.dart';
 import '../../../../features/authentication/data/models/requests/forgot_password_request_body.dart';
@@ -18,7 +17,6 @@ import '../../../../features/authentication/data/models/requests/verify_phone_re
 import '../../../../features/authentication/data/models/responses/check_code_response.dart';
 import '../../../../features/authentication/data/models/responses/forgot_password_response.dart';
 import '../../../../features/authentication/data/models/responses/reset_password_response.dart';
-
 part 'auth_api_service.g.dart';
 
 @RestApi(baseUrl: ApiConstants.apiBaseURL)

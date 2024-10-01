@@ -16,6 +16,15 @@ class ApiConstants {
   // home end points
  static const String getProfile = 'profile';
  static const String updateProfileEndPoint = 'profile';
+ static const String getTrip = 'trips';
+ static const String getMyTrip = 'my-trips';
+ static const String rateClient = 'rate-trip/{tripId}/{driverId}';
+ static const String acceptTrip = 'accept-trip/{tripId}';
+ static const String rejectedTrip = 'reject-trip/{tripId}';
+
+ //chat end points
+ static const String getMessage = 'get-message/{tripId}/{driverId}';
+ static const String sendMessage = 'get-message/{tripId}';
 }
 
 class ApiErrors {

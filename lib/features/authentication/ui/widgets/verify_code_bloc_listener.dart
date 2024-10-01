@@ -21,7 +21,7 @@ class VerifyCodeBlocListener extends StatelessWidget {
     return BlocConsumer<ForgotPasswordCubit, ForgotPasswordStates>(
       listener: (context, state) {
         if (state is CheckCodeSuccessState) {
-          context.pushReplacementNamed(Routes.completeForgetPassword, arguments: phone);
+          context.pushNamed(Routes.completeForgetPassword, arguments: phone);
           AnimatedSnackBar.material(
             state.checkCodeResponse.message,
             type: AnimatedSnackBarType.success,

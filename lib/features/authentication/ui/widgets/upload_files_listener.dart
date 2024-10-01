@@ -21,7 +21,7 @@ class UploadFilesListener extends StatelessWidget {
     return BlocConsumer<RegisterCubit, RegisterStates>(
       listener: (context, state) {
         if (state is UploadFilesSuccessState) {
-          context.pushReplacementNamed(Routes.home);
+          context.pushNamedAndRemoveUntil(Routes.home, predicate: (_) => false);
           AnimatedSnackBar.material(
             state.uploadFilesResponse.message!,
             type: AnimatedSnackBarType.success,

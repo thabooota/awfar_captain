@@ -2,12 +2,6 @@ class VariableManager {
   static const String fontFamily = "OpenSans";
 }
 
-class ApiConstants {
-  static const String apiBaseUrl = "";
-  static const String socketServerURL = "";
-
-}
-
 class ApiErrors {
   static const String badRequestError = "badRequestError";
   static const String noContent = "noContent";

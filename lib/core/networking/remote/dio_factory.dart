@@ -55,6 +55,7 @@ class DioFactory {
             SharedPreferencesManager.removeData(key: PrefsManager.token).then(
                   (_) => getIt.reset().then(
                     (_) {
+
                   setupGetIt().then(
                         (value) {
                       SnackBarService.showSnackBar(
