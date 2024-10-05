@@ -36,7 +36,7 @@ class DrawerView extends StatelessWidget {
                 title: LocaleKeys.drawerItemHome.tr(),
                 icon: AssetsManager.icHome,
                 onTap: () {
-                  context.pushReplacementNamed(Routes.home);
+                  context.pushNamedAndRemoveUntil(Routes.home, predicate: (route) => false,);
                 },
               ),
               DrawerItem(

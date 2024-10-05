@@ -16,17 +16,6 @@ part 'home_api_service.g.dart';
 abstract class HomeApiService {
   factory HomeApiService(Dio dio, {String baseUrl}) = _HomeApiService;
 
-  @GET(ApiConstants.getProfile)
-  Future<GetProfileResponse> getProfile({
-    @Header('Authorization') required String token,
-  });
-
-  @POST(ApiConstants.updateProfileEndPoint)
-  Future<UpdateProfileResponse> updateProfile({
-    @Header('Authorization') required String token,
-    @Body() required UpdateProfileRequestBody body,
-  });
-
   @POST(ApiConstants.rateClient)
   Future<MassageResponse> rateClient({
     @Header('Authorization') required String token,
@@ -40,7 +29,7 @@ abstract class HomeApiService {
     @Header('Authorization') required String token,
   });
 
-  @GET(ApiConstants.getTrip)
+  @GET(ApiConstants.getMyTrip)
   Future<GetMyTripResponse> getMyTrip({
     @Header('Authorization') required String token,
   });

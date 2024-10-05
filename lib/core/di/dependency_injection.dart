@@ -1,4 +1,6 @@
+import 'package:awfar_captain/core/networking/remote/services/captain_gate_api_services.dart';
 import 'package:awfar_captain/core/networking/remote/services/home_api_service.dart';
+import 'package:awfar_captain/features/captain_gate/data/repo/repo.dart';
 import 'package:awfar_captain/features/home/data/repo/home_repo.dart';
 import 'package:awfar_captain/features/home/logic/home_cubit.dart';
 import 'package:dio/dio.dart';
@@ -9,6 +11,7 @@ import '../../features/authentication/data/repo/register_repo.dart';
 import '../../features/authentication/logic/forget_password/forget_password_cubit.dart';
 import '../../features/authentication/logic/login/login_cubit.dart';
 import '../../features/authentication/logic/register/register_cubit.dart';
+import '../../features/captain_gate/logic/captain_gate_cubit.dart';
 import '../app_cubit/app_cubit.dart';
 import '../networking/remote/dio_factory.dart';
 import '../networking/remote/services/auth_api_service.dart';
@@ -27,6 +30,8 @@ Future<void> setupGetIt() async {
           () => AuthApiService(dio));
   getIt.registerLazySingleton<HomeApiService>(
           () => HomeApiService(dio));
+  getIt.registerLazySingleton<CaptainApiServices>(
+          () => CaptainApiServices(dio));
   // repos
   getIt.registerLazySingleton<RegisterRepo>(
           () => RegisterRepo(getIt<AuthApiService>()));
@@ -40,6 +45,8 @@ Future<void> setupGetIt() async {
   getIt.registerLazySingleton<HomeRepo> (
           () => HomeRepo(getIt<HomeApiService>()));
 
+  getIt.registerLazySingleton<CaptainGateRepo>(
+          () => CaptainGateRepo(getIt<CaptainApiServices>()));
   // cubits
   getIt.registerFactory<RegisterCubit>(
           () => RegisterCubit(getIt<RegisterRepo>()));
@@ -47,6 +54,9 @@ Future<void> setupGetIt() async {
           () => LoginCubit(getIt<LoginRepo>()));
   getIt.registerFactory<ForgotPasswordCubit>(
           () => ForgotPasswordCubit(getIt<ForgotPasswordRepo>()));
-  getIt.registerLazySingleton<HomeCubit>(
+  getIt.registerFactory<HomeCubit>(
           () => HomeCubit(getIt<HomeRepo>()));
+
+  getIt.registerFactory<CaptainGateCubit>(
+          () => CaptainGateCubit(getIt<CaptainGateRepo>()));
 }

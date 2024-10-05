@@ -2,62 +2,40 @@ import 'package:json_annotation/json_annotation.dart';
 part 'get_trip_response.g.dart';
 @JsonSerializable()
 class GetTripResponse {
-  @JsonKey(name: 'data')
-  final TripData tripInfo;
-  @JsonKey(name: 'client')
-  final ClientData clientInfo;
+  final String title;
+  @JsonKey(name: 'body')
+  final TripInfo tripInfo;
 
   GetTripResponse({
     required this.tripInfo,
-    required this.clientInfo,
+    required this.title,
   });
 
   factory GetTripResponse.fromJson(Map<String, dynamic> json) => _$GetTripResponseFromJson(json);
 }
 
 @JsonSerializable()
-class TripData {
-  final int id;
+class TripInfo {
+  final String trip_di;
   final String from;
   final String to;
-  @JsonKey(name: 'type_trip')
-  final TypeTrip typeTrip;
-  final int price;
+  final String from_long;
+  final String to_long;
+  final String from_lat;
+  final String to_lat;
+  final String coupon;
 
-  TripData( {required this.typeTrip,required this.id, required this.from, required this.to, required this.price});
-
-  factory TripData.fromJson(Map<String, dynamic> json) => _$TripDataFromJson(json);
-}
-
-@JsonSerializable()
-class TypeTrip {
-  final String name;
-  TypeTrip({required this.name});
-  factory TypeTrip.fromJson(Map<String, dynamic> json) => _$TypeTripFromJson(json);
-}
-
-@JsonSerializable()
-class ClientData {
-  final int id;
-  final String ?name;
-  final List<Media>? media;
-  ClientData({
-    required this.id,
-    this.name,
-    this.media,
+  TripInfo({
+    required this.from_lat,
+    required this.to_lat,
+    required this.trip_di,
+    required this.from,
+    required this.to,
+    required this.from_long,
+    required this.to_long,
+    required this.coupon
   });
 
-  factory ClientData.fromJson(Map<String, dynamic> json) => _$ClientDataFromJson(json);
-}
-
-@JsonSerializable()
-class Media {
-  final int id;
-  final String name;
-  final String path;
-
-  Media({required this.id, required this.name, required this.path});
-
-  factory Media.fromJson(Map<String, dynamic> json) => _$MediaFromJson(json);
+  factory TripInfo.fromJson(Map<String, dynamic> json) => _$TripInfoFromJson(json);
 
 }

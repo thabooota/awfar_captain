@@ -2,7 +2,9 @@ import 'package:awfar_captain/core/helpers/extensions.dart';
 import 'package:awfar_captain/core/helpers/spacing.dart';
 import 'package:awfar_captain/core/theming/color_manager.dart';
 import 'package:awfar_captain/core/theming/text_style_manager.dart';
-import 'package:awfar_captain/features/home/logic/home_cubit.dart';
+import 'package:awfar_captain/features/captain_gate/logic/captain_gate_cubit.dart';
+import 'package:awfar_captain/features/captain_gate/logic/captain_gate_state.dart';
+import 'package:awfar_captain/features/home/logic/home_state.dart';
 import 'package:awfar_captain/features/home/ui/widgets/drawer_view.dart';
 import 'package:awfar_captain/features/home/ui/widgets/home_map_view.dart';
 import 'package:awfar_captain/lang/locale_keys.g.dart';
@@ -13,26 +15,20 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../core/routing/routes.dart';
 import '../../../core/utils/assets_manager.dart';
-import '../logic/home_state.dart';
+import '../logic/home_cubit.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeCubit, HomeStates>(
+    return BlocBuilder<CaptainGateCubit, CaptainGateStates>(
       builder: (context, state) {
-        if(state is GetProfileLoading)
-          {
-            return const Scaffold(body: Center(child: CircularProgressIndicator(
-              color: ColorManager.green,
-            )));
-          }
-        if(context.read<HomeCubit>().myProfile != null) {
+        if(context.read<CaptainGateCubit>().myProfile != null) {
           return Scaffold(
           appBar: AppBar(
             centerTitle: true,
-            title: Row(
+            title: BlocBuilder<HomeCubit, HomeStates>(builder: (context, state) => Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
@@ -44,7 +40,7 @@ class HomeScreen extends StatelessWidget {
                 horizontalSpace(5.w),
                 Switch(
                   trackOutlineColor: WidgetStateProperty.resolveWith(
-                    (final Set<WidgetState> states) {
+                        (final Set<WidgetState> states) {
                       if (states.contains(WidgetState.selected)) {
                         return ColorManager.green;
                       }
@@ -60,7 +56,7 @@ class HomeScreen extends StatelessWidget {
                       context.read<HomeCubit>().chaneConnectionState(value),
                 ),
               ],
-            ),
+            ),),
             actions: [
               IconButton(
                 icon: SvgPicture.asset(AssetsManager.icNotification),
@@ -98,7 +94,13 @@ class HomeScreen extends StatelessWidget {
           ),
         );
         } else {
-          return const Scaffold(body: Center(child: Text('An error occurred!')));
+          if(state is GetProfileError)
+          {
+            return const Scaffold(body: Center(child: Text('An error occurred!')));
+          } else {
+          return const Scaffold(body: Center(child: CircularProgressIndicator(
+            color: ColorManager.green,
+          ))); }
         }
       },
     );

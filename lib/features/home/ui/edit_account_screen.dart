@@ -1,6 +1,6 @@
 import 'package:awfar_captain/core/theming/color_manager.dart';
-import 'package:awfar_captain/features/home/logic/home_cubit.dart';
-import 'package:awfar_captain/features/home/logic/home_state.dart';
+import 'package:awfar_captain/features/captain_gate/logic/captain_gate_cubit.dart';
+import 'package:awfar_captain/features/captain_gate/logic/captain_gate_state.dart';
 import 'package:awfar_captain/features/home/ui/widgets/custom_account_view_row.dart';
 import 'package:awfar_captain/features/home/ui/widgets/edit_profile_listener.dart';
 import 'package:awfar_captain/features/home/ui/widgets/edit_profile_text_form.dart';
@@ -22,7 +22,7 @@ class EditAccountScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         backgroundColor: ColorManager.scaffold,
-        body: BlocBuilder<HomeCubit, HomeStates>(
+        body: BlocBuilder<CaptainGateCubit, CaptainGateStates>(
           builder: (context, state) => Column(
             children: [
               Container(
@@ -58,52 +58,52 @@ class EditAccountScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
                   children: [
                     EditProfileTextForm(
-                        labelText: context.read<HomeCubit>().myProfile!.name,
+                        labelText: context.read<CaptainGateCubit>().myProfile!.name,
                         validator: (value) {},
                         obscureText: false,
                         text: 'Enter new name',
                         inputType: TextInputType.name,
-                        controller: context.read<HomeCubit>().editingNameController),
+                        controller: context.read<CaptainGateCubit>().editingNameController),
                     verticalSpace(10.h),
                     EditProfileTextForm(
-                        labelText: context.read<HomeCubit>().myProfile!.email,
+                        labelText: context.read<CaptainGateCubit>().myProfile!.email,
                         validator: (value) {},
                         obscureText: false,
                         text: 'Enter new email',
                         inputType: TextInputType.emailAddress,
-                        controller: context.read<HomeCubit>().editingEmailController),
+                        controller: context.read<CaptainGateCubit>().editingEmailController),
                     verticalSpace(10.h),
                     EditProfileTextForm(
-                        labelText: context.read<HomeCubit>().myProfile!.phone,
+                        labelText: context.read<CaptainGateCubit>().myProfile!.phone,
                         validator: (value) {},
                         obscureText: false,
                         text: 'Enter new phone',
                         inputType: TextInputType.phone,
-                        controller: context.read<HomeCubit>().editingPhoneController),
+                        controller: context.read<CaptainGateCubit>().editingPhoneController),
                     verticalSpace(10.h),
                     EditProfileTextForm(
                         labelText:
-                            context.read<HomeCubit>().myProfile!.address == null
+                            context.read<CaptainGateCubit>().myProfile!.address == null
                                 ? 'Enter your address'
-                                : context.read<HomeCubit>().myProfile!.address!,
+                                : context.read<CaptainGateCubit>().myProfile!.address!,
                         validator: (value) {},
                         obscureText: false,
                         text: 'Enter new address',
                         inputType: TextInputType.text,
                         controller:
-                            context.read<HomeCubit>().editingAddressController),
+                            context.read<CaptainGateCubit>().editingAddressController),
                     verticalSpace(10.h),
                     EditProfileTextForm(
                         labelText:
-                            context.read<HomeCubit>().myProfile!.workArea == null
+                            context.read<CaptainGateCubit>().myProfile!.workArea == null
                                 ? 'Enter your work area'
-                                : context.read<HomeCubit>().myProfile!.workArea!,
+                                : context.read<CaptainGateCubit>().myProfile!.workArea!,
                         validator: (value) {},
                         obscureText: false,
                         text: 'Enter new work area',
                         inputType: TextInputType.text,
                         controller:
-                            context.read<HomeCubit>().editingWorkAreaController),
+                            context.read<CaptainGateCubit>().editingWorkAreaController),
                     verticalSpace(60.h),
                     const EditProfileListener(),
                   ],

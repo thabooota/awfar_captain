@@ -4,6 +4,7 @@ import 'package:awfar_captain/features/authentication/logic/register/register_cu
 import 'package:awfar_captain/features/authentication/ui/add_documents_screen.dart';
 import 'package:awfar_captain/features/authentication/ui/verify_otp_forget_password.dart';
 import 'package:awfar_captain/features/authentication/ui/verify_otp_register.dart';
+import 'package:awfar_captain/features/captain_gate/logic/captain_gate_cubit.dart';
 import 'package:awfar_captain/features/chat/ui/chat_screen_view.dart';
 import 'package:awfar_captain/features/home/logic/home_cubit.dart';
 import 'package:awfar_captain/features/home/ui/edit_account_screen.dart';
@@ -89,13 +90,18 @@ class AppRouter {
       // Home
       case Routes.home:
         return AnimationRoute(
-            page: BlocProvider<HomeCubit>(
-                create: (context) => getIt<HomeCubit>()
-                  ..bottomSheets()
-                  ..emitGetProfileStates(),
+            page: MultiBlocProvider(
+    providers: [
+                BlocProvider<HomeCubit>(create: (context) => getIt<HomeCubit>()..bottomSheets()),
+                 BlocProvider<CaptainGateCubit> (create: (context) => getIt<CaptainGateCubit>()..emitGetProfileStates(),)
+                ],
                 child: const HomeScreen()));
       case Routes.captainGate:
-        return AnimationRoute(page: const CaptainGateScreen());
+        return AnimationRoute(
+            page: BlocProvider.value(
+                value: getIt<CaptainGateCubit>()..emitGetMyBalance()..emitGetAllTrips(),
+                 child:
+                 const CaptainGateScreen()));
         case Routes.reportMyTrips:
         return AnimationRoute(page: const ReportMyTrips());
       case Routes.notification:
@@ -113,11 +119,11 @@ class AppRouter {
       case Routes.accountSettings:
         return AnimationRoute(
             page: BlocProvider.value(
-                value: getIt<HomeCubit>(), child: const AccountSettings()));
+                value: getIt<CaptainGateCubit>(), child: const AccountSettings()));
       case Routes.editAccount:
         return AnimationRoute(
-            page: BlocProvider.value(
-                value: getIt<HomeCubit>(), child: const EditAccountScreen()));
+            page: BlocProvider(
+                create:(context) =>  getIt<CaptainGateCubit>()..emitGetMyBalance(), child: const EditAccountScreen()));
       case Routes.withdrawBalance:
         return AnimationRoute(page: const WithdrawBalance());
       // undefined

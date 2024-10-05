@@ -1,10 +1,8 @@
-import 'package:awfar_captain/app/awfar_captain_app.dart';
-import 'package:awfar_captain/features/home/logic/home_cubit.dart';
+import 'package:awfar_captain/features/captain_gate/logic/captain_gate_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/theming/color_manager.dart';
 import '../../../../core/theming/text_style_manager.dart';
@@ -21,8 +19,8 @@ class CustomAccountViewRow extends StatelessWidget {
           backgroundColor: ColorManager.originalWhite,
           radius: 37.0.h,
           child: CircleAvatar(
-            backgroundImage:context.read<HomeCubit>().myProfile!.media!.isNotEmpty ? NetworkImage(
-                context.read<HomeCubit>().myProfile!.media![0].path) : const AssetImage(AssetsManager.imgLogoPNG,),
+            backgroundImage:context.read<CaptainGateCubit>().myProfile!.media!.isNotEmpty ? NetworkImage(
+                context.read<CaptainGateCubit>().myProfile!.media![0].path) : const AssetImage(AssetsManager.imgLogoPNG,),
             radius: 35.5.h,
           ),
         ),
@@ -32,7 +30,7 @@ class CustomAccountViewRow extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              context.read<HomeCubit>().myProfile!.name,
+              context.read<CaptainGateCubit>().myProfile!.name,
               style: TextStyleManager.font20TextColor600,
             ),
             verticalSpace(8.0),

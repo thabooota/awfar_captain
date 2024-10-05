@@ -25,6 +25,9 @@ class ApiConstants {
  //chat end points
  static const String getMessage = 'get-message/{tripId}/{driverId}';
  static const String sendMessage = 'get-message/{tripId}';
+
+ // captain gate end points
+static const String getMyBalance = 'my-balance';
 }
 
 class ApiErrors {

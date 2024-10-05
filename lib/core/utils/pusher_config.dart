@@ -13,7 +13,7 @@ class PusherConfig {
   String SECRET = "2ce675eaf6f1c8d4ee15";
   String API_CLUSTER = "eu";
 
-  Future<void> initPusher(onEvent, {channelName = "private-chat", roomId}) async {
+  Future<void> initPusher(onEvent, {required String channelName , required String roomId}) async {
     _pusher = PusherChannelsFlutter.getInstance();
 
     try {
@@ -29,7 +29,7 @@ class PusherConfig {
         onMemberAdded: onMemberAdded,
         onMemberRemoved: onMemberRemoved,
         //authEndpoint: "${ApiEndPoints.baseUrlPusher}/broadcasting/auth",
-        onAuthorizer: onAuthorizer,
+        // onAuthorizer: onAuthorizer,
       );
 
       try {
@@ -90,11 +90,11 @@ class PusherConfig {
     log("onSubscriptionCount: $channelName subscriptionCount: $subscriptionCount");
   }
 
-  dynamic onAuthorizer(String channelName, String socketId, dynamic options) async {
-    return {
-      "auth": "foo:bar",
-      "channel_data": '{"user_id": ${_pusher.getSocketId()}',
-      "shared_secret": "foobar"
-    };
-  }
+  // dynamic onAuthorizer(String channelName, String socketId, dynamic options) async {
+  //   return {
+  //     "auth": "foo:bar",
+  //     "channel_data": '{"user_id": ${_pusher.getSocketId()}',
+  //     "shared_secret": "foobar"
+  //   };
+  // }
 }

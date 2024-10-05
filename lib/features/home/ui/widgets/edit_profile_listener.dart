@@ -1,7 +1,7 @@
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:awfar_captain/core/helpers/extensions.dart';
-import 'package:awfar_captain/features/home/logic/home_cubit.dart';
-import 'package:awfar_captain/features/home/logic/home_state.dart';
+import 'package:awfar_captain/features/captain_gate/logic/captain_gate_cubit.dart';
+import 'package:awfar_captain/features/captain_gate/logic/captain_gate_state.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,7 +16,7 @@ class EditProfileListener extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<HomeCubit, HomeStates>(
+    return BlocConsumer<CaptainGateCubit, CaptainGateStates>(
       listener: (context, state) {
         if (state is EditProfileSuccess) {
           context.pushReplacementNamed(Routes.home,);
@@ -39,7 +39,7 @@ class EditProfileListener extends StatelessWidget {
       builder: (context, state) => AnimatedCrossFade(
         firstChild: AppTextButton(
           appText: LocaleKeys.btnSend.tr(),
-          onTap: () => context.read<HomeCubit>().emitUpdateProfile()
+          onTap: () => context.read<CaptainGateCubit>().emitUpdateProfile()
         ),
         secondChild: Container(
           height: 50.0,

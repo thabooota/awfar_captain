@@ -8,63 +8,34 @@ part of 'get_trip_response.dart';
 
 GetTripResponse _$GetTripResponseFromJson(Map<String, dynamic> json) =>
     GetTripResponse(
-      tripInfo: TripData.fromJson(json['data'] as Map<String, dynamic>),
-      clientInfo: ClientData.fromJson(json['client'] as Map<String, dynamic>),
+      tripInfo: TripInfo.fromJson(json['body'] as Map<String, dynamic>),
+      title: json['title'] as String,
     );
 
 Map<String, dynamic> _$GetTripResponseToJson(GetTripResponse instance) =>
     <String, dynamic>{
-      'data': instance.tripInfo,
-      'client': instance.clientInfo,
+      'title': instance.title,
+      'body': instance.tripInfo,
     };
 
-TripData _$TripDataFromJson(Map<String, dynamic> json) => TripData(
-      typeTrip: TypeTrip.fromJson(json['type_trip'] as Map<String, dynamic>),
-      id: (json['id'] as num).toInt(),
+TripInfo _$TripInfoFromJson(Map<String, dynamic> json) => TripInfo(
+      from_lat: json['from_lat'] as String,
+      to_lat: json['to_lat'] as String,
+      trip_di: json['trip_di'] as String,
       from: json['from'] as String,
       to: json['to'] as String,
-      price: (json['price'] as num).toInt(),
+      from_long: json['from_long'] as String,
+      to_long: json['to_long'] as String,
+      coupon: json['coupon'] as String,
     );
 
-Map<String, dynamic> _$TripDataToJson(TripData instance) => <String, dynamic>{
-      'id': instance.id,
+Map<String, dynamic> _$TripInfoToJson(TripInfo instance) => <String, dynamic>{
+      'trip_di': instance.trip_di,
       'from': instance.from,
       'to': instance.to,
-      'type_trip': instance.typeTrip,
-      'price': instance.price,
-    };
-
-TypeTrip _$TypeTripFromJson(Map<String, dynamic> json) => TypeTrip(
-      name: json['name'] as String,
-    );
-
-Map<String, dynamic> _$TypeTripToJson(TypeTrip instance) => <String, dynamic>{
-      'name': instance.name,
-    };
-
-ClientData _$ClientDataFromJson(Map<String, dynamic> json) => ClientData(
-      id: (json['id'] as num).toInt(),
-      name: json['name'] as String?,
-      media: (json['media'] as List<dynamic>?)
-          ?.map((e) => Media.fromJson(e as Map<String, dynamic>))
-          .toList(),
-    );
-
-Map<String, dynamic> _$ClientDataToJson(ClientData instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-      'media': instance.media,
-    };
-
-Media _$MediaFromJson(Map<String, dynamic> json) => Media(
-      id: (json['id'] as num).toInt(),
-      name: json['name'] as String,
-      path: json['path'] as String,
-    );
-
-Map<String, dynamic> _$MediaToJson(Media instance) => <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-      'path': instance.path,
+      'from_long': instance.from_long,
+      'to_long': instance.to_long,
+      'from_lat': instance.from_lat,
+      'to_lat': instance.to_lat,
+      'coupon': instance.coupon,
     };
