@@ -12,9 +12,11 @@ import '../../features/authentication/logic/forget_password/forget_password_cubi
 import '../../features/authentication/logic/login/login_cubit.dart';
 import '../../features/authentication/logic/register/register_cubit.dart';
 import '../../features/captain_gate/logic/captain_gate_cubit.dart';
+import '../../features/home/data/repo/routes_rep.dart';
 import '../app_cubit/app_cubit.dart';
 import '../networking/remote/dio_factory.dart';
 import '../networking/remote/services/auth_api_service.dart';
+import '../networking/remote/services/routes_api_service.dart';
 
 final getIt = GetIt.instance;
 
@@ -32,6 +34,8 @@ Future<void> setupGetIt() async {
           () => HomeApiService(dio));
   getIt.registerLazySingleton<CaptainApiServices>(
           () => CaptainApiServices(dio));
+  getIt.registerLazySingleton<RoutesApiService>(
+      () => RoutesApiService(dio));
   // repos
   getIt.registerLazySingleton<RegisterRepo>(
           () => RegisterRepo(getIt<AuthApiService>()));
@@ -47,6 +51,9 @@ Future<void> setupGetIt() async {
 
   getIt.registerLazySingleton<CaptainGateRepo>(
           () => CaptainGateRepo(getIt<CaptainApiServices>()));
+
+  getIt.registerLazySingleton<RoutesRepo>(
+          () => RoutesRepo(getIt<RoutesApiService>()));
   // cubits
   getIt.registerFactory<RegisterCubit>(
           () => RegisterCubit(getIt<RegisterRepo>()));
@@ -55,8 +62,11 @@ Future<void> setupGetIt() async {
   getIt.registerFactory<ForgotPasswordCubit>(
           () => ForgotPasswordCubit(getIt<ForgotPasswordRepo>()));
   getIt.registerFactory<HomeCubit>(
-          () => HomeCubit(getIt<HomeRepo>()));
+          () => HomeCubit(
+              getIt<HomeRepo>(),
+            getIt<RoutesRepo>(),
+              ));
 
   getIt.registerFactory<CaptainGateCubit>(
-          () => CaptainGateCubit(getIt<CaptainGateRepo>()));
+          () => CaptainGateCubit(getIt<CaptainGateRepo>(),));
 }

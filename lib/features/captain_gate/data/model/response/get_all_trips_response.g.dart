@@ -23,7 +23,7 @@ TripData _$TripDataFromJson(Map<String, dynamic> json) => TripData(
       id: (json['id'] as num).toInt(),
       from: json['from'] as String,
       to: json['to'] as String,
-      rate: json['rate'] as String,
+      rate: json['rate'] as String?,
       price: (json['price'] as num).toInt(),
       clientInfo: ClientInfo.fromJson(json['client'] as Map<String, dynamic>),
     );

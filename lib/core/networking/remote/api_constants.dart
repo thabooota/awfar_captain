@@ -2,7 +2,8 @@ class ApiConstants {
 
   // Base URL
   static const String apiBaseURL = "https://dash.awfarcar.com/api/v1/driver/";
-
+  static const String routesBaseUrl =
+      "https://routes.googleapis.com/directions/v2:computeRoutes/";
   //Auth end points
   static const String loginEndPoint = 'auth/login';
   static const String registerEndPoint = 'auth/register';
@@ -28,6 +29,8 @@ class ApiConstants {
 
  // captain gate end points
 static const String getMyBalance = 'my-balance';
+// map api
+  static const String locationBaseUrl = "https://maps.googleapis.com/maps/api/";
 }
 
 class ApiErrors {

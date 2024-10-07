@@ -1,15 +1,11 @@
 import 'package:awfar_captain/core/networking/remote/api_error_handler.dart';
 import 'package:awfar_captain/core/networking/remote/services/home_api_service.dart';
-import 'package:awfar_captain/features/home/data/models/requests/upload_profile_request_body.dart';
-import 'package:awfar_captain/features/home/data/models/response/get_profile_response.dart';
 import 'package:awfar_captain/features/home/data/models/response/get_trip_response.dart';
-import 'package:awfar_captain/features/home/data/models/response/update_profile_response.dart';
-
 import '../../../../core/networking/remote/api_result.dart';
 
 class HomeRepo {
   final HomeApiService _homeApiService;
-
+  final String apiKey = 'AIzaSyB51Rkafh8v_Vi5qQZAAs04x23gEGcMHxE';
   HomeRepo(this._homeApiService);
 
   Future<ApiResult<GetTripResponse>> getTrip({required String token}) async {

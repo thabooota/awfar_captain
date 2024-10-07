@@ -8,12 +8,12 @@ import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 class PusherConfig {
   late PusherChannelsFlutter _pusher;
 
-  String APP_ID = "1868451";
-  String API_KEY = "58707689ba5b02e6b04c";
-  String SECRET = "2ce675eaf6f1c8d4ee15";
+  String APP_ID = "1766181";
+  String API_KEY = "3fc9bba59aceb10daa36";
+  String SECRET = "4c9e879ad8be49b3d304";
   String API_CLUSTER = "eu";
 
-  Future<void> initPusher(onEvent, {required String channelName , required String roomId}) async {
+  Future<void> initPusher(onEvent, {required String channelName }) async {
     _pusher = PusherChannelsFlutter.getInstance();
 
     try {
@@ -34,10 +34,10 @@ class PusherConfig {
 
       try {
         await _pusher.subscribe(
-          channelName: "$channelName.$roomId",
+          channelName: "$channelName",
         );
 
-        log("trying to subscribe to :  $channelName.$roomId");
+        log("trying to subscribe to :  $channelName");
       } catch (e) {
         log(e.toString());
       }

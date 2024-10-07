@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:awfar_captain/core/networking/local/prefs_manager.dart';
 import 'package:awfar_captain/core/networking/local/shared_preferences.dart';
 import 'package:awfar_captain/core/utils/pusher_config.dart';
@@ -7,16 +6,17 @@ import 'package:awfar_captain/features/captain_gate/data/model/response/get_all_
 import 'package:awfar_captain/features/captain_gate/data/model/response/get_my_balance_response.dart';
 import 'package:awfar_captain/features/captain_gate/data/repo/repo.dart';
 import 'package:awfar_captain/features/captain_gate/logic/captain_gate_state.dart';
+import 'package:awfar_captain/features/home/data/models/response/trips_pending_response.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 import '../../home/data/models/requests/upload_profile_request_body.dart';
 import '../../home/data/models/response/get_profile_response.dart';
+import '../../home/data/repo/routes_rep.dart';
 
-class CaptainGateCubit extends Cubit<CaptainGateStates>{
+class CaptainGateCubit extends Cubit<CaptainGateStates> {
   final CaptainGateRepo _captainGateRepo;
 
-  late PusherConfig _pusherConfig;
   CaptainGateCubit(this._captainGateRepo) : super(CaptainGateInitial());
   GetMyBalanceResponse ?myBalanceResponse;
   void emitGetMyBalance() async {
@@ -32,28 +32,10 @@ class CaptainGateCubit extends Cubit<CaptainGateStates>{
       emit(GetMyBalanceError(error.toString()));
     });
   }
+
   String token = SharedPreferencesManager.getData( key: PrefsManager.token,);
+
   ProfileInfo ?myProfile;
-
-  void onEvent(PusherEvent event) {
-    log("event came: ${event.data}");
-    try {
-      log("evvvvvvent name :${event.eventName}");
-      if (event.eventName == "notification") {
-        log("here");
-        log("3333333333333333333333333333333333333333333333");
-      }
-    } catch (e) {
-      log(e.toString());
-    }
-  }
-
-  initializePusherNotifications(roomId) async {
-    _pusherConfig = PusherConfig();
-
-    _pusherConfig.initPusher(onEvent ,channelName: 'driver', roomId: roomId);
-  }
-
   void emitGetProfileStates() async {
     emit(GetProfileLoading());
     final response = await _captainGateRepo.getProfile(
@@ -62,9 +44,6 @@ class CaptainGateCubit extends Cubit<CaptainGateStates>{
     response.when(
         success: (data) {
           myProfile = data.profileInfo;
-          log("################################################################################################");
-          initializePusherNotifications(data.profileInfo.id.toString());
-          log("################################################################################################");
           emit(GetProfileSuccess(profile: data));
         },
         failure: (error) {
