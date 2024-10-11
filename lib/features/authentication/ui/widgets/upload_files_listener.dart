@@ -43,7 +43,7 @@ class UploadFilesListener extends StatelessWidget {
         child: AnimatedCrossFade(
           firstChild: AppTextButton(
             appText: LocaleKeys.btnNext.tr(),
-            onTap: () => context.read<RegisterCubit>().emitUploadFiles(),
+            onTap: () => validateThenDoLogin(context.read<RegisterCubit>()),
           ),
           secondChild: Container(
             height: 50.0,
@@ -67,5 +67,11 @@ class UploadFilesListener extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void validateThenDoLogin(RegisterCubit cubit) {
+    if (cubit.filesFormKey.currentState!.validate()) {
+      cubit.emitUploadFiles();
+    }
   }
 }

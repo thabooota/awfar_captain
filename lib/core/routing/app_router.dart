@@ -111,7 +111,9 @@ class AppRouter {
       case Routes.rating:
         return AnimationRoute(page: const RatingScreen());
       case Routes.finishTrip:
-        return AnimationRoute(page: const FinishTripScreen());
+        return AnimationRoute(page: BlocProvider.value(
+            value: getIt<HomeCubit>(),
+            child: const FinishTripScreen()));
       case Routes.chat:
         return AnimationRoute(page: const ChatScreenView());
       case Routes.technicalSupport:

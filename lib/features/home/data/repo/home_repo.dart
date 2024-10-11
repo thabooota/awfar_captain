@@ -1,19 +1,73 @@
 import 'package:awfar_captain/core/networking/remote/api_error_handler.dart';
 import 'package:awfar_captain/core/networking/remote/services/home_api_service.dart';
-import 'package:awfar_captain/features/home/data/models/response/get_trip_response.dart';
+import 'package:awfar_captain/features/home/data/models/requests/accept_trip_request_body.dart';
+import 'package:awfar_captain/features/home/data/models/requests/store_driver_trip_request_body.dart';
+import 'package:awfar_captain/features/home/data/models/requests/update_status_driver_request_body.dart';
+import 'package:awfar_captain/features/home/data/models/response/trip_accepted_response.dart';
 import '../../../../core/networking/remote/api_result.dart';
+import '../models/response/massage_response.dart';
 
 class HomeRepo {
   final HomeApiService _homeApiService;
-  final String apiKey = 'AIzaSyB51Rkafh8v_Vi5qQZAAs04x23gEGcMHxE';
   HomeRepo(this._homeApiService);
 
-  Future<ApiResult<GetTripResponse>> getTrip({required String token}) async {
+  Future<ApiResult<MassageResponse>> storeDriverTrip({required String token, required StoreDriverTripRequestBody storeDriverTripRequestBody}) async{
     try {
-      final response = await _homeApiService.getTrip(token: 'Bearer $token');
+      final response = await _homeApiService.storeDriverTrip(token: 'Bearer $token', storeDriverTripRequestBody: storeDriverTripRequestBody);
       return ApiResult.success(response);
     } on Exception catch (e) {
       return ApiResult.failure(ErrorHandler.handle(e));
     }
   }
+  Future<ApiResult<TripAcceptedResponse>> acceptedTrip({required AcceptOrRejectedTripRequestBody acceptTripRequestBody}) async {
+    try {
+      final response = await _homeApiService.acceptTrip(acceptTripRequestBody: acceptTripRequestBody);
+      return ApiResult.success(response);
+    } on Exception catch (e) {
+      return ApiResult.failure(ErrorHandler.handle(e));
+    }
+  }
+  Future<ApiResult<MassageResponse>> rejectedTrip({required AcceptOrRejectedTripRequestBody rejectTripRequestBody}) async {
+    try {
+      final response = await _homeApiService.rejectedTrip(acceptTripRequestBody: rejectTripRequestBody);
+      return ApiResult.success(response);
+    } on Exception catch (e) {
+      return ApiResult.failure(ErrorHandler.handle(e));
+    }
+  }
+  Future<ApiResult<MassageResponse>> tripCost({
+    required String token,
+    required int tripId,
+    required int charge,
+  }) async {
+    try {
+      final response = await _homeApiService.tripCost(token: 'Bearer $token', tripId: tripId, charge: charge);
+      return ApiResult.success(response);
+    } on Exception catch (e) {
+      return ApiResult.failure(ErrorHandler.handle(e));
+    }
+
+}
+Future <ApiResult<MassageResponse>> changeStatusDriver({
+    required int tripId,
+  required UpdateStatusDriverRequestBody updateStatusDriverRequestBody,
+}) async {
+    try {
+      final response = await _homeApiService.updateStatusDriver(updateStatusDriverRequestBody: updateStatusDriverRequestBody);
+      return ApiResult.success(response);
+    } on Exception catch (e) {
+      return ApiResult.failure(ErrorHandler.handle(e));
+    }
+}
+
+Future <ApiResult<MassageResponse>> updateDriverStatus({
+  required UpdateStatusDriverRequestBody updateStatusTripRequestBody,
+}) async {
+    try {
+      final response = await _homeApiService.updateStatusDriver(updateStatusDriverRequestBody: updateStatusTripRequestBody);
+      return ApiResult.success(response);
+    } on Exception catch (e) {
+      return ApiResult.failure(ErrorHandler.handle(e));
+    }
+}
 }

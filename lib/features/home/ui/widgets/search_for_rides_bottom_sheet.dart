@@ -25,11 +25,7 @@ class SearchForRidesBottomSheet extends StatelessWidget {
       ),
       child: Row(
         children: [
-          GestureDetector(
-              onTap: () {
-                context.read<HomeCubit>().changeBottomSheetState(BottomSheetStates.rideRequest);
-              },
-              child: Image.asset(AssetsManager.icSearch, width: 60.w,)),
+          Image.asset(AssetsManager.icSearch, width: 60.w,),
           horizontalSpace(10.w),
           Text(LocaleKeys.searchForRides.tr(), style: TextStyleManager.font25White600.copyWith(color: ColorManager.originalBlack),),
         ],

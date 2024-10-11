@@ -33,9 +33,6 @@ class _HomeMapViewState extends State<HomeMapView> {
     _cameraPosition = const CameraPosition(
         target: LatLng(30.167125838855537, 31.244386917367265), zoom: 7.56);
     addCustomIcon();
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   showBottomSheet();
-    // });
     super.initState();
   }
 
@@ -54,7 +51,6 @@ class _HomeMapViewState extends State<HomeMapView> {
       zoomControlsEnabled: false,
     );
   }
-
   void getMyCurrentLocation() async {
     try {
       LocationData locationData = await locationService.getLocation();
@@ -100,7 +96,8 @@ class _HomeMapViewState extends State<HomeMapView> {
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(10))),
         context: context,
-        builder: (context) => Wrap(children: [
+        builder: (context) => Wrap(
+            children: [
           Padding(
             padding: const EdgeInsets.only(top: 15.0, right: 18.0, left: 18.0, bottom: 25.0),
             child: Container(

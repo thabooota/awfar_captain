@@ -20,7 +20,7 @@ class CustomAccountViewRow extends StatelessWidget {
           radius: 37.0.h,
           child: CircleAvatar(
             backgroundImage:context.read<CaptainGateCubit>().myProfile!.media!.isNotEmpty ? NetworkImage(
-                context.read<CaptainGateCubit>().myProfile!.media![0].path) : const AssetImage(AssetsManager.imgLogoPNG,),
+                context.read<CaptainGateCubit>().myProfile!.media![0].path) : const AssetImage(AssetsManager.imgProfileUser,),
             radius: 35.5.h,
           ),
         ),

@@ -15,21 +15,25 @@ class ApiConstants {
   static const String uploadFilesEndPoint = "/upload-files";
 
   // home end points
- static const String getProfile = 'profile';
+
  static const String updateProfileEndPoint = 'profile';
- static const String getTrip = 'trips';
  static const String getMyTrip = 'my-trips';
  static const String rateClient = 'rate-trip/{tripId}/{driverId}';
- static const String acceptTrip = 'accept-trip/{tripId}';
- static const String rejectedTrip = 'reject-trip/{tripId}';
+ static const String acceptTrip = 'TripAccept';
+ static const String rejectedTrip = 'TripRejected';
+ static const String storeDriverTrip = 'Store-Driver-Trip';
+ static const String changeDriverStatus = 'ChangeStatusDriver';
+ static const String tripCost = 'add-charge/{tripId}';
 
  //chat end points
  static const String getMessage = 'get-message/{tripId}/{driverId}';
  static const String sendMessage = 'get-message/{tripId}';
 
  // captain gate end points
-static const String getMyBalance = 'my-balance';
-// map api
+  static const String getMyBalance = 'my-balance';
+  static const String getProfile = 'profile';
+
+ // map api
   static const String locationBaseUrl = "https://maps.googleapis.com/maps/api/";
 }
 

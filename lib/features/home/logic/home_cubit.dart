@@ -1,6 +1,13 @@
+import 'dart:convert';
 import 'dart:developer';
+import 'package:awfar_captain/core/networking/local/prefs_manager.dart';
+import 'package:awfar_captain/core/networking/local/shared_preferences.dart';
 import 'package:awfar_captain/core/utils/enums.dart';
 import 'package:awfar_captain/core/utils/location_service.dart';
+import 'package:awfar_captain/features/home/data/models/requests/store_driver_trip_request_body.dart';
+import 'package:awfar_captain/features/home/data/models/requests/update_status_driver_request_body.dart';
+import 'package:awfar_captain/features/home/data/models/response/get_trip_response.dart';
+import 'package:awfar_captain/features/home/data/models/response/trip_accepted_response.dart';
 import 'package:awfar_captain/features/home/data/repo/routes_rep.dart';
 import 'package:awfar_captain/features/home/logic/home_state.dart';
 import 'package:awfar_captain/features/home/ui/widgets/arrived_meeting_place_bottom_sheet.dart';
@@ -14,6 +21,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:location/location.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 import '../../../core/utils/pusher_config.dart';
+import '../data/models/requests/accept_trip_request_body.dart';
 import '../data/models/requests/get_routes_request_body.dart';
 import '../data/models/response/get_routes_response.dart';
 import '../data/models/response/trips_pending_response.dart';
@@ -23,19 +31,25 @@ import '../ui/widgets/search_for_rides_bottom_sheet.dart';
 class HomeCubit extends Cubit<HomeStates> {
   final HomeRepo _homeRepo;
   final RoutesRepo _routesRepo;
-  HomeCubit(this._homeRepo, this._routesRepo,) : super(InitialHomeState());
+  HomeCubit(
+    this._homeRepo,
+    this._routesRepo,
+  ) : super(InitialHomeState());
 
   bool isOnline = false;
-  BottomSheetStates bottomSheetStates = BottomSheetStates.searchForRides;
+  BottomSheetStates bottomSheetStates = BottomSheetStates.offline;
+  TextEditingController chargerController = TextEditingController();
+  final GlobalKey<FormState> tripCostFormKey = GlobalKey<FormState>();
 
-  void chaneConnectionState (bool value){
+  void chaneConnectionState(bool value) {
     isOnline = value;
-    if(!value)
-      {
-        changeBottomSheetState(BottomSheetStates.offline);
-      }else{
-      initializePusherNotifications();
+    if (value) {
+      initializePusherNotifications(channelName: 'TripsPending', onEvent: onEvent);
       changeBottomSheetState(BottomSheetStates.searchForRides);
+      emit(ChangeConnectionState());
+    } else {
+      changeBottomSheetState(BottomSheetStates.offline);
+      emit(ChangeConnectionState());
     }
     emit(ChangeConnectionState());
   }
@@ -64,37 +78,32 @@ class HomeCubit extends Cubit<HomeStates> {
     emit(ChangeBottomSheetState());
   }
 
-
-
-  TripsPendingResponse ?tripsPendingResponse;
-
-  void onEvent(PusherEvent event) {
-    log("event came: ${event.data}");
-    try {
-      log("evvvvvvent name :${event.eventName}");
-      if (event.eventName == "event") {
-        log("here");
-        tripsPendingResponse = event.data;
-        if (tripsPendingResponse!.trip_id != null) {
-          print(tripsPendingResponse!.trip_id);
-          getRoutes();
-        }
-      }
-    } catch (e) {
-      print('Errrroooooooooooooooooooorrrr');
-      log(e.toString());
-    }
-  }
   late PusherConfig _pusherConfig;
-  initializePusherNotifications() async {
+  initializePusherNotifications({required onEvent, required String channelName}) async {
     _pusherConfig = PusherConfig();
 
-    _pusherConfig.initPusher(onEvent ,channelName: 'TripsPending');
+    _pusherConfig.initPusher(onEvent, channelName: channelName);
+  }
+
+  TripsPendingResponse? tripsPendingResponse;
+
+  void onEvent(PusherEvent event) {
+    try {
+      log("event name :${event.eventName}");
+      if (event.eventName == "event") {
+        log("here");
+        tripsPendingResponse = TripsPendingResponse.fromJson(json.decode(event.data));
+        getRoutes(lat: double.parse(tripsPendingResponse!.from_lat) , long: double.parse(tripsPendingResponse!.from_long));
+      }
+    } catch (e) {
+      log(e.toString());
+    }
   }
 
   LocationService locationService = LocationService();
 
-  Future<void> getRoutes() async {
+  GetRoutesResponse ?routesResponse;
+  Future<void> getRoutes({required double lat, required double long}) async {
     emit(GetRoutesLoadingState());
     LocationData myLocationLatLng = await locationService.getLocation();
     GetRoutesRequestBody getRoutesRequestBody = GetRoutesRequestBody(
@@ -109,21 +118,178 @@ class HomeCubit extends Cubit<HomeStates> {
       destination: LocationInfo(
         location: LocationInfoData(
           latLng: LatLngInfo(
-            latitude: double.parse(tripsPendingResponse!.from_lat),
-            longitude: double.parse(tripsPendingResponse!.from_long),
+            latitude: lat,
+            longitude: long,
           ),
         ),
       ),
       routeModifiers: const RouteModifiers(),
     );
     final routes =
-    await _routesRepo.getRoutes(getRoutesRequestBody: getRoutesRequestBody);
+        await _routesRepo.getRoutes(getRoutesRequestBody: getRoutesRequestBody);
     routes.when(success: (GetRoutesResponse getRoutesResponse) {
-      print(getRoutesResponse.routes[0].distanceMeters);
+      routesResponse = getRoutesResponse;
+      debugPrint("${getRoutesResponse.routes[0].distanceMeters}");
+      emitStoreDriverTrip(distance: getRoutesResponse.routes[0].distanceMeters);
       emit(GetRoutesSuccessState(getRoutesResponse));
     }, failure: (error) {
       emit(GetRoutesFailureState(error.toString()));
     });
   }
 
+  void emitStoreDriverTrip({required double distance}) async {
+    emit(StoreDriverTripLoadingState());
+    final response = await _homeRepo.storeDriverTrip(token: SharedPreferencesManager.getData(key: PrefsManager.token),
+        storeDriverTripRequestBody: StoreDriverTripRequestBody(
+            trip_id: tripsPendingResponse!.trip_id,
+            driver_id: SharedPreferencesManager.getData(key: PrefsManager.driverId),
+            distance: distance
+        ));
+    response.when(success: (data) {
+      initializePusherNotifications(
+          onEvent: onResetTrip,
+          channelName: 'DriverNotification.${SharedPreferencesManager.getData(key: PrefsManager.driverId)
+          }');
+      emit(StoreDriverTripSuccessState(data));
+    },
+        failure: (error) {
+      emit(StoreDriverTripFailureState(error.toString()));
+        });
+  }
+
+  RestTripResponse ?restTripResponse;
+
+  void onResetTrip(PusherEvent event) {
+    try {
+      log("event name : ${event.eventName}");
+      if (event.eventName == "event") {
+        log("from_long:${json.decode(event.data)["data"]["from_long"]}");
+        log("from_lat:${json.decode(event.data)["data"]["from_lat"]}");
+        log("to_long:${json.decode(event.data)["data"]["to_long"]}");
+        log("price:${json.decode(event.data)["data"]["price"]}");
+        log("form:${json.decode(event.data)["data"]["from"]}");
+        log("to:${json.decode(event.data)["data"]["to"]}");
+        log("to_lat:${json.decode(event.data)["data"]["to_lat"]}");
+        log("Trip-id:${json.decode(event.data)["data"]["Trip-id"]}");
+        log("Client_Name:${json.decode(event.data)["data"]["Client_Name"]}");
+
+        restTripResponse = RestTripResponse(data: TripInfo(
+            from_long: json.decode(event.data)["data"]["from_long"],
+            from_lat: json.decode(event.data)["data"]["from_lat"],
+            to_long: json.decode(event.data)["data"]["to_long"],
+            price: json.decode(event.data)["data"]["price"],
+            form: json.decode(event.data)["data"]["from"],
+            to: json.decode(event.data)["data"]["to"],
+            to_lat: json.decode(event.data)["data"]["to_lat"],
+            tripId: json.decode(event.data)["data"]["Trip-id"],
+            Client_Name: json.decode(event.data)["data"]["Client_Name"]
+        ));
+        log(restTripResponse!.data.Client_Name);
+        changeBottomSheetState(BottomSheetStates.rideRequest);
+        emit(RestTripRequestState());
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  TripAcceptedResponse ?tripAcceptedResponse;
+
+  void emitAcceptedTripRequestState() async{
+    emit(AcceptedTripLoadingState());
+
+    final response = await _homeRepo.acceptedTrip(
+        acceptTripRequestBody: AcceptOrRejectedTripRequestBody(
+            id: restTripResponse!.data.tripId,
+            driver_id: SharedPreferencesManager.getData(key: PrefsManager.driverId)
+        ));
+    response.when(success: (data) {
+      tripAcceptedResponse = data;
+      getRoutes(
+          lat: double.parse(restTripResponse!.data.from_lat),
+          long: double.parse(restTripResponse!.data.from_long),
+      );
+
+      emit(AcceptedTripSuccessState(data));
+    }, failure: (error) {
+      emit(AcceptedTripFailureState(error.toString()));
+    });
+  }
+  void emitRejectedTripRequestState() async{
+    emit(RejectedTripLoadingState());
+    final response = await _homeRepo.rejectedTrip(
+    rejectTripRequestBody: AcceptOrRejectedTripRequestBody(driver_id: SharedPreferencesManager.getData(
+        key: PrefsManager.driverId, ),
+        id: restTripResponse!.data.tripId
+    ));
+    response.when(success: (data) {
+      initializePusherNotifications(channelName: 'TripsPending', onEvent: onEvent);
+      emit(RejectedTripSuccessState(data)
+      );
+    }, failure: (error) {
+      emit(RejectedTripFailureState(error.toString()));
+    });
+  }
+
+  void emitTripCostState() async {
+    emit(CostTripLoadingState());
+    final response = await _homeRepo.tripCost(
+        token: SharedPreferencesManager.getData(key: PrefsManager.token), tripId:  tripAcceptedResponse!.TripID, charge: chargerController.hashCode);
+    response.when(success: (data) {
+      changeBottomSheetState(BottomSheetStates.searchForRides);
+      emit(CostTripSuccessState(data));
+    }, failure: (error) {
+      emit(CostTripFailureState(error.toString()));
+    });
+  }
+
+  void emitUpdateDriverStatus({required String status}) async {
+    emit(UpdateStatusTripLoadingState());
+    final response = await _homeRepo.updateDriverStatus(
+      updateStatusTripRequestBody: UpdateStatusDriverRequestBody(
+          tripId: tripAcceptedResponse!.TripID, status: status),);
+    response.when(success: (data) {
+      emit(UpdateStatusTripSuccessState(data));
+    }, failure: (error) {
+      emit(UpdateStatusTripFailureState(error.toString()));
+    });
+  }
+
+
+  // void updateCurrentLocation() async {
+  //   try {
+  //     LocationData locationData = await locationService.getLocation();
+  //
+  //     myLocationLatLng =
+  //         LatLng(locationData.latitude!, locationData.longitude!);
+  //
+  //     Marker currentLocationMarker = Marker(
+  //       markerId: const MarkerId('my location'),
+  //       position: myLocationLatLng,
+  //       icon: myLocationMarkerIcon,
+  //     );
+  //
+  //     CameraPosition myCurrentCameraPosition = CameraPosition(
+  //       target: myLocationLatLng,
+  //       zoom: 15,
+  //     );
+  //
+  //     googleMapController.animateCamera(
+  //         CameraUpdate.newCameraPosition(myCurrentCameraPosition));
+  //     markers.add(currentLocationMarker);
+  //
+  //     getLocationDetails();
+  //
+  //     emit(GetCurrentLocationState());
+  //   } on LocationServiceException catch (e) {
+  //     debugPrint("\x1B[33m${e.toString()}\x1B[0m");
+  //     SystemNavigator.pop();
+  //   } on LocationPermissionException catch (e) {
+  //     debugPrint("\x1B[33m${e.toString()}\x1B[0m");
+  //     SystemNavigator.pop();
+  //   } catch (e) {
+  //     debugPrint("\x1B[33m${e.toString()}\x1B[0m");
+  //     // SystemNavigator.pop();
+  //   }
+  // }
 }

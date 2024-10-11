@@ -1,7 +1,12 @@
 import 'package:awfar_captain/core/networking/remote/api_constants.dart';
+import 'package:awfar_captain/features/chat/data/models/response/get_meassage_response.dart';
+import 'package:awfar_captain/features/home/data/models/requests/accept_trip_request_body.dart';
 import 'package:awfar_captain/features/home/data/models/requests/rate_client_request_body.dart';
 import 'package:awfar_captain/features/captain_gate/data/model/response/get_my_trip_response.dart';
+import 'package:awfar_captain/features/home/data/models/requests/store_driver_trip_request_body.dart';
+import 'package:awfar_captain/features/home/data/models/requests/update_status_driver_request_body.dart';
 import 'package:awfar_captain/features/home/data/models/response/get_trip_response.dart';
+import 'package:awfar_captain/features/home/data/models/response/trip_accepted_response.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
@@ -23,25 +28,19 @@ abstract class HomeApiService {
     @Body() required RateClientRequestBody rateClientRequestBody,
   });
 
-  @GET(ApiConstants.getTrip)
-  Future<GetTripResponse> getTrip({
-    @Header('Authorization') required String token,
-  });
-
   @GET(ApiConstants.getMyTrip)
   Future<GetMyTripResponse> getMyTrip({
     @Header('Authorization') required String token,
   });
-@POST(ApiConstants.acceptTrip)
-  Future<MassageResponse> acceptTrip({
-    @Header('Authorization') required String token,
-    @Path('tripId') required String tripId,
-});
+
+  @POST(ApiConstants.acceptTrip)
+  Future<TripAcceptedResponse> acceptTrip({
+    @Body() required AcceptOrRejectedTripRequestBody acceptTripRequestBody,
+  });
 
   @POST(ApiConstants.rejectedTrip)
   Future<MassageResponse> rejectedTrip({
-    @Header('Authorization') required String token,
-    @Path('tripId') required String tripId,
+    @Body() required AcceptOrRejectedTripRequestBody acceptTripRequestBody,
   });
 
   @POST(ApiConstants.sendMessage)
@@ -50,6 +49,21 @@ abstract class HomeApiService {
     @Path('tripId') required String tripId,
     @Body() required SendMessageRequestBody body,
   });
+
+  @POST(ApiConstants.storeDriverTrip)
+  Future<MassageResponse> storeDriverTrip({
+    @Header('Authorization') required String token,
+    @Body() required StoreDriverTripRequestBody storeDriverTripRequestBody,
+  });
+
+  @POST(ApiConstants.changeDriverStatus)
+  Future<MassageResponse> updateStatusDriver(
+      {@Body()
+      required UpdateStatusDriverRequestBody updateStatusDriverRequestBody});
+  @POST(ApiConstants.tripCost)
+  Future<MassageResponse> tripCost({
+    @Body() required int charge,
+    @Header('Authorization') required String token,
+    @Path('tripId') required int tripId,
+  });
 }
-
-

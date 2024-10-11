@@ -1,6 +1,6 @@
 enum BottomSheetStates {
-  searchForRides,
   offline,
+  searchForRides,
   rideRequest,
   meetClient,
   arrivingPlace,

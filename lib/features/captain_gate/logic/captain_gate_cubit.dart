@@ -44,6 +44,7 @@ class CaptainGateCubit extends Cubit<CaptainGateStates> {
     response.when(
         success: (data) {
           myProfile = data.profileInfo;
+          SharedPreferencesManager.saveData(key: PrefsManager.driverId, value: data.profileInfo.id);
           emit(GetProfileSuccess(profile: data));
         },
         failure: (error) {

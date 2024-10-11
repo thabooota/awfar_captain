@@ -8,6 +8,7 @@ class AssetsManager {
   static const String imgLogo = "${_imgPath}img_logo.svg";
   static const String imgChangePasswordDone = "${_imgPath}img_change_password_done.svg";
   static const String imgLogoPNG = "${_imgPath}awfar-logo-1 1 (Traced).png";
+  static const String imgProfileUser = "${_imgPath}img_profile-user.png";
 
   // icons
   static const String icAwfarLogo = "${_icPath}ic_awfar_logo.svg";

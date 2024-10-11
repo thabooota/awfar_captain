@@ -28,6 +28,7 @@ Future<void> setupGetIt() async {
   Dio dio = DioFactory.getDio();
 
   // services
+
   getIt.registerLazySingleton<AuthApiService>(
           () => AuthApiService(dio));
   getIt.registerLazySingleton<HomeApiService>(
@@ -36,7 +37,9 @@ Future<void> setupGetIt() async {
           () => CaptainApiServices(dio));
   getIt.registerLazySingleton<RoutesApiService>(
       () => RoutesApiService(dio));
+
   // repos
+
   getIt.registerLazySingleton<RegisterRepo>(
           () => RegisterRepo(getIt<AuthApiService>()));
 
@@ -61,12 +64,12 @@ Future<void> setupGetIt() async {
           () => LoginCubit(getIt<LoginRepo>()));
   getIt.registerFactory<ForgotPasswordCubit>(
           () => ForgotPasswordCubit(getIt<ForgotPasswordRepo>()));
-  getIt.registerFactory<HomeCubit>(
+  getIt.registerLazySingleton<HomeCubit>(
           () => HomeCubit(
               getIt<HomeRepo>(),
             getIt<RoutesRepo>(),
               ));
 
-  getIt.registerFactory<CaptainGateCubit>(
+  getIt.registerLazySingleton<CaptainGateCubit>(
           () => CaptainGateCubit(getIt<CaptainGateRepo>(),));
 }

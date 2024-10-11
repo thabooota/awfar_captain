@@ -14,7 +14,7 @@ class DioFactory {
   static Dio? dio;
 
   static Dio getDio() {
-    Duration timeOut = const Duration(seconds: 45);
+    Duration timeOut = const Duration(seconds: 55);
 
     if (dio == null) {
       dio = Dio();
@@ -55,7 +55,6 @@ class DioFactory {
             SharedPreferencesManager.removeData(key: PrefsManager.token).then(
                   (_) => getIt.reset().then(
                     (_) {
-
                   setupGetIt().then(
                         (value) {
                       SnackBarService.showSnackBar(

@@ -34,6 +34,7 @@ class RegisterCubit extends Cubit<RegisterStates> {
   final TextEditingController confirmPasswordController =
       TextEditingController();
   final GlobalKey<FormState> detailsFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> filesFormKey = GlobalKey<FormState>();
   bool hidePassword = true;
   bool hideConfirmPassword = true;
 

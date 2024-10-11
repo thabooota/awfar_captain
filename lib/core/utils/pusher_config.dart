@@ -34,7 +34,7 @@ class PusherConfig {
 
       try {
         await _pusher.subscribe(
-          channelName: "$channelName",
+          channelName: channelName,
         );
 
         log("trying to subscribe to :  $channelName");

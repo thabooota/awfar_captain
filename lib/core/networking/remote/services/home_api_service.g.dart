@@ -64,40 +64,6 @@ class _HomeApiService implements HomeApiService {
   }
 
   @override
-  Future<GetTripResponse> getTrip({required String token}) async {
-    final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'Authorization': token};
-    _headers.removeWhere((k, v) => v == null);
-    const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<GetTripResponse>(Options(
-      method: 'GET',
-      headers: _headers,
-      extra: _extra,
-    )
-        .compose(
-          _dio.options,
-          'trips',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        )));
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late GetTripResponse _value;
-    try {
-      _value = GetTripResponse.fromJson(_result.data!);
-    } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
-      rethrow;
-    }
-    return _value;
-  }
-
-  @override
   Future<GetMyTripResponse> getMyTrip({required String token}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -132,23 +98,21 @@ class _HomeApiService implements HomeApiService {
   }
 
   @override
-  Future<MassageResponse> acceptTrip({
-    required String token,
-    required String tripId,
-  }) async {
+  Future<TripAcceptedResponse> acceptTrip(
+      {required AcceptOrRejectedTripRequestBody acceptTripRequestBody}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'Authorization': token};
-    _headers.removeWhere((k, v) => v == null);
-    const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<MassageResponse>(Options(
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(acceptTripRequestBody.toJson());
+    final _options = _setStreamType<TripAcceptedResponse>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
         .compose(
           _dio.options,
-          'accept-trip/${tripId}',
+          'TripAccept',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -158,9 +122,9 @@ class _HomeApiService implements HomeApiService {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late MassageResponse _value;
+    late TripAcceptedResponse _value;
     try {
-      _value = MassageResponse.fromJson(_result.data!);
+      _value = TripAcceptedResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -169,15 +133,13 @@ class _HomeApiService implements HomeApiService {
   }
 
   @override
-  Future<MassageResponse> rejectedTrip({
-    required String token,
-    required String tripId,
-  }) async {
+  Future<MassageResponse> rejectedTrip(
+      {required AcceptOrRejectedTripRequestBody acceptTripRequestBody}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'Authorization': token};
-    _headers.removeWhere((k, v) => v == null);
-    const Map<String, dynamic>? _data = null;
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(acceptTripRequestBody.toJson());
     final _options = _setStreamType<MassageResponse>(Options(
       method: 'POST',
       headers: _headers,
@@ -185,7 +147,7 @@ class _HomeApiService implements HomeApiService {
     )
         .compose(
           _dio.options,
-          'reject-trip/${tripId}',
+          'TripRejected',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -225,6 +187,118 @@ class _HomeApiService implements HomeApiService {
         .compose(
           _dio.options,
           'get-message/${tripId}',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late MassageResponse _value;
+    try {
+      _value = MassageResponse.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<MassageResponse> storeDriverTrip({
+    required String token,
+    required StoreDriverTripRequestBody storeDriverTripRequestBody,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Authorization': token};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    _data.addAll(storeDriverTripRequestBody.toJson());
+    final _options = _setStreamType<MassageResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          'Store-Driver-Trip',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late MassageResponse _value;
+    try {
+      _value = MassageResponse.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<MassageResponse> updateStatusDriver(
+      {required UpdateStatusDriverRequestBody
+          updateStatusDriverRequestBody}) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(updateStatusDriverRequestBody.toJson());
+    final _options = _setStreamType<MassageResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          'ChangeStatusDriver',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late MassageResponse _value;
+    try {
+      _value = MassageResponse.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<MassageResponse> tripCost({
+    required int charge,
+    required String token,
+    required int tripId,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Authorization': token};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = charge;
+    final _options = _setStreamType<MassageResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          'add-charge/${tripId}',
           queryParameters: queryParameters,
           data: _data,
         )

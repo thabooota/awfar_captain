@@ -66,31 +66,36 @@ class HomeScreen extends StatelessWidget {
           ),
           drawer: const DrawerView(),
           body: const HomeMapView(),
-          bottomSheet: Wrap(
-            children: [
-              Container(
-                decoration: const BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                          color: ColorManager.darkGrey,
-                          blurRadius: 12,
-                          blurStyle: BlurStyle.normal,
-                          spreadRadius: 1,
-                          offset: Offset(
-                            0,
-                            -5,
-                          ),
-                      ),
-                    ],
-                    color: ColorManager.originalWhite,
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(10),
-                        topLeft: Radius.circular(10.0))),
-                padding: const EdgeInsets.only(
-                    top: 15.0, right: 18.0, left: 18.0, bottom: 25.0),
-                child: context.read<HomeCubit>().bottomSheets(),
-              ),
-            ],
+          bottomSheet: BlocBuilder<HomeCubit, HomeStates>( builder: (context, state) => Wrap(
+              children: [
+                Container(
+                  decoration: const BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                            color: ColorManager.darkGrey,
+                            blurRadius: 12,
+                            blurStyle: BlurStyle.normal,
+                            spreadRadius: 1,
+                            offset: Offset(
+                              0,
+                              -5,
+                            ),
+                        ),
+                      ],
+                      color: ColorManager.originalWhite,
+                      borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(10),
+                          topLeft: Radius.circular(10.0))),
+                  padding: const EdgeInsets.only(
+                      top: 15.0,
+                      right: 18.0,
+                      left: 18.0,
+                      bottom: 25.0
+                  ),
+                  child: context.read<HomeCubit>().bottomSheets(),
+                ),
+              ],
+            ),
           ),
         );
         } else {

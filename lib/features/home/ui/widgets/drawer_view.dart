@@ -39,12 +39,12 @@ class DrawerView extends StatelessWidget {
                   context.pushNamedAndRemoveUntil(Routes.home, predicate: (route) => false,);
                 },
               ),
-              DrawerItem(
-                title: LocaleKeys.drawerItemFiles.tr(),
-                png: true,
-                icon: AssetsManager.icFiles,
-                onTap: () {},
-              ),
+              // DrawerItem(
+              //   title: LocaleKeys.drawerItemFiles.tr(),
+              //   png: true,
+              //   icon: AssetsManager.icFiles,
+              //   onTap: () {},
+              // ),
               DrawerItem(
                 title: LocaleKeys.captainGate.tr(),
                 icon: AssetsManager.icHome,
