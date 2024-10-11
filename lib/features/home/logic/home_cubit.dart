@@ -23,6 +23,7 @@ import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 import '../../../core/utils/pusher_config.dart';
 import '../data/models/requests/accept_trip_request_body.dart';
 import '../data/models/requests/get_routes_request_body.dart';
+import '../data/models/requests/rate_client_request_body.dart';
 import '../data/models/response/get_routes_response.dart';
 import '../data/models/response/trips_pending_response.dart';
 import '../data/repo/home_repo.dart';
@@ -39,7 +40,9 @@ class HomeCubit extends Cubit<HomeStates> {
   bool isOnline = false;
   BottomSheetStates bottomSheetStates = BottomSheetStates.offline;
   TextEditingController chargerController = TextEditingController();
+  TextEditingController commentRateController = TextEditingController();
   final GlobalKey<FormState> tripCostFormKey = GlobalKey<FormState>();
+  double rate = 0;
 
   void chaneConnectionState(bool value) {
     isOnline = value;
@@ -79,6 +82,9 @@ class HomeCubit extends Cubit<HomeStates> {
   }
 
   late PusherConfig _pusherConfig;
+
+  late PusherConfig _chatPusherConfig;
+
   initializePusherNotifications({required onEvent, required String channelName}) async {
     _pusherConfig = PusherConfig();
 
@@ -100,9 +106,22 @@ class HomeCubit extends Cubit<HomeStates> {
     }
   }
 
+  void onChat(PusherEvent event) {
+    try {
+      log("event name :${event.eventName}");
+      if (event.eventName == "event") {
+        log("here");
+     //TODO response
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
   LocationService locationService = LocationService();
 
   GetRoutesResponse ?routesResponse;
+
   Future<void> getRoutes({required double lat, required double long}) async {
     emit(GetRoutesLoadingState());
     LocationData myLocationLatLng = await locationService.getLocation();
@@ -163,16 +182,6 @@ class HomeCubit extends Cubit<HomeStates> {
     try {
       log("event name : ${event.eventName}");
       if (event.eventName == "event") {
-        log("from_long:${json.decode(event.data)["data"]["from_long"]}");
-        log("from_lat:${json.decode(event.data)["data"]["from_lat"]}");
-        log("to_long:${json.decode(event.data)["data"]["to_long"]}");
-        log("price:${json.decode(event.data)["data"]["price"]}");
-        log("form:${json.decode(event.data)["data"]["from"]}");
-        log("to:${json.decode(event.data)["data"]["to"]}");
-        log("to_lat:${json.decode(event.data)["data"]["to_lat"]}");
-        log("Trip-id:${json.decode(event.data)["data"]["Trip-id"]}");
-        log("Client_Name:${json.decode(event.data)["data"]["Client_Name"]}");
-
         restTripResponse = RestTripResponse(data: TripInfo(
             from_long: json.decode(event.data)["data"]["from_long"],
             from_lat: json.decode(event.data)["data"]["from_lat"],
@@ -215,6 +224,7 @@ class HomeCubit extends Cubit<HomeStates> {
       emit(AcceptedTripFailureState(error.toString()));
     });
   }
+
   void emitRejectedTripRequestState() async{
     emit(RejectedTripLoadingState());
     final response = await _homeRepo.rejectedTrip(
@@ -243,7 +253,9 @@ class HomeCubit extends Cubit<HomeStates> {
     });
   }
 
-  void emitUpdateDriverStatus({required String status}) async {
+  void emitUpdateDriverStatus({
+    required String status
+  }) async {
     emit(UpdateStatusTripLoadingState());
     final response = await _homeRepo.updateDriverStatus(
       updateStatusTripRequestBody: UpdateStatusDriverRequestBody(
@@ -255,6 +267,23 @@ class HomeCubit extends Cubit<HomeStates> {
     });
   }
 
+  void emitRateClientStates() async {
+    emit(RateClientLoadingState());
+    final response = await _homeRepo.rateClient(
+driverId: SharedPreferencesManager.getData(key: PrefsManager.driverId),
+        token: SharedPreferencesManager.getData(key: PrefsManager.token),
+        tripId: tripAcceptedResponse!.TripID,
+        rateClientRequestBody: RateClientRequestBody(
+            comment: commentRateController.text,
+            rate: rate.hashCode)
+    );
+    response.when(success: (data) {
+      changeBottomSheetState(BottomSheetStates.searchForRides);
+      emit(RateClientSuccessState(data));
+    }, failure: (error) {
+      emit(RateClientFailureState(error.toString()));
+    });
+  }
 
   // void updateCurrentLocation() async {
   //   try {

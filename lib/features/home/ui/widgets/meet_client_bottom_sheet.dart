@@ -86,22 +86,22 @@ class MeetClientBottomSheet extends StatelessWidget {
           Row(
             children: [
               Text(LocaleKeys.cash.tr(),style: TextStyleManager.font17Black700,),
-              Spacer(),
-              Text('130 ${LocaleKeys.currency.tr()}', style: TextStyleManager.font17Black700),
+              const Spacer(),
+              Text('${cubit.tripAcceptedResponse!.Price}${LocaleKeys.currency.tr()}', style: TextStyleManager.font17Black700),
               horizontalSpace(50.w),
             ],),
           Row(
             children: [
               Text(LocaleKeys.discount.tr(),style: TextStyleManager.font17Black700,),
-              Spacer(),
-              Text('10 ${LocaleKeys.currency.tr()}', style: TextStyleManager.font17Black700),
+              const Spacer(),
+              Text('0 ${LocaleKeys.currency.tr()}', style: TextStyleManager.font17Black700),
               horizontalSpace(50.w),
             ],),
           Row(
             children: [
               Text(LocaleKeys.totalPayment.tr(),style: TextStyleManager.font17Black700,),
-              Spacer(),
-              Text('120 ${LocaleKeys.currency.tr()}', style: TextStyleManager.font17Black700),
+              const Spacer(),
+              Text('${cubit.tripAcceptedResponse!.Price} ${LocaleKeys.currency.tr()}', style: TextStyleManager.font17Black700),
               horizontalSpace(50.w),
             ],),
           verticalSpace(10.h),

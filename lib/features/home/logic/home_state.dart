@@ -83,3 +83,15 @@ class CostTripFailureState extends HomeStates {
   final String errorMessage;
   CostTripFailureState(this.errorMessage);
 }
+
+class RateClientLoadingState extends HomeStates {}
+
+class RateClientSuccessState extends HomeStates {
+  final MassageResponse massageResponse;
+  RateClientSuccessState(this.massageResponse);
+}
+
+class RateClientFailureState extends HomeStates {
+  final String errorMessage;
+  RateClientFailureState(this.errorMessage);
+}

@@ -109,13 +109,17 @@ class AppRouter {
         case Routes.myRides:
         return AnimationRoute(page: const MyTripScreen());
       case Routes.rating:
-        return AnimationRoute(page: const RatingScreen());
+        return AnimationRoute(page: BlocProvider.value(
+            value: getIt<HomeCubit>(),
+            child: const RatingScreen()));
       case Routes.finishTrip:
         return AnimationRoute(page: BlocProvider.value(
             value: getIt<HomeCubit>(),
             child: const FinishTripScreen()));
       case Routes.chat:
-        return AnimationRoute(page: const ChatScreenView());
+        return AnimationRoute(page: BlocProvider.value(
+            value: getIt<HomeCubit>(),
+            child:  const ChatScreenView()));
       case Routes.technicalSupport:
         return AnimationRoute(page: const TechnicalSupport());
       case Routes.accountSettings:

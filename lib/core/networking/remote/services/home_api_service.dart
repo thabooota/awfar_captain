@@ -23,8 +23,8 @@ abstract class HomeApiService {
   @POST(ApiConstants.rateClient)
   Future<MassageResponse> rateClient({
     @Header('Authorization') required String token,
-    @Path('tripId') required String tripId,
-    @Path('driverId') required String driverId,
+    @Path('tripId') required int tripId,
+    @Path('driverId') required int driverId,
     @Body() required RateClientRequestBody rateClientRequestBody,
   });
 

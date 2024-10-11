@@ -26,8 +26,8 @@ class _HomeApiService implements HomeApiService {
   @override
   Future<MassageResponse> rateClient({
     required String token,
-    required String tripId,
-    required String driverId,
+    required int tripId,
+    required int driverId,
     required RateClientRequestBody rateClientRequestBody,
   }) async {
     final _extra = <String, dynamic>{};
