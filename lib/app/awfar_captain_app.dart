@@ -44,8 +44,7 @@ class _AwfarCaptainAppState extends State<AwfarCaptainApp> {
               return MaterialApp(
                 debugShowCheckedModeBanner: false,
                 title: 'Awfar-Captain',
-               // initialRoute: widget.initialRoute,
-                initialRoute: Routes.addDecuments,
+               initialRoute: widget.initialRoute,
                 theme: ThemeManager.getLightTheme(),
                 darkTheme: ThemeManager.getDarkTheme(),
                 themeMode: ThemeMode.light,

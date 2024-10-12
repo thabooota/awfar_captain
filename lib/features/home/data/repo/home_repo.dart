@@ -6,6 +6,7 @@ import 'package:awfar_captain/features/home/data/models/requests/update_status_d
 import 'package:awfar_captain/features/home/data/models/response/trip_accepted_response.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../core/networking/remote/api_result.dart';
+import '../../../chat/data/models/request/send_message_request_body.dart';
 import '../models/requests/rate_client_request_body.dart';
 import '../models/response/massage_response.dart';
 
@@ -31,6 +32,18 @@ class HomeRepo {
     try {
       final response = await _homeApiService.acceptTrip(
           acceptTripRequestBody: acceptTripRequestBody);
+      return ApiResult.success(response);
+    } on Exception catch (e) {
+      return ApiResult.failure(ErrorHandler.handle(e));
+    }
+  }
+
+  Future<ApiResult<MassageResponse>> sendMessage({
+    required SendMessageRequestBody sendMessageRequestBody
+}) async {
+    try {
+      final response = await _homeApiService.sendMessage(
+          body: sendMessageRequestBody);
       return ApiResult.success(response);
     } on Exception catch (e) {
       return ApiResult.failure(ErrorHandler.handle(e));

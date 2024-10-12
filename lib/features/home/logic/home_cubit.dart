@@ -4,9 +4,12 @@ import 'package:awfar_captain/core/networking/local/prefs_manager.dart';
 import 'package:awfar_captain/core/networking/local/shared_preferences.dart';
 import 'package:awfar_captain/core/utils/enums.dart';
 import 'package:awfar_captain/core/utils/location_service.dart';
+import 'package:awfar_captain/features/chat/data/models/request/send_message_request_body.dart';
+import 'package:awfar_captain/features/chat/data/models/response/get_meassage_response.dart';
 import 'package:awfar_captain/features/home/data/models/requests/store_driver_trip_request_body.dart';
 import 'package:awfar_captain/features/home/data/models/requests/update_status_driver_request_body.dart';
 import 'package:awfar_captain/features/home/data/models/response/get_trip_response.dart';
+import 'package:awfar_captain/features/home/data/models/response/massage_response.dart';
 import 'package:awfar_captain/features/home/data/models/response/trip_accepted_response.dart';
 import 'package:awfar_captain/features/home/data/repo/routes_rep.dart';
 import 'package:awfar_captain/features/home/logic/home_state.dart';
@@ -41,6 +44,7 @@ class HomeCubit extends Cubit<HomeStates> {
   BottomSheetStates bottomSheetStates = BottomSheetStates.offline;
   TextEditingController chargerController = TextEditingController();
   TextEditingController commentRateController = TextEditingController();
+  TextEditingController messageController = TextEditingController();
   final GlobalKey<FormState> tripCostFormKey = GlobalKey<FormState>();
   double rate = 0;
 
@@ -105,19 +109,61 @@ class HomeCubit extends Cubit<HomeStates> {
       log(e.toString());
     }
   }
-
-  void onChat(PusherEvent event) {
+List <MessageInfo> messages = [];
+  void onChat(PusherEvent event, {required ScrollController scrollController}) {
     try {
       log("event name :${event.eventName}");
       if (event.eventName == "event") {
-        log("here");
-     //TODO response
+        log("Chaaaaaaaaaaaaaaat");
+        var message = json.decode(event.data);
+       emitAddMessageState(messageInfo: MessageInfo(
+           sender: message["message"]["sender"],
+           id: message["message"]["id"],
+           message: message["message"]["message"]
+       ));
+       animateListToTheEnd(scrollController: scrollController);
       }
     } catch (e) {
       log(e.toString());
     }
   }
 
+  void emitAddMessageState({required MessageInfo messageInfo}) {
+    messages.add(messageInfo);
+    emit(AddMessageState());
+  }
+
+
+  animateListToTheEnd({int time = 1 , required ScrollController scrollController}) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      scrollController.animateTo(
+        scrollController.position.maxScrollExtent,
+        duration: Duration(milliseconds: time),
+        curve: Curves.easeInOut,
+      );
+    });
+  }
+  void emitSendMessageState({required MessageInfo messageInfo})async {
+    emit(SendMessageLoadingState());
+
+    final response  = await _homeRepo.sendMessage(sendMessageRequestBody: SendMessageRequestBody(
+        sender: 'driver',
+        message: messageController.text,
+        // TODO: add client id
+        client_Id: SharedPreferencesManager.getData(key: PrefsManager.token),
+        driver_Id: SharedPreferencesManager.getData(key: PrefsManager.token),
+    ),
+    );
+    response.when(success: (MassageResponse message) {
+     emitAddMessageState(messageInfo: MessageInfo(
+         sender: "driver", id: SharedPreferencesManager.getData(key: PrefsManager.driverId),
+         message: messageController.text));
+      messageController.clear();
+      emit(SendMessageSuccessState(message));
+    }, failure: (errorMessage) {
+      emit(SendMessageFailureState(errorMessage.apiErrorModel.message));
+    });
+  }
   LocationService locationService = LocationService();
 
   GetRoutesResponse ?routesResponse;

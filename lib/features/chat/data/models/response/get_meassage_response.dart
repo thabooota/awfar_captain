@@ -1,21 +1,15 @@
-
-import 'package:freezed_annotation/freezed_annotation.dart';
-part 'get_meassage_response.g.dart';
-@JsonSerializable()
 class GetMessageResponse {
-  final List<Message> messages;
+  final MessageInfo messages;
+
   GetMessageResponse({required this.messages});
 
-  factory GetMessageResponse.fromJson(Map<String, dynamic> json) => _$GetMessageResponseFromJson(json);
 }
 
-@JsonSerializable()
-class Message {
+class MessageInfo {
+  final int id;
   final String sender;
-  final String receiver;
   final String message;
 
-  Message({required this.sender, required this.receiver, required this.message});
+  MessageInfo({required this.sender, required this.id, required this.message});
 
-  factory Message.fromJson(Map<String, dynamic> json) => _$MessageFromJson(json);
 }

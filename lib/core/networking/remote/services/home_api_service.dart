@@ -45,8 +45,6 @@ abstract class HomeApiService {
 
   @POST(ApiConstants.sendMessage)
   Future<MassageResponse> sendMessage({
-    @Header('Authorization') required String token,
-    @Path('tripId') required String tripId,
     @Body() required SendMessageRequestBody body,
   });
 

@@ -168,15 +168,11 @@ class _HomeApiService implements HomeApiService {
   }
 
   @override
-  Future<MassageResponse> sendMessage({
-    required String token,
-    required String tripId,
-    required SendMessageRequestBody body,
-  }) async {
+  Future<MassageResponse> sendMessage(
+      {required SendMessageRequestBody body}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'Authorization': token};
-    _headers.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body.toJson());
     final _options = _setStreamType<MassageResponse>(Options(
@@ -186,7 +182,7 @@ class _HomeApiService implements HomeApiService {
     )
         .compose(
           _dio.options,
-          'get-message/${tripId}',
+          'get-message/{tripId}',
           queryParameters: queryParameters,
           data: _data,
         )

@@ -1,233 +1,121 @@
-import 'package:awfar_captain/features/chat/ui/widget/message_model.dart';
-import 'package:flutter/material.dart';
-
-class ChatScreenView extends StatefulWidget {
-  const ChatScreenView({super.key});
-
-  @override
-  State<ChatScreenView> createState() => _ChatScreenViewState();
-}
-
-class _ChatScreenViewState extends State<ChatScreenView> {
-  String id = "0";
-  ScrollController scrollController = ScrollController();
-  TextEditingController messageController = TextEditingController();
-
-  List<MessageModel> message = [
-    MessageModel(
-      receiverId: "0",
-      senderId: "1",
-      content: "السلام عليكم",
-      dateTime: "1",
-    ),
-    MessageModel(
-      receiverId: "1",
-      senderId: "0",
-      content: "عليكم السلام، كيف استطيع مساعدك اليوم",
-      dateTime: "2",
-    ),
-    MessageModel(
-      receiverId: "0",
-      senderId: "1",
-      content: "السلام عليكم",
-      dateTime: "3",
-    ),
-    MessageModel(
-      receiverId: "1",
-      senderId: "0",
-      content: "عليكم السلام، كيف استطيع مساعدك اليوم",
-      dateTime: "4",
-    ),
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "الدردشه لمساعده الطالب",
-          style: TextStyle(
-            fontSize: 22.0,
-            fontWeight: FontWeight.w500,
-            color: Colors.white,
-          ),
-        ),
-        centerTitle: true,
-        backgroundColor: const Color(0XFF57B4D7),
-        leading: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: const Icon(
-            Icons.arrow_back_ios_new,
-            color: Colors.white,
-          ),
-        ),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomRight: Radius.circular(20),
-            bottomLeft: Radius.circular(20),
-          ),
-        ),
-      ),
-      body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 18.0),
-        color: Colors.white,
-        child: Column(
-          children: [
-            Expanded(
-              child: ListView.separated(
-                controller: scrollController,
-                physics: const BouncingScrollPhysics(),
-                itemBuilder: (context, index) {
-                  if (message[index].senderId == id) {
-                    return buildMyMessage(context, message[index]);
-                  }
-                  return buildMessage(context, message[index]);
-                },
-                separatorBuilder: (context, index) => const SizedBox(
-                  height: 14.0,
-                ),
-                itemCount: message.length,
-              ),
-            ),
-            const SizedBox(
-              height: 10.0,
-            ),
-            Container(
-              decoration: BoxDecoration(
-                color: const Color(0XFF57B4D7).withOpacity(0.5),
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TextFormField(
-                      controller: messageController,
-                      decoration: InputDecoration(
-                        hintText: 'Type your message here...',
-                        border: InputBorder.none,
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                          borderSide: const BorderSide(
-                            color: Color(0XFF57B4D7),
-                            width: 1.5,
-                          ),
-                        ),
-                        contentPadding:
-                        const EdgeInsets.symmetric(horizontal: 12.0),
-                        hintStyle: const TextStyle(
-                          color: Colors.black45,
-                          fontSize: 16.0,
-                        ),
-                      ),
-                      style: const TextStyle(color: Colors.black),
-                      maxLines: null,
-                    ),
-                  ),
-                  FloatingActionButton.small(
-                    heroTag: "emoji",
-                    focusColor: Colors.transparent,
-                    foregroundColor: Colors.transparent,
-                    hoverColor: Colors.transparent,
-                    splashColor: Colors.transparent,
-                    backgroundColor: Colors.transparent,
-                    hoverElevation: 0.0,
-                    elevation: 0.0,
-                    onPressed: () {},
-                    child: const Icon(
-                      Icons.emoji_emotions_outlined,
-                      color: Colors.black54,
-                    ),
-                  ),
-                  FloatingActionButton.small(
-                    heroTag: "image",
-                    backgroundColor: Colors.transparent,
-                    focusColor: Colors.transparent,
-                    foregroundColor: Colors.transparent,
-                    hoverColor: Colors.transparent,
-                    splashColor: Colors.transparent,
-                    hoverElevation: 0.0,
-                    elevation: 0.0,
-                    onPressed: () {},
-                    child: const Icon(
-                      Icons.image_outlined,
-                      color: Colors.black54,
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 8.0),
-                    height: 35.0,
-                    width: 35.0,
-                    child: FloatingActionButton(
-                      heroTag: "send",
-                      onPressed: () {},
-                      elevation: 7.0,
-                      backgroundColor: Colors.black38,
-                      child: const Icon(
-                        Icons.send,
-                        color: Color(0XFF57B4D7),
-                        size: 22.0,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget buildMyMessage(context, MessageModel message) => Align(
-    alignment: AlignmentDirectional.topStart,
-    child: Container(
-      padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadiusDirectional.only(
-          bottomEnd: Radius.circular(15.0),
-          topEnd: Radius.circular(15.0),
-          topStart: Radius.circular(15.0),
-        ),
-        color: Color(0XFF57B4D7),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            message.content,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 18,
-            ),
-          ),
-        ],
-      ),
-    ),
-  );
-
-  Widget buildMessage(context, MessageModel message) => Align(
-    alignment: AlignmentDirectional.topEnd,
-    child: Container(
-      padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadiusDirectional.only(
-          bottomStart: Radius.circular(15.0),
-          topEnd: Radius.circular(15.0),
-          topStart: Radius.circular(15.0),
-        ),
-        color: Colors.grey[300],
-      ),
-      child: Column(
-        children: [
-          Text(
-            message.content,
-            style: const TextStyle(
-              color: Colors.black,
-              fontSize: 18,
-            ),
-          ),
-        ],
-      ),
-    ),
-  );
-}
+// import 'dart:developer';
+//
+// import 'package:animated_snack_bar/animated_snack_bar.dart';
+// import 'package:awfar_captain/features/chat/ui/widget/message_model.dart';
+// import 'package:awfar_captain/features/home/logic/home_cubit.dart';
+// import 'package:awfar_captain/features/home/logic/home_state.dart';
+// import 'package:awfar_client/core/helpers/spacing.dart';
+// import 'package:awfar_client/features/chat/logic/chat_cubit.dart';
+// import 'package:awfar_client/features/chat/logic/chat_states.dart';
+// import 'package:awfar_client/features/chat/ui/widgets/message_item.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter_bloc/flutter_bloc.dart';
+// import 'package:loading_animation_widget/loading_animation_widget.dart';
+// import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
+//
+// import '../../../core/helpers/spacing.dart';
+// import '../../../core/theming/color_manager.dart';
+// import '../../../core/utils/pusher_config.dart';
+// import 'widgets/chat_bottom_sheet.dart';
+//
+// // clint token: xcuUbPsm8fjmjoLSK0Ez4SLNyEJ6aOEVMoX0SvIK0Udhui28hhcPp3TB3PgU
+// // clint id: 56
+// // trip id: 26
+// // driver token: HO4zDg3mFOJsbiRRCa6as35IzdCfAFGTJ3q9IsdqtqrpJF0iAD2b1krKKxLe
+// // driver id: 46
+//
+// class ChatScreen extends StatefulWidget {
+//   const ChatScreen({super.key});
+//
+//   @override
+//   State<ChatScreen> createState() => _ChatScreenState();
+// }
+//
+// class _ChatScreenState extends State<ChatScreen> {
+//   ScrollController scrollController = ScrollController();
+//
+//   @override
+//   void initState() {
+//     super.initState();
+//   }
+//
+//   @override
+//   void dispose() {
+//     super.dispose();
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return BlocConsumer<HomeCubit, HomeStates>(
+//       listener: (context, state) {
+//         if (state is SendMessageSuccessState) {
+//           AnimatedSnackBar.material(
+//             state.massageResponse.message,
+//             type: AnimatedSnackBarType.success,
+//             animationCurve: Curves.fastEaseInToSlowEaseOut,
+//             mobileSnackBarPosition: MobileSnackBarPosition.top,
+//             duration: const Duration(milliseconds: 1200),
+//           ).show(context);
+//         }
+//         if (state is SendMessageFailureState) {
+//           AnimatedSnackBar.material(
+//             state.errorMessage,
+//             type: AnimatedSnackBarType.error,
+//             animationCurve: Curves.fastEaseInToSlowEaseOut,
+//             mobileSnackBarPosition: MobileSnackBarPosition.top,
+//             duration: const Duration(milliseconds: 1200),
+//           ).show(context);
+//         }
+//       },
+//       builder: (context, state) {
+//         return Scaffold(
+//           extendBodyBehindAppBar: true,
+//           extendBody: true,
+//           backgroundColor: ColorManager.scaffold,
+//           appBar: AppBar(),
+//           bottomSheet: const ChatBottomSheet(),
+//           body: SafeArea(
+//             child: state is GetMessagesLoadingState
+//                 // ? Center(
+//               child: LoadingAnimationWidget.staggeredDotsWave(
+//                 size: 40,
+//                 color: ColorManager.green,
+//               ),
+//             )
+//                 : Column(
+//               children: [
+//                 Expanded(
+//                   child: ListView.separated(
+//                     controller: scrollController,
+//                     // reverse: true,
+//                     padding: const EdgeInsets.symmetric(
+//                         horizontal: 16.0, vertical: 12.0),
+//                     itemBuilder: (context, index) => context
+//                         .read<HomeCubit>()
+//                         .messages[index]
+//                         .sender ==
+//                         56
+//                         ? MessageItem(
+//                       clint: true,
+//                       message:
+//                       context.read<HomeCubit>().messages[index],
+//                     )
+//                         : MessageItem(
+//                       clint: false,
+//                       message:
+//                       context.read<HomeCubit>().messages[index],
+//                     ),
+//                     separatorBuilder: (context, index) =>
+//                         verticalSpace(12.0),
+//                     itemCount: context.read<HomeCubit>().messages.length,
+//                   ),
+//                 ),
+//                 verticalSpace(80.0),
+//               ],
+//             ),
+//           ),
+//         );
+//       },
+//     );
+//   }
+// }

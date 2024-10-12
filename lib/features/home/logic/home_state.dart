@@ -74,6 +74,8 @@ class UpdateStatusTripFailureState extends HomeStates {
 
 class CostTripLoadingState extends HomeStates {}
 
+class AddMessageState extends HomeStates {}
+
 class CostTripSuccessState extends HomeStates {
   final MassageResponse massageResponse;
   CostTripSuccessState(this.massageResponse);
@@ -94,4 +96,15 @@ class RateClientSuccessState extends HomeStates {
 class RateClientFailureState extends HomeStates {
   final String errorMessage;
   RateClientFailureState(this.errorMessage);
+}
+
+class SendMessageLoadingState extends HomeStates {}
+
+class SendMessageSuccessState extends HomeStates {
+  final MassageResponse massageResponse;
+  SendMessageSuccessState(this.massageResponse);
+}
+class SendMessageFailureState extends HomeStates {
+  final String errorMessage;
+  SendMessageFailureState(this.errorMessage);
 }
