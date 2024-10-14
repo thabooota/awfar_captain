@@ -1,20 +1,26 @@
 import 'package:awfar_captain/core/helpers/extensions.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/routing/routes.dart';
 import '../../../../core/theming/color_manager.dart';
 import '../../../../core/theming/text_style_manager.dart';
 import '../../../../core/widgets/app_text_button.dart';
+import '../../../../lang/locale_keys.g.dart';
+import '../../data/entity/trip_entity.dart';
 
 class MyTripsItem extends StatelessWidget {
   final bool isEnabled;
   final void Function()? onTap;
+  final TripEntity tripEntity;
 
   const MyTripsItem({
     super.key,
     required this.isEnabled,
     required this.onTap,
+    required this.tripEntity,
   });
 
   @override
@@ -30,23 +36,23 @@ class MyTripsItem extends StatelessWidget {
           children: [
             Padding(
               padding:
-                  const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
+              const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
               child: Row(
                 children: [
                   Column(
                     children: [
                       Text(
-                        "اغسطس 31, 2023",
+                        tripEntity.date,
                         style: TextStyleManager.font14TextColor500,
                       ),
                       verticalSpace(8.0),
                       Text(
-                        "عند 8:32 pm",
+                        tripEntity.time,
                         style: TextStyleManager.font10Grey400,
                       ),
                       verticalSpace(4.0),
                       Text(
-                        "رقم الطلب : 898522",
+                        "${LocaleKeys.tripNumber.tr()} : ${tripEntity.tripNumber}",
                         style: TextStyleManager.font12Grey400,
                       ),
                     ],
@@ -56,7 +62,7 @@ class MyTripsItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        "207.65 ج.م",
+                        "${tripEntity.finalTotalCost} ج.م",
                         style: TextStyleManager.font14TextColor500,
                       ),
                       verticalSpace(20.0),
@@ -67,11 +73,15 @@ class MyTripsItem extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 8.0, vertical: 4.0),
                             decoration: BoxDecoration(
-                              color: ColorManager.green,
+                              color: tripEntity.status == "pending"
+                                  ? Colors.orangeAccent
+                                  : tripEntity.status == "canceled"
+                                  ? Colors.redAccent
+                                  : ColorManager.green,
                               borderRadius: BorderRadius.circular(5.0),
                             ),
                             child: Text(
-                              "ملغي",
+                              tripEntity.status,
                               style: TextStyleManager.font10White700.copyWith(
                                 fontWeight: FontWeight.w500,
                               ),
@@ -80,7 +90,7 @@ class MyTripsItem extends StatelessWidget {
                           if (!isEnabled) ...[
                             horizontalSpace(12.0),
                             Transform.rotate(
-                              angle: 1.57079633,
+                              angle: 4.71238898,
                               child: const Icon(
                                 Icons.arrow_back_ios_new,
                               ),
@@ -105,23 +115,31 @@ class MyTripsItem extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "من شبرا الخيمة",
-                              style: TextStyleManager.font14Grey400,
-                            ),
-                            Text(
-                              "وسط البلد ميدان التحرير",
-                              style: TextStyleManager.font14Grey400,
-                            ),
-                          ],
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "- ${tripEntity.from}",
+                                style: TextStyleManager.font14Grey400,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              Text(
+                                "- ${tripEntity.to}",
+                                style: TextStyleManager.font14Grey400,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
                         ),
-                        const Spacer(),
                         AppTextButton(
-                          appText: "الابلاغ عن الرحلة",
-                          onTap: () => context.pushNamed(Routes.reportMyTrips),
+                          appText: LocaleKeys.reportForTrip.tr(),
+                          onTap: () => context.pushNamed(
+                            Routes.reportMyTrips,
+                            arguments: tripEntity.tripNumber,
+                          ),
                           textStyle: TextStyleManager.font10White700,
                           minimumSize: Size(70.w, 35.h),
                           backgroundColor: const Color(0xFFFC4974),
@@ -133,26 +151,12 @@ class MyTripsItem extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          "كوبون ",
+                          "${LocaleKeys.coupon.tr()} ",
                           style: TextStyleManager.font14Grey400,
                         ),
-                        Spacer(),
+                        const Spacer(),
                         Text(
-                          "- 00.00",
-                          style: TextStyleManager.font14Grey400,
-                        ),
-                      ],
-                    ),
-                    verticalSpace(4.0),
-                    Row(
-                      children: [
-                        Text(
-                          "تكلفة الرحلة ",
-                          style: TextStyleManager.font14Grey400,
-                        ),
-                        Spacer(),
-                        Text(
-                          "00.00 ج.م ",
+                          tripEntity.coupon,
                           style: TextStyleManager.font14Grey400,
                         ),
                       ],
@@ -161,12 +165,26 @@ class MyTripsItem extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          "اجمالي التكلفة",
+                          LocaleKeys.tripCost.tr(),
+                          style: TextStyleManager.font14Grey400,
+                        ),
+                        const Spacer(),
+                        Text(
+                          "${tripEntity.cost} ج.م ",
+                          style: TextStyleManager.font14Grey400,
+                        ),
+                      ],
+                    ),
+                    verticalSpace(4.0),
+                    Row(
+                      children: [
+                        Text(
+                          LocaleKeys.totalTripCost.tr(),
                           style: TextStyleManager.font14TextColor500,
                         ),
-                        Spacer(),
+                        const Spacer(),
                         Text(
-                          "00.00 ج.م ",
+                          "${tripEntity.finalTotalCost} ج.م ",
                           style: TextStyleManager.font14TextColor500,
                         ),
                         horizontalSpace(12.0),

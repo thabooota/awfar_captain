@@ -84,5 +84,9 @@ abstract class  LocaleKeys {
   static const aboutApp = 'aboutApp';
   static const privacyPolicy = 'privacyPolicy';
   static const accountSettings = 'accountSettings';
+  static const tripNumber = 'tripNumber';
+  static const reportForTrip = 'reportForTrip';
+  static const coupon = 'coupon';
+  static const totalTripCost = 'totalTripCost';
 
 }

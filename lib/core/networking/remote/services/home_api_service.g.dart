@@ -182,7 +182,7 @@ class _HomeApiService implements HomeApiService {
     )
         .compose(
           _dio.options,
-          'get-message/{tripId}',
+          'sent-message',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -307,6 +307,41 @@ class _HomeApiService implements HomeApiService {
     late MassageResponse _value;
     try {
       _value = MassageResponse.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<GetMessagesResponse> getMessages(
+      {required GetMessagesRequestBody getMessagesRequestBody}) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(getMessagesRequestBody.toJson());
+    final _options = _setStreamType<GetMessagesResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          'Get-Messages',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late GetMessagesResponse _value;
+    try {
+      _value = GetMessagesResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

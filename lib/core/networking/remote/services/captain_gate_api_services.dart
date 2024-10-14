@@ -31,7 +31,7 @@ abstract class CaptainApiServices {
   });
 
   @GET(ApiConstants.getMyTrip)
-  Future<GetAllTripsResponse> getAllTrips({
+  Future<GetTripsResponse> getAllTrips({
     @Header('Authorization') required String token,
 });
 }

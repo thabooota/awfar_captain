@@ -9,7 +9,7 @@ part of 'rate_client_request_body.dart';
 RateClientRequestBody _$RateClientRequestBodyFromJson(
         Map<String, dynamic> json) =>
     RateClientRequestBody(
-      rate: (json['rate'] as num).toInt(),
+      rate: json['rate'] as String,
       comment: json['comment'] as String,
     );
 

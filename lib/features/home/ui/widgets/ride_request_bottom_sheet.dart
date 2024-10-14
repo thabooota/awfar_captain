@@ -30,7 +30,6 @@ class RideRequestBottomSheet extends StatelessWidget {
           context.read<HomeCubit>().changeBottomSheetState(BottomSheetStates.meetClient);
         } else if(state is AcceptedTripFailureState || state is AcceptedTripFailureState ) {
           Navigator.pop(context);
-          Navigator.pop(context);
           AnimatedSnackBar.material(
             state.errorMessage,
             type: AnimatedSnackBarType.error,

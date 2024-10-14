@@ -11,7 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/theming/text_style_manager.dart';
-import '../../../../core/utils/enums.dart';
+
 
 class FinishTripBottomSheetListener extends StatelessWidget {
   const FinishTripBottomSheetListener({super.key});
@@ -28,9 +28,8 @@ class FinishTripBottomSheetListener extends StatelessWidget {
         } else if(state is UpdateStatusTripSuccessState)
         {
           Navigator.pop(context);
-          context.pushNamedAndRemoveUntil(
+          context.pushNamed(
             Routes.finishTrip,
-            predicate: (_) => false,
           );
         }
         else if(state is UpdateStatusTripFailureState)

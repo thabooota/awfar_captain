@@ -81,5 +81,9 @@
   "more" : "المزيد",
   "aboutApp" : "عن التطبيق" ,
   "privacyPolicy" : "سياسة الخصوصية",
-  "accountSettings" : "اعدادات الحساب"
+  "accountSettings" : "اعدادات الحساب",
+  "tripNumber": "رقم الرحله",
+  "reportForTrip": "الابلاغ عن الرحله",
+  "coupon": "كوبون",
+  "totalTripCost": "اجمالي تكلفه الرحله"
 }

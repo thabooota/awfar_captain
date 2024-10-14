@@ -2,6 +2,8 @@ import 'package:awfar_captain/features/home/data/models/response/get_routes_resp
 import 'package:awfar_captain/features/home/data/models/response/massage_response.dart';
 import 'package:awfar_captain/features/home/data/models/response/trip_accepted_response.dart';
 
+import '../../chat/data/models/response/get_meassage_response.dart';
+
 abstract class HomeStates {}
 
 class InitialHomeState extends HomeStates {}
@@ -107,4 +109,14 @@ class SendMessageSuccessState extends HomeStates {
 class SendMessageFailureState extends HomeStates {
   final String errorMessage;
   SendMessageFailureState(this.errorMessage);
+}
+class GetMessageLoadingState extends HomeStates {}
+
+class GetMessageSuccessState extends HomeStates {
+  final GetMessagesResponse massageResponse;
+  GetMessageSuccessState(this.massageResponse);
+}
+class GetMessageFailureState extends HomeStates {
+  final String errorMessage;
+  GetMessageFailureState(this.errorMessage);
 }

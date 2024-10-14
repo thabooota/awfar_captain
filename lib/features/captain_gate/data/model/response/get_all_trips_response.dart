@@ -1,36 +1,77 @@
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
 part 'get_all_trips_response.g.dart';
+
 @JsonSerializable()
-class GetAllTripsResponse {
-  @JsonKey(name: 'data')
-  final List<TripData> allTrips;
+class GetTripsResponse {
+  final List<Trip> data;
 
-  GetAllTripsResponse({required this.allTrips});
+  const GetTripsResponse({required this.data});
 
-  factory GetAllTripsResponse.fromJson(Map<String, dynamic> json) => _$GetAllTripsResponseFromJson(json);
-
+  factory GetTripsResponse.fromJson(Map<String, dynamic> json) =>
+      _$GetTripsResponseFromJson(json);
 }
 
 @JsonSerializable()
-class TripData {
+class Trip {
   final int id;
-  final String from;
-  final String to;
-  final String ?rate;
-  final int price;
-  @JsonKey(name: 'client')
-  final ClientInfo clientInfo;
+  @JsonKey(name: "trip_number")
+  final String tripNumber;
+  final String from, to, status;
+  final double? coupon;
+  final double price;
+  final int? rate;
+  @JsonKey(name: "start_at")
+  final String? startAt;
+  @JsonKey(name: "end_at")
+  final String? endAt;
+  @JsonKey(name: "total_price")
+  final double totalPrice;
+  @JsonKey(name: "type_trip")
+  final TripType tripType;
 
-  TripData({required this.id, required this.from, required this.to, required this.rate, required this.price, required this.clientInfo});
+  const Trip({
+    required this.id,
+    required this.tripNumber,
+    required this.from,
+    required this.to,
+    required this.status,
+    required this.price,
+    required this.rate,
+    required this.startAt,
+    required this.endAt,
+    required this.tripType,
+    required this.totalPrice,
+    required this.coupon,
+  });
 
-  factory TripData.fromJson(Map<String, dynamic> json) => _$TripDataFromJson(json);
+  factory Trip.fromJson(Map<String, dynamic> json) => _$TripFromJson(json);
 }
 
 @JsonSerializable()
-class ClientInfo {
-  final String name;
+class TripType {
+  final int id;
+  final String name, description;
+  final double price;
+  final List<Media> media;
 
-  ClientInfo({required this.name});
+  const TripType({
+    required this.id,
+    required this.name,
+    required this.description,
+    required this.price,
+    required this.media,
+  });
 
-  factory ClientInfo.fromJson(Map<String, dynamic> json) => _$ClientInfoFromJson(json);
+  factory TripType.fromJson(Map<String, dynamic> json) =>
+      _$TripTypeFromJson(json);
+}
+
+@JsonSerializable()
+class Media {
+  final String path;
+
+  const Media({required this.path});
+
+  factory Media.fromJson(Map<String, dynamic> json) => _$MediaFromJson(json);
 }

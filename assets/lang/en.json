@@ -81,5 +81,9 @@
 "more" : "More",
   "aboutApp" : "About Application" ,
   "privacyPolicy" : "Privacy Policy",
-  "accountSettings" : "Account Settings"
+  "accountSettings" : "Account Settings",
+  "tripNumber": "Trip Number",
+  "reportForTrip": "Report for trip",
+  "coupon": "Coupon",
+  "totalTripCost": "Total trip cost"
 }

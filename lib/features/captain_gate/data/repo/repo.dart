@@ -46,7 +46,7 @@ class CaptainGateRepo {
     }
   }
 
-  Future<ApiResult<GetAllTripsResponse>> getAllTrips({required String token}) async {
+  Future<ApiResult<GetTripsResponse>> getAllTrips({required String token}) async {
     try {
       final response = await _captainApiServices.getAllTrips(token: 'Bearer $token');
       return ApiResult.success(response);

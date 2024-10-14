@@ -18,7 +18,7 @@ class ApiConstants {
 
  static const String updateProfileEndPoint = 'profile';
  static const String getMyTrip = 'my-trips';
- static const String rateClient = 'rate-trip/{tripId}/{driverId}';
+ static const String rateClient = 'rate-trip/{tripId}/{clientId}';
  static const String acceptTrip = 'TripAccept';
  static const String rejectedTrip = 'TripRejected';
  static const String storeDriverTrip = 'Store-Driver-Trip';
@@ -26,8 +26,8 @@ class ApiConstants {
  static const String tripCost = 'add-charge/{tripId}';
 
  //chat end points
- static const String getMessage = 'get-message/{tripId}/{driverId}';
- static const String sendMessage = 'get-message/{tripId}';
+ static const String getMessage = 'Get-Messages';
+ static const String sendMessage = 'sent-message';
 
  // captain gate end points
   static const String getMyBalance = 'my-balance';

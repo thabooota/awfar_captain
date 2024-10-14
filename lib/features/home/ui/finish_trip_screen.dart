@@ -78,42 +78,42 @@ class FinishTripScreen extends StatelessWidget {
                     ),
                     child: Column(
                       children: [
-                        Text(LocaleKeys.amountCollected.tr(), style: TextStyleManager.font20BlackBold,),
-                      verticalSpace(20.h),
-                        Container(
-                          width: 120,
-                          decoration: BoxDecoration(
-                            color: ColorManager.lighterGrey,
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          child: TextFormField(
-                            validator: (value) {
-                              if(value == null || value.hashCode < context.read<HomeCubit>().tripAcceptedResponse!.Price) {
-                                return 'Please enter true amount';
-                              }
-                              return null;
-                            },
-                            controller: context.read<HomeCubit>().chargerController,
-                            cursorColor: ColorManager.green,
-                            maxLines: 1,
-                            keyboardType: TextInputType.number,
-                            decoration: InputDecoration(
-                              focusedBorder:  OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  borderSide: const BorderSide(
-                                    color: ColorManager.lighterGrey,
-
-                                  )
-                              ),
-                                enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              borderSide: const BorderSide(
-                                color: ColorManager.lighterGrey,
-                              )
-                            )),
-                          ),
-                        ),
-                        verticalSpace(30.0.h),
+                      //   Text(LocaleKeys.amountCollected.tr(), style: TextStyleManager.font20BlackBold,),
+                      // verticalSpace(20.h),
+                      //   Container(
+                      //     width: 120,
+                      //     decoration: BoxDecoration(
+                      //       color: ColorManager.lighterGrey,
+                      //       borderRadius: BorderRadius.circular(10.0),
+                      //     ),
+                      //     child: TextFormField(
+                      //       validator: (value) {
+                      //         if(value == null || value.hashCode < context.read<HomeCubit>().tripAcceptedResponse!.Price) {
+                      //           return 'Please enter true amount';
+                      //         }
+                      //         return null;
+                      //       },
+                      //       controller: context.read<HomeCubit>().chargerController,
+                      //       cursorColor: ColorManager.green,
+                      //       maxLines: 1,
+                      //       keyboardType: TextInputType.number,
+                      //       decoration: InputDecoration(
+                      //         focusedBorder:  OutlineInputBorder(
+                      //             borderRadius: BorderRadius.circular(10.0),
+                      //             borderSide: const BorderSide(
+                      //               color: ColorManager.lighterGrey,
+                      //
+                      //             )
+                      //         ),
+                      //           enabledBorder: OutlineInputBorder(
+                      //         borderRadius: BorderRadius.circular(10.0),
+                      //         borderSide: const BorderSide(
+                      //           color: ColorManager.lighterGrey,
+                      //         )
+                      //       )),
+                      //     ),
+                      //   ),
+                      //   verticalSpace(30.0.h),
                         const FinishTripBlocListener(),
                       ],
                     ),

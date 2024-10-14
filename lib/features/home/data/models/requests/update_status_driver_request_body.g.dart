@@ -9,13 +9,13 @@ part of 'update_status_driver_request_body.dart';
 UpdateStatusDriverRequestBody _$UpdateStatusDriverRequestBodyFromJson(
         Map<String, dynamic> json) =>
     UpdateStatusDriverRequestBody(
-      tripId: (json['tripId'] as num).toInt(),
+      trip_id: (json['trip_id'] as num).toInt(),
       status: json['status'] as String,
     );
 
 Map<String, dynamic> _$UpdateStatusDriverRequestBodyToJson(
         UpdateStatusDriverRequestBody instance) =>
     <String, dynamic>{
-      'tripId': instance.tripId,
+      'trip_id': instance.trip_id,
       'status': instance.status,
     };

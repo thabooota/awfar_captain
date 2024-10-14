@@ -24,6 +24,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:location/location.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 import '../../../core/utils/pusher_config.dart';
+import '../../chat/data/models/request/get_message_request_body.dart';
 import '../data/models/requests/accept_trip_request_body.dart';
 import '../data/models/requests/get_routes_request_body.dart';
 import '../data/models/requests/rate_client_request_body.dart';
@@ -46,6 +47,7 @@ class HomeCubit extends Cubit<HomeStates> {
   TextEditingController commentRateController = TextEditingController();
   TextEditingController messageController = TextEditingController();
   final GlobalKey<FormState> tripCostFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> chatFormKey = GlobalKey<FormState>();
   double rate = 0;
 
   void chaneConnectionState(bool value) {
@@ -87,8 +89,6 @@ class HomeCubit extends Cubit<HomeStates> {
 
   late PusherConfig _pusherConfig;
 
-  late PusherConfig _chatPusherConfig;
-
   initializePusherNotifications({required onEvent, required String channelName}) async {
     _pusherConfig = PusherConfig();
 
@@ -110,22 +110,24 @@ class HomeCubit extends Cubit<HomeStates> {
     }
   }
 List <MessageInfo> messages = [];
-  void onChat(PusherEvent event, {required ScrollController scrollController}) {
-    try {
-      log("event name :${event.eventName}");
-      if (event.eventName == "event") {
-        log("Chaaaaaaaaaaaaaaat");
-        var message = json.decode(event.data);
-       emitAddMessageState(messageInfo: MessageInfo(
-           sender: message["message"]["sender"],
-           id: message["message"]["id"],
-           message: message["message"]["message"]
-       ));
-       animateListToTheEnd(scrollController: scrollController);
-      }
-    } catch (e) {
-      log(e.toString());
-    }
+  void emitGetMessagesState() async {
+    messages = [];
+    emit(GetMessageLoadingState());
+    final getMessagesResponse = await _homeRepo.getMessages(
+      getMessagesRequestBody: GetMessagesRequestBody(
+        driverId: SharedPreferencesManager.getData(key: PrefsManager.driverId).toString(),
+        clientId: tripAcceptedResponse!.Client.Client_id.toString(),
+      ),
+    );
+    getMessagesResponse.when(
+      success: (GetMessagesResponse getMessagesResponse) {
+        messages = getMessagesResponse.messages;
+        emit(GetMessageSuccessState(getMessagesResponse));
+      },
+      failure: (error) {
+        emit(GetMessageFailureState(error.apiErrorModel.message));
+      },
+    );
   }
 
   void emitAddMessageState({required MessageInfo messageInfo}) {
@@ -133,31 +135,20 @@ List <MessageInfo> messages = [];
     emit(AddMessageState());
   }
 
-
-  animateListToTheEnd({int time = 1 , required ScrollController scrollController}) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      scrollController.animateTo(
-        scrollController.position.maxScrollExtent,
-        duration: Duration(milliseconds: time),
-        curve: Curves.easeInOut,
-      );
-    });
-  }
-  void emitSendMessageState({required MessageInfo messageInfo})async {
+  void emitSendMessageState()async {
     emit(SendMessageLoadingState());
-
     final response  = await _homeRepo.sendMessage(sendMessageRequestBody: SendMessageRequestBody(
         sender: 'driver',
         message: messageController.text,
         // TODO: add client id
-        client_Id: SharedPreferencesManager.getData(key: PrefsManager.token),
-        driver_Id: SharedPreferencesManager.getData(key: PrefsManager.token),
+        client_id: tripAcceptedResponse!.Client.Client_id.toString(), driver_id: SharedPreferencesManager.getData(key: PrefsManager.driverId).toString(),
     ),
     );
     response.when(success: (MassageResponse message) {
-     emitAddMessageState(messageInfo: MessageInfo(
+     emitAddMessageState(
+         messageInfo: MessageInfo(
          sender: "driver", id: SharedPreferencesManager.getData(key: PrefsManager.driverId),
-         message: messageController.text));
+         message: messageController.text,),);
       messageController.clear();
       emit(SendMessageSuccessState(message));
     }, failure: (errorMessage) {
@@ -166,7 +157,7 @@ List <MessageInfo> messages = [];
   }
   LocationService locationService = LocationService();
 
-  GetRoutesResponse ?routesResponse;
+  late GetRoutesResponse routesResponse;
 
   Future<void> getRoutes({required double lat, required double long}) async {
     emit(GetRoutesLoadingState());
@@ -195,7 +186,7 @@ List <MessageInfo> messages = [];
     routes.when(success: (GetRoutesResponse getRoutesResponse) {
       routesResponse = getRoutesResponse;
       debugPrint("${getRoutesResponse.routes[0].distanceMeters}");
-      emitStoreDriverTrip(distance: getRoutesResponse.routes[0].distanceMeters);
+      emitStoreDriverTrip( distance: getRoutesResponse.routes[0].distanceMeters,);
       emit(GetRoutesSuccessState(getRoutesResponse));
     }, failure: (error) {
       emit(GetRoutesFailureState(error.toString()));
@@ -260,11 +251,10 @@ List <MessageInfo> messages = [];
         ));
     response.when(success: (data) {
       tripAcceptedResponse = data;
-      getRoutes(
-          lat: double.parse(restTripResponse!.data.from_lat),
-          long: double.parse(restTripResponse!.data.from_long),
-      );
-
+      // getRoutes(
+      //     lat: double.parse(restTripResponse!.data.from_lat),
+      //     long: double.parse(restTripResponse!.data.from_long),
+      // );
       emit(AcceptedTripSuccessState(data));
     }, failure: (error) {
       emit(AcceptedTripFailureState(error.toString()));
@@ -305,7 +295,7 @@ List <MessageInfo> messages = [];
     emit(UpdateStatusTripLoadingState());
     final response = await _homeRepo.updateDriverStatus(
       updateStatusTripRequestBody: UpdateStatusDriverRequestBody(
-          tripId: tripAcceptedResponse!.TripID, status: status),);
+          trip_id: tripAcceptedResponse!.TripID, status: status),);
     response.when(success: (data) {
       emit(UpdateStatusTripSuccessState(data));
     }, failure: (error) {
@@ -316,12 +306,12 @@ List <MessageInfo> messages = [];
   void emitRateClientStates() async {
     emit(RateClientLoadingState());
     final response = await _homeRepo.rateClient(
-driverId: SharedPreferencesManager.getData(key: PrefsManager.driverId),
+driverId: tripAcceptedResponse!.Client.Client_id,
         token: SharedPreferencesManager.getData(key: PrefsManager.token),
         tripId: tripAcceptedResponse!.TripID,
         rateClientRequestBody: RateClientRequestBody(
             comment: commentRateController.text,
-            rate: rate.hashCode)
+            rate: rate.toString())
     );
     response.when(success: (data) {
       changeBottomSheetState(BottomSheetStates.searchForRides);

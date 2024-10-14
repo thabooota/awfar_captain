@@ -10,6 +10,7 @@ import 'package:awfar_captain/features/home/data/models/response/trips_pending_r
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
+import '../../../core/networking/remote/api_error_model.dart';
 import '../../home/data/models/requests/upload_profile_request_body.dart';
 import '../../home/data/models/response/get_profile_response.dart';
 import '../../home/data/repo/routes_rep.dart';
@@ -83,22 +84,31 @@ class CaptainGateCubit extends Cubit<CaptainGateStates> {
         });
   }
 
-  GetAllTripsResponse ?myTrips;
-  void emitGetAllTrips() async {
+  List<bool> myTripsActive = [];
+  List<Trip> trips = [];
+  void emitGetTripsState() async {
+    myTripsActive = [];
+    trips = [];
 
     emit(GetAllTripsLoading());
 
-    final response = await _captainGateRepo.getAllTrips(token: token);
+    final getTripsResponse = await _captainGateRepo.getAllTrips(
+      token: SharedPreferencesManager.getData(
+        key: PrefsManager.token,
+      ),
+    );
 
-    response.when(
-        success: (data) {
-          myTrips = data;
-          print('anaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/////////////////');
-          emit(GetAllTripsSuccess(myTrips: data));
-        },
-        failure: (error) {
-          print(error.toString());
-          emit(GetAllTripsError(error: error.apiErrorModel.message));
-        });
+    getTripsResponse.when(
+      success: (GetTripsResponse getTripsResponse) {
+        getTripsResponse.data.forEach((_) => myTripsActive.add(false));
+        trips = getTripsResponse.data
+            .where((trip) => trip.status != "pending")
+            .toList();
+        emit(GetAllTripsSuccess(myTrips: getTripsResponse));
+      },
+      failure: (error) {
+        emit(GetAllTripsError(error: error.apiErrorModel.message));
+      },
+    );
   }
 }

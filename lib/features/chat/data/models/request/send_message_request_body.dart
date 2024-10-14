@@ -5,9 +5,9 @@ part 'send_message_request_body.g.dart';
 class SendMessageRequestBody {
   final String sender;
   final String message;
-  final int client_Id;
-  final int driver_Id;
-  SendMessageRequestBody({required this.sender, required this.message, required this.client_Id, required this.driver_Id});
+  final String client_id;
+  final String driver_id;
+  SendMessageRequestBody({required this.sender, required this.message, required this.client_id, required this.driver_id});
 
   Map<String, dynamic > toJson() => _$SendMessageRequestBodyToJson(this);
 }

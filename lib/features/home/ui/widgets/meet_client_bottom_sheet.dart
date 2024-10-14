@@ -1,6 +1,9 @@
+import 'package:awfar_captain/core/helpers/extensions.dart';
 import 'package:awfar_captain/core/networking/local/prefs_manager.dart';
 import 'package:awfar_captain/core/networking/local/shared_preferences.dart';
+import 'package:awfar_captain/core/routing/routes.dart';
 import 'package:awfar_captain/features/home/logic/home_state.dart';
+import 'package:awfar_captain/features/home/ui/rating_screen.dart';
 import 'package:awfar_captain/features/home/ui/widgets/meeting_client_listener.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -74,11 +77,11 @@ class MeetClientBottomSheet extends StatelessWidget {
                 Column(
                   children: [
                     Text(
-                      '70 ${LocaleKeys.currency.tr()}',
+                      '${cubit.tripAcceptedResponse!.Price} ${LocaleKeys.currency.tr()}',
                       style: TextStyleManager.font17TextColor600,
                     ),
                     Text(
-                      '36 km',
+                      '${cubit.routesResponse!.routes[0].distanceMeters /1000} km',
                       style: TextStyleManager.font17DarkGrey400,
                     ),
                   ],
@@ -155,10 +158,7 @@ class MeetClientBottomSheet extends StatelessWidget {
                 ),
                 GestureDetector(
                     onTap: () {
-                      cubit.initializePusherNotifications(
-                          onEvent: cubit.onChat,
-                          channelName:
-                              "message.Driver.${SharedPreferencesManager.getData(key: PrefsManager.driverId)}");
+                      context.pushNamed(Routes.chat);
                     },
                     child: Image.asset(
                       AssetsManager.icChat,

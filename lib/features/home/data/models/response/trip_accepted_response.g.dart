@@ -35,6 +35,7 @@ Map<String, dynamic> _$TripAcceptedResponseToJson(
     };
 
 ClintInfo _$ClintInfoFromJson(Map<String, dynamic> json) => ClintInfo(
+      Client_id: (json['Client_id'] as num).toInt(),
       name: json['Full Name'] as String,
       Phone: json['Phone'] as String,
     );
@@ -42,4 +43,5 @@ ClintInfo _$ClintInfoFromJson(Map<String, dynamic> json) => ClintInfo(
 Map<String, dynamic> _$ClintInfoToJson(ClintInfo instance) => <String, dynamic>{
       'Full Name': instance.name,
       'Phone': instance.Phone,
+      'Client_id': instance.Client_id,
     };

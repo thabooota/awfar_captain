@@ -6,7 +6,6 @@ import '../../../../core/theming/color_manager.dart';
 import '../../../../core/theming/text_style_manager.dart';
 import '../../data/models/response/get_meassage_response.dart';
 
-
 class MessageItem extends StatelessWidget {
   final bool clint;
   final MessageInfo message;
@@ -48,6 +47,14 @@ class MessageItem extends StatelessWidget {
               ),
             ),
             verticalSpace(4.0),
+            Text(
+              "${message.createdAt == null ? ' ' : message.createdAt!.split("T")[1].substring(0, 5)} · Read",
+              style: TextStyleManager.font10Grey400.copyWith(
+                color: clint
+                    ? ColorManager.originalWhite
+                    : ColorManager.originalBlack,
+              ),
+            )
           ],
         ),
       ),

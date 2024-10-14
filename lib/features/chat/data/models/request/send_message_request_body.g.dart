@@ -11,8 +11,8 @@ SendMessageRequestBody _$SendMessageRequestBodyFromJson(
     SendMessageRequestBody(
       sender: json['sender'] as String,
       message: json['message'] as String,
-      client_Id: (json['client_Id'] as num).toInt(),
-      driver_Id: (json['driver_Id'] as num).toInt(),
+      client_id: json['client_id'] as String,
+      driver_id: json['driver_id'] as String,
     );
 
 Map<String, dynamic> _$SendMessageRequestBodyToJson(
@@ -20,6 +20,6 @@ Map<String, dynamic> _$SendMessageRequestBodyToJson(
     <String, dynamic>{
       'sender': instance.sender,
       'message': instance.message,
-      'client_Id': instance.client_Id,
-      'driver_Id': instance.driver_Id,
+      'client_id': instance.client_id,
+      'driver_id': instance.driver_id,
     };

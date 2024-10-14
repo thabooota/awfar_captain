@@ -130,13 +130,13 @@ class _CaptainApiServices implements CaptainApiServices {
   }
 
   @override
-  Future<GetAllTripsResponse> getAllTrips({required String token}) async {
+  Future<GetTripsResponse> getAllTrips({required String token}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Authorization': token};
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<GetAllTripsResponse>(Options(
+    final _options = _setStreamType<GetTripsResponse>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -153,9 +153,9 @@ class _CaptainApiServices implements CaptainApiServices {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late GetAllTripsResponse _value;
+    late GetTripsResponse _value;
     try {
-      _value = GetAllTripsResponse.fromJson(_result.data!);
+      _value = GetTripsResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

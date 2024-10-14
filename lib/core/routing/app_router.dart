@@ -5,7 +5,6 @@ import 'package:awfar_captain/features/authentication/ui/add_documents_screen.da
 import 'package:awfar_captain/features/authentication/ui/verify_otp_forget_password.dart';
 import 'package:awfar_captain/features/authentication/ui/verify_otp_register.dart';
 import 'package:awfar_captain/features/captain_gate/logic/captain_gate_cubit.dart';
-import 'package:awfar_captain/features/chat/ui/chat_screen_view.dart';
 import 'package:awfar_captain/features/home/logic/home_cubit.dart';
 import 'package:awfar_captain/features/home/ui/edit_account_screen.dart';
 import 'package:awfar_captain/features/home/ui/home_screen.dart';
@@ -21,6 +20,7 @@ import '../../features/authentication/ui/login_screen.dart';
 import '../../features/authentication/ui/register_screen.dart';
 import '../../features/authentication/ui/complete_register_screen.dart';
 import '../../features/captain_gate/ui/captain_gate_screen.dart';
+import '../../features/chat/ui/chat_screen_view.dart';
 import '../../features/home/ui/account_settings.dart';
 import '../../features/home/ui/finish_trip_screen.dart';
 import '../../features/home/ui/rating_screen.dart';
@@ -99,7 +99,7 @@ class AppRouter {
       case Routes.captainGate:
         return AnimationRoute(
             page: BlocProvider.value(
-                value: getIt<CaptainGateCubit>()..emitGetMyBalance()..emitGetAllTrips(),
+                value: getIt<CaptainGateCubit>()..emitGetMyBalance()..emitGetTripsState(),
                  child:
                  const CaptainGateScreen()));
         case Routes.reportMyTrips:
@@ -107,7 +107,9 @@ class AppRouter {
       case Routes.notification:
         return AnimationRoute(page: const NotificationScreen());
         case Routes.myRides:
-        return AnimationRoute(page: const MyTripScreen());
+        return AnimationRoute(page: BlocProvider.value(
+            value: getIt<CaptainGateCubit>(),
+            child: const MyTripScreen()));
       case Routes.rating:
         return AnimationRoute(page: BlocProvider.value(
             value: getIt<HomeCubit>(),
@@ -116,10 +118,10 @@ class AppRouter {
         return AnimationRoute(page: BlocProvider.value(
             value: getIt<HomeCubit>(),
             child: const FinishTripScreen()));
-      // case Routes.chat:
-      //   return AnimationRoute(page: BlocProvider.value(
-      //       value: getIt<HomeCubit>(),
-      //       child:  const ChatScreenView()));
+      case Routes.chat:
+        return AnimationRoute(page: BlocProvider.value(
+            value: getIt<HomeCubit>()..emitGetMessagesState(),
+            child:  const ChatScreen()));
       case Routes.technicalSupport:
         return AnimationRoute(page: const TechnicalSupport());
       case Routes.accountSettings:

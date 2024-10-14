@@ -24,8 +24,9 @@ class ClintInfo {
   @JsonKey(name: "Full Name")
   final String name;
   final String Phone;
+  final int Client_id;
 
-  ClintInfo({required this.name, required this.Phone});
+  ClintInfo({required this.Client_id, required this.name, required this.Phone});
 
   factory ClintInfo.fromJson(Map<String, dynamic> json) => _$ClintInfoFromJson(json);
 

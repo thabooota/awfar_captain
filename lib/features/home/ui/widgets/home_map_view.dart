@@ -39,6 +39,7 @@ class _HomeMapViewState extends State<HomeMapView> {
   bool isFirstCall = true;
   GoogleMapController? googleMapController;
   Set<Marker> markers = {};
+
   @override
   Widget build(BuildContext context) {
     return GoogleMap(
@@ -74,7 +75,7 @@ class _HomeMapViewState extends State<HomeMapView> {
             locationData.latitude!,
             locationData.longitude!,
           ),
-          zoom: 16.2);
+          zoom: 16.4);
       googleMapController
           ?.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
       isFirstCall = false;

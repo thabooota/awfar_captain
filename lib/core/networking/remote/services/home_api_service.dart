@@ -10,6 +10,7 @@ import 'package:awfar_captain/features/home/data/models/response/trip_accepted_r
 import 'package:dio/dio.dart';
 import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
+import '../../../../features/chat/data/models/request/get_message_request_body.dart';
 import '../../../../features/chat/data/models/request/send_message_request_body.dart';
 import '../../../../features/home/data/models/requests/get_routes_request_body.dart';
 import '../../../../features/home/data/models/response/get_routes_response.dart';
@@ -24,7 +25,7 @@ abstract class HomeApiService {
   Future<MassageResponse> rateClient({
     @Header('Authorization') required String token,
     @Path('tripId') required int tripId,
-    @Path('driverId') required int driverId,
+    @Path('clientId') required int driverId,
     @Body() required RateClientRequestBody rateClientRequestBody,
   });
 
@@ -63,5 +64,10 @@ abstract class HomeApiService {
     @Body() required int charge,
     @Header('Authorization') required String token,
     @Path('tripId') required int tripId,
+  });
+
+  @POST(ApiConstants.getMessage)
+  Future<GetMessagesResponse> getMessages({
+    @Body() required GetMessagesRequestBody getMessagesRequestBody,
   });
 }

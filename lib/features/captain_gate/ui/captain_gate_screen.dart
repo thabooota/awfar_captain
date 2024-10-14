@@ -44,7 +44,7 @@ class CaptainGateScreen extends StatelessWidget {
       body: BlocBuilder<CaptainGateCubit, CaptainGateStates>(
         builder: (context, state) {
           CaptainGateCubit cubit = context.read<CaptainGateCubit>();
-          if(state is GetMyBalanceLoading || state is GetAllTripsLoading || cubit.myBalanceResponse == null || cubit.myTrips == null)
+          if(state is GetMyBalanceLoading || state is GetAllTripsLoading || cubit.myBalanceResponse == null || cubit.trips.isEmpty)
             {
               return const Center(child: CircularProgressIndicator(color: ColorManager.green,));
             } else {

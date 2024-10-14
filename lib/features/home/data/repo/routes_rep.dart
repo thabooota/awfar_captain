@@ -1,5 +1,4 @@
 import 'package:awfar_captain/core/networking/remote/api_error_handler.dart';
-
 import '../../../../core/networking/remote/api_result.dart';
 import '../../../../core/networking/remote/services/routes_api_service.dart';
 import '../models/requests/get_routes_request_body.dart';

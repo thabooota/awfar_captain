@@ -43,7 +43,7 @@ class EditProfileError extends CaptainGateStates {
 class GetAllTripsLoading extends CaptainGateStates {}
 
 class GetAllTripsSuccess extends CaptainGateStates {
-  final GetAllTripsResponse myTrips;
+  final GetTripsResponse myTrips;
   GetAllTripsSuccess({required this.myTrips});
 }
 

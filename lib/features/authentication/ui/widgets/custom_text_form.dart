@@ -23,6 +23,7 @@ class CustomTextForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      textAlign: TextAlign.start,
       controller: controller,
       obscureText: obscureText,
       validator: validator,

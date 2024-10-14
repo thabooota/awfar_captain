@@ -42,7 +42,7 @@ class ClientMeetingListener extends StatelessWidget {
       child:   Padding(
         padding: const EdgeInsets.all(8.0),
         child: AppTextButton(appText: LocaleKeys.meetingClient.tr(), onTap: () {
-          context.read<HomeCubit>().emitUpdateDriverStatus(status: "meeting");
+          context.read<HomeCubit>().emitUpdateDriverStatus(status: "waiting");
         }),
       ),
     );

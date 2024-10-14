@@ -18,31 +18,34 @@ class FinishTripBlocListener extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<HomeCubit, HomeStates>(
       listener: (context, state) {
-        if (state is CostTripSuccessState) {
-            context.pushNamedAndRemoveUntil(
-              Routes.rating,
-              predicate: (_) => false,
-          );
-          AnimatedSnackBar.material(
-            state.massageResponse.message,
-            type: AnimatedSnackBarType.success,
-            animationCurve: Curves.fastEaseInToSlowEaseOut,
-            mobileSnackBarPosition: MobileSnackBarPosition.bottom,
-          ).show(context);
-        }
-        if (state is CostTripFailureState) {
-          AnimatedSnackBar.material(
-            state.errorMessage,
-            type: AnimatedSnackBarType.error,
-            animationCurve: Curves.fastEaseInToSlowEaseOut,
-            mobileSnackBarPosition: MobileSnackBarPosition.bottom,
-          ).show(context);
-        }
+        // if (state is CostTripSuccessState) {
+        //     context.pushNamedAndRemoveUntil(
+        //       Routes.rating,
+        //       predicate: (_) => false,
+        //   );
+        //   AnimatedSnackBar.material(
+        //     state.massageResponse.message,
+        //     type: AnimatedSnackBarType.success,
+        //     animationCurve: Curves.fastEaseInToSlowEaseOut,
+        //     mobileSnackBarPosition: MobileSnackBarPosition.bottom,
+        //   ).show(context);
+        // }
+        // if (state is CostTripFailureState) {
+        //   AnimatedSnackBar.material(
+        //     state.errorMessage,
+        //     type: AnimatedSnackBarType.error,
+        //     animationCurve: Curves.fastEaseInToSlowEaseOut,
+        //     mobileSnackBarPosition: MobileSnackBarPosition.bottom,
+        //   ).show(context);
+        // }
       },
       builder: (context, state) => AnimatedCrossFade(
         firstChild: AppTextButton(
           appText: LocaleKeys.finishPayment.tr(),
-          onTap: () => validateThenDoFinishTrip(context.read<HomeCubit>()),
+          onTap: () {
+            context.pushNamed(Routes.rating);
+           // validateThenDoFinishTrip(context.read<HomeCubit>());
+          },
         ),
         secondChild: Container(
           height: 50.0,
