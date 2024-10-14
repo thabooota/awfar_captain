@@ -39,7 +39,7 @@ class RideRequestBottomSheet extends StatelessWidget {
         } else if (state is RejectedTripSuccessState)
           {
             Navigator.pop(context);
-            context.read<HomeCubit>().changeBottomSheetState(BottomSheetStates.rideRequest);
+            context.read<HomeCubit>().changeBottomSheetState(BottomSheetStates.searchForRides);
           }
       },
       builder: (context, state) {

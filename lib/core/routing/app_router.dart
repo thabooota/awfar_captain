@@ -92,7 +92,7 @@ class AppRouter {
         return AnimationRoute(
             page: MultiBlocProvider(
     providers: [
-                BlocProvider<HomeCubit>(create: (context) => getIt<HomeCubit>()..bottomSheets()),
+                BlocProvider<HomeCubit>(create: (context) => getIt<HomeCubit>()..bottomSheets()..initHomeCubit()),
                  BlocProvider<CaptainGateCubit> (create: (context) => getIt<CaptainGateCubit>()..emitGetProfileStates(),)
                 ],
                 child: const HomeScreen()));

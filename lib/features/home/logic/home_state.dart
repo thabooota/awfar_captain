@@ -13,6 +13,7 @@ class ChangeBottomSheetState extends HomeStates {}
 class ChangeConnectionState extends HomeStates {}
 
 class GetRoutesLoadingState extends HomeStates {}
+class GetCurrentLocationState extends HomeStates {}
 
 class GetRoutesSuccessState extends HomeStates {
   final GetRoutesResponse getRoutesResponse;
@@ -99,7 +100,7 @@ class RateClientFailureState extends HomeStates {
   final String errorMessage;
   RateClientFailureState(this.errorMessage);
 }
-
+class ChangeMarkerState extends HomeStates {}
 class SendMessageLoadingState extends HomeStates {}
 
 class SendMessageSuccessState extends HomeStates {

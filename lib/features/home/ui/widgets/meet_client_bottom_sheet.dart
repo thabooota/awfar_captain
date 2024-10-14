@@ -1,3 +1,4 @@
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:awfar_captain/core/helpers/extensions.dart';
 import 'package:awfar_captain/core/networking/local/prefs_manager.dart';
 import 'package:awfar_captain/core/networking/local/shared_preferences.dart';
@@ -10,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/theming/color_manager.dart';
 import '../../../../core/theming/text_style_manager.dart';
@@ -152,9 +154,26 @@ class MeetClientBottomSheet extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Image.asset(
-                  AssetsManager.icCall,
-                  width: 50.w,
+                GestureDetector(
+                  onTap: () async {
+                    if (await canLaunchUrl(Uri.parse(
+                    "tel:${cubit.tripAcceptedResponse!.Client.Phone}"))) {
+                    await launchUrl(Uri.parse(
+                    "tel:${cubit.tripAcceptedResponse!.Client.Phone}"));
+                    } else {
+                    AnimatedSnackBar.material(
+                    "can't launch this url, please try again later'",
+                    type: AnimatedSnackBarType.error,
+                    animationCurve: Curves.fastEaseInToSlowEaseOut,
+                    mobileSnackBarPosition:
+                    MobileSnackBarPosition.bottom,
+                    ).show(context);
+                   }
+                  },
+                  child: Image.asset(
+                    AssetsManager.icCall,
+                    width: 50.w,
+                  ),
                 ),
                 GestureDetector(
                     onTap: () {
