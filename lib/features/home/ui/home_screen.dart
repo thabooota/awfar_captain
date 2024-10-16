@@ -61,12 +61,12 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
             ),
-            actions: [
-              IconButton(
-                icon: SvgPicture.asset(AssetsManager.icNotification),
-                onPressed: () => context.pushNamed(Routes.notification),
-              ),
-            ],
+            // actions: [
+            //   IconButton(
+            //     icon: SvgPicture.asset(AssetsManager.icNotification),
+            //     onPressed: () => context.pushNamed(Routes.notification),
+            //   ),
+            // ],
           ),
           drawer:  DrawerView(
             onChangeLang: (String value) {

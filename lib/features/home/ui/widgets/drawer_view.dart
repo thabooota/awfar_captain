@@ -59,11 +59,11 @@ class DrawerView extends StatelessWidget {
                   );
                 },
               ),
-              DrawerItem(
-                title: LocaleKeys.drawerItemNotifications.tr(),
-                icon: AssetsManager.icNotification,
-                onTap: () => context.pushNamed(Routes.notification),
-              ),
+              // DrawerItem(
+              //   title: LocaleKeys.drawerItemNotifications.tr(),
+              //   icon: AssetsManager.icNotification,
+              //   onTap: () => context.pushNamed(Routes.notification),
+              // ),
               DrawerItem(
                 title: LocaleKeys.drawerItemSupport.tr(),
                 icon: AssetsManager.icSupport,

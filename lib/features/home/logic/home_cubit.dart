@@ -247,7 +247,6 @@ class HomeCubit extends Cubit<HomeStates> {
     }
     emit(ChangeConnectionState());
   }
-
   Widget bottomSheets() {
     switch (bottomSheetStates) {
       case BottomSheetStates.searchForRides:
@@ -271,6 +270,8 @@ class HomeCubit extends Cubit<HomeStates> {
     bottomSheetStates = state;
     emit(ChangeBottomSheetState());
   }
+
+  // home logic
 
   initializePusherNotifications(
       {required onEvent, required String channelName}) async {
