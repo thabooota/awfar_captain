@@ -1,5 +1,7 @@
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:awfar_captain/core/helpers/extensions.dart';
+import 'package:awfar_captain/core/networking/local/prefs_manager.dart';
+import 'package:awfar_captain/core/networking/local/shared_preferences.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,9 +21,11 @@ class AddDetailsBlocListener extends StatelessWidget {
     return BlocConsumer<RegisterCubit, RegisterStates>(
       listener: (context, state) {
         if (state is AddDetailsSuccessState) {
-          context.pushNamed(
+          context.pushNamedAndRemoveUntil(
             Routes.addDecuments,
+            predicate: (_) => false,
           );
+          SharedPreferencesManager.saveData(key: PrefsManager.completeAddDetails, value: true);
           AnimatedSnackBar.material(
             state.addDetailsResponse.message!,
             type: AnimatedSnackBarType.success,

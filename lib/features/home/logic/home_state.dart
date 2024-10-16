@@ -13,7 +13,10 @@ class ChangeBottomSheetState extends HomeStates {}
 class ChangeConnectionState extends HomeStates {}
 
 class GetRoutesLoadingState extends HomeStates {}
+
 class GetCurrentLocationState extends HomeStates {}
+
+class ChangeAppLangState extends HomeStates {}
 
 class GetRoutesSuccessState extends HomeStates {
   final GetRoutesResponse getRoutesResponse;

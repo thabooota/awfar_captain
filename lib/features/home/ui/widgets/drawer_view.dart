@@ -1,5 +1,6 @@
 import 'package:awfar_captain/core/helpers/extensions.dart';
 import 'package:awfar_captain/features/home/ui/widgets/custom_account_view_row.dart';
+import 'package:awfar_captain/features/home/ui/widgets/language_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/networking/local/prefs_manager.dart';
@@ -11,7 +12,9 @@ import '../../../../lang/locale_keys.g.dart';
 import 'drawer_item.dart';
 
 class DrawerView extends StatelessWidget {
-  const DrawerView({super.key});
+  final Function(String value) onChangeLang;
+
+  const DrawerView({super.key, required this.onChangeLang});
 
   @override
   Widget build(BuildContext context) {
@@ -39,12 +42,6 @@ class DrawerView extends StatelessWidget {
                   context.pushNamedAndRemoveUntil(Routes.home, predicate: (route) => false,);
                 },
               ),
-              // DrawerItem(
-              //   title: LocaleKeys.drawerItemFiles.tr(),
-              //   png: true,
-              //   icon: AssetsManager.icFiles,
-              //   onTap: () {},
-              // ),
               DrawerItem(
                 title: LocaleKeys.captainGate.tr(),
                 icon: AssetsManager.icHome,
@@ -54,20 +51,12 @@ class DrawerView extends StatelessWidget {
                 title: LocaleKeys.drawerItemLang.tr(),
                 icon: AssetsManager.icLang,
                 onTap: () {
-                  if (SharedPreferencesManager.getData(key: PrefsManager.lang) ==
-                      "en") {
-                    SharedPreferencesManager.saveData(
-                            key: PrefsManager.lang, value: "ar")
-                        .then((_) async {
-                      await context.setLocale(const Locale('ar'));
-                    });
-                  } else {
-                    SharedPreferencesManager.saveData(
-                            key: PrefsManager.lang, value: "en")
-                        .then((_) async {
-                      await context.setLocale(const Locale('en'));
-                    });
-                  }
+                  showDialog(
+                    context: context,
+                    builder: (context) => LanguageDialog(
+                      onChangeLang: onChangeLang,
+                    ),
+                  );
                 },
               ),
               DrawerItem(
@@ -88,14 +77,16 @@ class DrawerView extends StatelessWidget {
                 icon: AssetsManager.icSettings,
                 onTap: () {
                   context.pushNamed(Routes.accountSettings);
-                },
+                  },
               ),
               DrawerItem(
                 title: LocaleKeys.drawerItemLogout.tr(),
                 icon: AssetsManager.icLogout,
                 onTap: () {
-                  SharedPreferencesManager.removeData(key: PrefsManager.fcmToken);
-                  SharedPreferencesManager.removeData(key: PrefsManager.token)
+                  SharedPreferencesManager.removeData(key: PrefsManager.token);
+                  SharedPreferencesManager.removeData(key: PrefsManager.verifyCode);
+                  SharedPreferencesManager.removeData(key: PrefsManager.completeAddDecuments);
+                  SharedPreferencesManager.removeData(key: PrefsManager.completeAddDetails)
                       .then((_) => context.pushNamedAndRemoveUntil(Routes.login,
                           predicate: (Route<dynamic> route) => false));
                 },

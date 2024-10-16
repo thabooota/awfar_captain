@@ -44,17 +44,19 @@ class CaptainGateScreen extends StatelessWidget {
       body: BlocBuilder<CaptainGateCubit, CaptainGateStates>(
         builder: (context, state) {
           CaptainGateCubit cubit = context.read<CaptainGateCubit>();
-          if(state is GetMyBalanceLoading || state is GetAllTripsLoading || cubit.myBalanceResponse == null || cubit.trips.isEmpty)
+          if(state is GetAllTripsLoading)
             {
               return const Center(child: CircularProgressIndicator(color: ColorManager.green,));
-            } else {
+            } if (state is GetAllTripsError ) {
+            return Center(child: Text(LocaleKeys.errorText.tr() ,style:  TextStyleManager.font20TextColor600,),);
+          }else  {
             return ListView(
               padding:
                   const EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
               children: [
                 Center(
                   child: Text(
-                    '${cubit.myBalanceResponse!.balance.balance} ${LocaleKeys.currency.tr()}',
+                    '0 ${LocaleKeys.currency.tr()}',
                     style: TextStyleManager.font25White600
                         .copyWith(color: ColorManager.originalBlack),
                   ),
@@ -99,7 +101,7 @@ class CaptainGateScreen extends StatelessWidget {
                             ),
                             const Spacer(),
                             Text(
-                              "💔 ضعيف",
+                              "جيد",
                               style: TextStyleManager.font17TextColor600,
                             ),
                           ],
@@ -143,7 +145,7 @@ class CaptainGateScreen extends StatelessWidget {
                             ),
                             const Spacer(),
                             Text(
-                              "50 %",
+                              "0 %",
                               style: TextStyleManager.font17TextColor600
                                   .copyWith(color: ColorManager.red),
                             ),
@@ -168,7 +170,7 @@ class CaptainGateScreen extends StatelessWidget {
                                 onPressed: () {},
                                 icon: const Icon(Icons.arrow_back_ios)),
                             Text(
-                              '28-4-2024 : 21-4-2024',
+                              '28-1-2025 : 21-4-2025',
                               style: TextStyleManager.font20BlackBold,
                             ),
                             IconButton(
@@ -185,7 +187,7 @@ class CaptainGateScreen extends StatelessWidget {
                             ),
                             const Spacer(),
                             Text(
-                              '0 H 10 M',
+                              '0 H 0 M',
                               style: TextStyleManager.font17TextColor600,
                             ),
                           ],
@@ -200,6 +202,7 @@ class CaptainGateScreen extends StatelessWidget {
                   style: TextStyleManager.font20BlackBold,
                 ),
                 verticalSpace(10.h),
+                if(cubit.trips.isNotEmpty)
                 const MyTripsWidget(),
               ],
             );

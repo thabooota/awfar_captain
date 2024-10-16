@@ -13,6 +13,10 @@ AddDetailsRequestBody _$AddDetailsRequestBodyFromJson(
       email: json['email'] as String,
       password: json['password'] as String,
       password_confirmation: json['password_confirmation'] as String,
+      car_model: json['car_model'] as String,
+      car_brand: json['car_brand'] as String,
+      car_color: json['car_color'] as String,
+      car_number: json['car_number'] as String,
     );
 
 Map<String, dynamic> _$AddDetailsRequestBodyToJson(
@@ -22,4 +26,8 @@ Map<String, dynamic> _$AddDetailsRequestBodyToJson(
       'email': instance.email,
       'password': instance.password,
       'password_confirmation': instance.password_confirmation,
+      'car_number': instance.car_number,
+      'car_model': instance.car_model,
+      'car_brand': instance.car_brand,
+      'car_color': instance.car_color,
     };

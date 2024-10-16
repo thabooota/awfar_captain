@@ -20,9 +20,10 @@ class CompleteRegisterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:  Text(
-         LocaleKeys.addData.tr(),style:  TextStyleManager.font17blackBold, ),
-        leading: const BackIconButton(),
+        title: Text(
+          LocaleKeys.addData.tr(),
+          style: TextStyleManager.font17blackBold,
+        ),
       ),
       body: SafeArea(
         child: Padding(
@@ -33,65 +34,104 @@ class CompleteRegisterScreen extends StatelessWidget {
               return Form(
                 key: registerCubit.detailsFormKey,
                 child: ListView(
-                physics: const BouncingScrollPhysics(),
-                children: [
-                  CompleteRegisterItem(
-                    validator: (value) => nameValidation(value),
-                    label: LocaleKeys.name.tr(),
-                    hintText: LocaleKeys.enterYourName.tr(),
-                    controller: registerCubit.nameController,
-                    inputType: TextInputType.name, hidePassword: false,
-                  ),
-                  verticalSpace(28.0),
-                  CompleteRegisterItem(
-                    validator: (value) => emailValidation(value),
-                    label: LocaleKeys.email.tr(),
-                    hintText: LocaleKeys.enterYourEmail.tr(),
-                    controller: registerCubit.emailController,
-                    inputType: TextInputType.emailAddress, hidePassword: false,
-                  ),
-                  verticalSpace(28.0),
-                  CompleteRegisterItem(
-                    validator: (value) => passwordValidation(value),
-                    label: LocaleKeys.password.tr(),
-                    hintText:LocaleKeys.enterPassword.tr(),
-                    controller: registerCubit.passwordController,
-                    inputType: TextInputType.visiblePassword,
-                    hidePassword: registerCubit.hidePassword,
-                    suffixIcon: IconButton(
-                      onPressed: () => context
-                          .read<RegisterCubit>()
-                          .emitChangePasswordIconState(),
-                      icon: SvgPicture.asset(
-                        registerCubit.hidePassword
-                            ? AssetsManager.icShow
-                            : AssetsManager.icHide,
+                  physics: const BouncingScrollPhysics(),
+                  children: [
+                    CompleteRegisterItem(
+                      validator: (value) => nameValidation(value),
+                      label: LocaleKeys.name.tr(),
+                      hintText: LocaleKeys.enterYourName.tr(),
+                      controller: registerCubit.nameController,
+                      inputType: TextInputType.name,
+                      hidePassword: false,
+                    ),
+                    verticalSpace(28.0),
+                    CompleteRegisterItem(
+                      validator: (value) => emailValidation(value),
+                      label: LocaleKeys.email.tr(),
+                      hintText: LocaleKeys.enterYourEmail.tr(),
+                      controller: registerCubit.emailController,
+                      inputType: TextInputType.emailAddress,
+                      hidePassword: false,
+                    ),
+                    verticalSpace(28.0),
+                    CompleteRegisterItem(
+                      validator: (value) => passwordValidation(value),
+                      label: LocaleKeys.password.tr(),
+                      hintText: LocaleKeys.enterPassword.tr(),
+                      controller: registerCubit.passwordController,
+                      inputType: TextInputType.visiblePassword,
+                      hidePassword: registerCubit.hidePassword,
+                      suffixIcon: IconButton(
+                        onPressed: () => context
+                            .read<RegisterCubit>()
+                            .emitChangePasswordIconState(),
+                        icon: SvgPicture.asset(
+                          registerCubit.hidePassword
+                              ? AssetsManager.icShow
+                              : AssetsManager.icHide,
+                        ),
                       ),
                     ),
-                  ),
-                  verticalSpace(28.0),
-                  CompleteRegisterItem(
-                    validator: (value) => confirmPasswordValidation(value, registerCubit.passwordController.text),
-                    label: LocaleKeys.confirmPassword.tr(),
-                    hintText: LocaleKeys.enterConfirmPassword.tr(),
-                    controller: registerCubit.confirmPasswordController,
-                    inputType: TextInputType.visiblePassword,
-                    hidePassword: registerCubit.hideConfirmPassword,
-                    suffixIcon: IconButton(
-                      onPressed: () => context
-                          .read<RegisterCubit>()
-                          .emitChangeConfirmPasswordIconState(),
-                      icon: SvgPicture.asset(
-                        registerCubit.hideConfirmPassword
-                            ? AssetsManager.icShow
-                            : AssetsManager.icHide,
+                    verticalSpace(28.0),
+                    CompleteRegisterItem(
+                      validator: (value) => confirmPasswordValidation(
+                          value, registerCubit.passwordController.text),
+                      label: LocaleKeys.confirmPassword.tr(),
+                      hintText: LocaleKeys.enterConfirmPassword.tr(),
+                      controller: registerCubit.confirmPasswordController,
+                      inputType: TextInputType.visiblePassword,
+                      hidePassword: registerCubit.hideConfirmPassword,
+                      suffixIcon: IconButton(
+                        onPressed: () => context
+                            .read<RegisterCubit>()
+                            .emitChangeConfirmPasswordIconState(),
+                        icon: SvgPicture.asset(
+                          registerCubit.hideConfirmPassword
+                              ? AssetsManager.icShow
+                              : AssetsManager.icHide,
+                        ),
                       ),
                     ),
-                  ),
-                  verticalSpace(28.0),
-                  const AddDetailsBlocListener(),
-                ],
-                            ),
+                    verticalSpace(28.0),
+                    CompleteRegisterItem(
+                      validator: (value) => nameValidation(value),
+                      label: LocaleKeys.carBrand.tr(),
+                      hintText: LocaleKeys.carBrand.tr(),
+                      controller: registerCubit.carBrandController,
+                      inputType: TextInputType.name,
+                      hidePassword: false,
+                    ),
+                    verticalSpace(28.0),
+                    CompleteRegisterItem(
+                      validator: (value) => nameValidation(value),
+                      label: LocaleKeys.carColor.tr(),
+                      hintText: LocaleKeys.carColor.tr(),
+                      controller: registerCubit.carColorController,
+                      inputType: TextInputType.name,
+                      hidePassword: false,
+                    ),
+                    verticalSpace(28.0),
+                    CompleteRegisterItem(
+                      validator: (value) => nameValidation(value),
+                      label: LocaleKeys.carModel.tr(),
+                      hintText: LocaleKeys.carModel.tr(),
+                      controller: registerCubit.carModelController,
+                      inputType: TextInputType.text,
+                      hidePassword: false,
+                    ),
+                    verticalSpace(28.0),
+                    CompleteRegisterItem(
+                      validator: (value) => nameValidation(value),
+                      label: LocaleKeys.colorNumber.tr(),
+                      hintText: LocaleKeys.colorNumber.tr(),
+                      controller: registerCubit.carNumberController,
+                      inputType: TextInputType.name,
+                      hidePassword: false,
+                    ),
+                    verticalSpace(28.0),
+                    const AddDetailsBlocListener(),
+                  ],
+                ),
               );
             },
           ),
@@ -115,7 +155,6 @@ class CompleteRegisterScreen extends StatelessWidget {
       return null;
     }
   }
-
 
   String? passwordValidation(String? password) {
     if (password == null || password.isEmpty) {

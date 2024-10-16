@@ -7,6 +7,8 @@ import 'package:awfar_captain/lang/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../core/di/dependency_injection.dart';
+import '../../../../core/helpers/navigation_service.dart';
 import '../../../../core/routing/routes.dart';
 import '../../../../core/utils/enums.dart';
 import '../../../../core/widgets/app_text_button.dart';
@@ -26,7 +28,16 @@ class RateBlocListener extends StatelessWidget {
         } else if(state is RateClientSuccessState)
         {
           Navigator.pop(context);
-          context.pushNamedAndRemoveUntil(Routes.home,predicate: (_) => false,);
+          getIt.reset().then(
+                (_) {
+              setupGetIt().then(
+                    (value) {
+                  return NavigationService.navigateToAndRemoveAll(
+                      Routes.home);
+                },
+              );
+            },
+          );
         }
         else if(state is UpdateStatusTripFailureState)
         {

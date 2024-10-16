@@ -33,7 +33,7 @@ class RegisterScreen extends StatelessWidget {
                     style:  const ButtonStyle(
                         padding: WidgetStatePropertyAll(EdgeInsets.all(0.0))
                     ),
-                    onPressed: () => context.pushReplacementNamed(Routes.login),
+                    onPressed: () => context.pushNamedAndRemoveUntil(Routes.login, predicate: (_) => false,),
                     child: Text(LocaleKeys.loginNow.tr(), style: TextStyleManager.font17blackBold,))
               ],
             ),

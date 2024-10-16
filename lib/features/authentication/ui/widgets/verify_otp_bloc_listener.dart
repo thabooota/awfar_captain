@@ -27,10 +27,14 @@ class VerifyOtpBlocListener extends StatelessWidget {
             key: PrefsManager.token,
             value: state.verifyPhoneResponse.token,
           ).then(
-            (_) => context.pushNamed(
+            (_) {
+              return context.pushNamedAndRemoveUntil(
               Routes.completeRegister,
-            ),
+              predicate: (_) => false,
+            );
+            },
           );
+          SharedPreferencesManager.saveData(key: PrefsManager.verifyCode, value: true);
           AnimatedSnackBar.material(
             state.verifyPhoneResponse.message,
             type: AnimatedSnackBarType.success,

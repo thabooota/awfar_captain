@@ -19,6 +19,10 @@
   "changePasswordHeader": "تغيير كلمة السر",
   "enterYourName": "اضف اسمك بالكامل",
   "email": "البريد الالكتروني",
+  "carColor": "لون السيارة",
+  "colorNumber": "رقم اللوحات",
+  "carBrand": "نوع السيارة",
+  "carModel": "موديل السيارة",
   "enterYourEmail": "اضف بريدك الالكتروني",
   "password": "الرقم السري",
   "enterPassword": "اضف الرقم السري",
@@ -85,5 +89,9 @@
   "tripNumber": "رقم الرحله",
   "reportForTrip": "الابلاغ عن الرحله",
   "coupon": "كوبون",
-  "totalTripCost": "اجمالي تكلفه الرحله"
+  "totalTripCost": "اجمالي تكلفه الرحله",
+  "errorText": "حدث خطأ ما برجاء اعاده المحاولة",
+  "en" : "اللغة الانجليزية" ,
+  "ar" : "اللغة اعربية" ,
+  "selectLang" : "اختر اللغة"
 }

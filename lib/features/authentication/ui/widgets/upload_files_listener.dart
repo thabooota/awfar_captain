@@ -1,5 +1,7 @@
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:awfar_captain/core/helpers/extensions.dart';
+import 'package:awfar_captain/core/networking/local/prefs_manager.dart';
+import 'package:awfar_captain/core/networking/local/shared_preferences.dart';
 import 'package:awfar_captain/features/authentication/logic/register/register_cubit.dart';
 import 'package:awfar_captain/features/authentication/logic/register/register_state.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -28,6 +30,7 @@ class UploadFilesListener extends StatelessWidget {
             animationCurve: Curves.fastEaseInToSlowEaseOut,
             mobileSnackBarPosition: MobileSnackBarPosition.bottom,
           ).show(context);
+          SharedPreferencesManager.saveData(key: PrefsManager.completeAddDecuments, value: true);
         }
         if (state is UploadFilesFailureState) {
           AnimatedSnackBar.material(

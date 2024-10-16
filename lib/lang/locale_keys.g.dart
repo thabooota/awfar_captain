@@ -21,6 +21,10 @@ abstract class  LocaleKeys {
   static const changePasswordHeader = 'changePasswordHeader';
   static const enterYourName = 'enterYourName';
   static const email = 'email';
+  static const carColor = 'carColor';
+  static const colorNumber = 'colorNumber';
+  static const carBrand = 'carBrand';
+  static const carModel = 'carModel';
   static const enterYourEmail = 'enterYourEmail';
   static const password = 'password';
   static const enterPassword = 'enterPassword';
@@ -88,5 +92,9 @@ abstract class  LocaleKeys {
   static const reportForTrip = 'reportForTrip';
   static const coupon = 'coupon';
   static const totalTripCost = 'totalTripCost';
+  static const errorText = 'errorText';
+  static const en = 'en';
+  static const ar = 'ar';
+  static const selectLang = 'selectLang';
 
 }

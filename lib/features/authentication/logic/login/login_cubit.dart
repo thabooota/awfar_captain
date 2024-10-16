@@ -33,7 +33,7 @@ class LoginCubit extends Cubit<LoginStates> {
         success: (LoginResponse response) {
       SharedPreferencesManager.saveData(
           key: PrefsManager.token,
-          value:response.token
+          value: response.token
       );
       emit(LoginSuccessState(response));
     }, failure: (ErrorHandler error) {

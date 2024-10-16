@@ -55,16 +55,25 @@ Future<void> main() async {
 
       bool? isOnboarding =
           SharedPreferencesManager.getData(key: PrefsManager.onboarding);
-
+      bool ?isVerifyCode = SharedPreferencesManager.getData(key: PrefsManager.verifyCode);
+      bool ?isCompleteAddDetails = SharedPreferencesManager.getData(key: PrefsManager.completeAddDetails);
+      bool ?isCompleteAddDecuments = SharedPreferencesManager.getData(key: PrefsManager.completeAddDecuments);
       String? token = SharedPreferencesManager.getData(
         key: PrefsManager.token,
       );
 
       if (isOnboarding != null) {
-        if (token != null) {
+        if (token != null&& isVerifyCode != null && isCompleteAddDetails != null && isCompleteAddDecuments != null) {
           initialRoute = Routes.home;
-        } else {
-          initialRoute = Routes.login;
+        }
+        if (token != null && isVerifyCode != null && isCompleteAddDetails != null && isCompleteAddDecuments == null) {
+          initialRoute = Routes.addDecuments;
+        }
+        if (token != null && isVerifyCode != null  && isCompleteAddDetails == null && isCompleteAddDecuments == null) {
+            initialRoute = Routes.completeRegister;
+          }
+        if (token != null  && isVerifyCode == null  && isCompleteAddDetails == null && isCompleteAddDecuments == null) {
+          initialRoute = Routes.register;
         }
       }
 

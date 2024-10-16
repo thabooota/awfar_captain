@@ -19,6 +19,7 @@ import 'package:awfar_captain/features/home/ui/widgets/meet_client_bottom_sheet.
 import 'package:awfar_captain/features/home/ui/widgets/offline_bottom_sheet.dart';
 import 'package:awfar_captain/features/home/ui/widgets/ride_request_bottom_sheet.dart';
 import 'package:awfar_captain/features/home/ui/widgets/start_trip_bottom_sheet.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,6 +29,7 @@ import 'package:location/location.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 import '../../../core/theming/color_manager.dart';
 import '../../../core/utils/pusher_config.dart';
+import '../../../lang/locale_keys.g.dart';
 import '../../chat/data/models/request/get_message_request_body.dart';
 import '../data/models/requests/accept_trip_request_body.dart';
 import '../data/models/requests/get_routes_request_body.dart';
@@ -47,6 +49,9 @@ class HomeCubit extends Cubit<HomeStates> {
   ) : super(InitialHomeState());
 
   bool isOnline = false;
+  BitmapDescriptor myLocationMarkerIcon = BitmapDescriptor.defaultMarker;
+  BitmapDescriptor locationMarkerAnotherIcon = BitmapDescriptor.defaultMarker;
+  BitmapDescriptor locationMarkerIcon = BitmapDescriptor.defaultMarker;
   BottomSheetStates bottomSheetStates = BottomSheetStates.offline;
   TextEditingController chargerController = TextEditingController();
   TextEditingController commentRateController = TextEditingController();
@@ -61,6 +66,21 @@ class HomeCubit extends Cubit<HomeStates> {
   late GoogleMapController googleMapController;
   Set<Marker> markers = {};
   late LatLng currentLocation;
+
+  void onSelectLang(BuildContext context, String value) {
+    if (value == LocaleKeys.en.tr()) {
+      SharedPreferencesManager.saveData(key: PrefsManager.lang, value: "en")
+          .then((_) async {
+        await context.setLocale(const Locale('en'));
+      });
+    } else {
+      SharedPreferencesManager.saveData(key: PrefsManager.lang, value: "ar")
+          .then((_) async {
+        await context.setLocale(const Locale('ar'));
+      });
+    }
+    emit(ChangeAppLangState());
+  }
 
   LatLngBounds getLatLngBounds(List<LatLng> points) {
     double minLat = double.infinity;
@@ -80,10 +100,6 @@ class HomeCubit extends Cubit<HomeStates> {
       northeast: LatLng(maxLat, maxLng),
     );
   }
-
-  BitmapDescriptor myLocationMarkerIcon = BitmapDescriptor.defaultMarker;
-  BitmapDescriptor locationMarkerAnotherIcon = BitmapDescriptor.defaultMarker;
-  BitmapDescriptor locationMarkerIcon = BitmapDescriptor.defaultMarker;
 
   void addCustomMapIcons() async {
     BitmapDescriptor.fromAssetImage(
@@ -159,6 +175,8 @@ class HomeCubit extends Cubit<HomeStates> {
     addCustomMapIcons();
     updateCurrentLocation();
   }
+
+  late PusherConfig _pusherConfig;
 
   void setCameraPosition() {
     if (isFirstCall) {
@@ -254,8 +272,6 @@ class HomeCubit extends Cubit<HomeStates> {
     emit(ChangeBottomSheetState());
   }
 
-  late PusherConfig _pusherConfig;
-
   initializePusherNotifications(
       {required onEvent, required String channelName}) async {
     _pusherConfig = PusherConfig();
@@ -264,6 +280,7 @@ class HomeCubit extends Cubit<HomeStates> {
   }
 
   TripsPendingResponse? tripsPendingResponse;
+
   void onEvent(PusherEvent event) {
     try {
       print("event name :${event.eventName}");
@@ -283,59 +300,6 @@ class HomeCubit extends Cubit<HomeStates> {
   }
 
   List<MessageInfo> messages = [];
-
-  void emitGetMessagesState() async {
-    messages = [];
-    emit(GetMessageLoadingState());
-    final getMessagesResponse = await _homeRepo.getMessages(
-      getMessagesRequestBody: GetMessagesRequestBody(
-        driverId: SharedPreferencesManager.getData(key: PrefsManager.driverId)
-            .toString(),
-        clientId: tripAcceptedResponse!.Client.Client_id.toString(),
-      ),
-    );
-    getMessagesResponse.when(
-      success: (GetMessagesResponse getMessagesResponse) {
-        messages = getMessagesResponse.messages;
-        emit(GetMessageSuccessState(getMessagesResponse));
-      },
-      failure: (error) {
-        emit(GetMessageFailureState(error.apiErrorModel.message));
-      },
-    );
-  }
-
-  void emitAddMessageState({required MessageInfo messageInfo}) {
-    messages.add(messageInfo);
-    emit(AddMessageState());
-  }
-
-  void emitSendMessageState() async {
-    emit(SendMessageLoadingState());
-    final response = await _homeRepo.sendMessage(
-      sendMessageRequestBody: SendMessageRequestBody(
-        sender: 'driver',
-        message: messageController.text,
-        // TODO: add client id
-        client_id: tripAcceptedResponse!.Client.Client_id.toString(),
-        driver_id: SharedPreferencesManager.getData(key: PrefsManager.driverId)
-            .toString(),
-      ),
-    );
-    response.when(success: (MassageResponse message) {
-      emitAddMessageState(
-        messageInfo: MessageInfo(
-          sender: "driver",
-          id: SharedPreferencesManager.getData(key: PrefsManager.driverId),
-          message: messageController.text,
-        ),
-      );
-      messageController.clear();
-      emit(SendMessageSuccessState(message));
-    }, failure: (errorMessage) {
-      emit(SendMessageFailureState(errorMessage.apiErrorModel.message));
-    });
-  }
 
   late GetRoutesResponse routesResponse;
   List<LatLng> latLng = [];
@@ -495,7 +459,23 @@ class HomeCubit extends Cubit<HomeStates> {
           channelName: 'TripsPending', onEvent: onEvent);
       emit(RejectedTripSuccessState(data));
     }, failure: (error) {
+      print(error);
       emit(RejectedTripFailureState(error.toString()));
+    });
+  }
+
+  void emitUpdateDriverStatus({
+    required String status
+  }) async {
+    emit(UpdateStatusTripLoadingState());
+    final response = await _homeRepo.updateDriverStatus(
+      updateStatusTripRequestBody: UpdateStatusDriverRequestBody(
+          trip_id: tripAcceptedResponse!.TripID, status: status),
+    );
+    response.when(success: (data) {
+      emit(UpdateStatusTripSuccessState(data));
+    }, failure: (error) {
+      emit(UpdateStatusTripFailureState(error.toString()));
     });
   }
 
@@ -513,19 +493,6 @@ class HomeCubit extends Cubit<HomeStates> {
     });
   }
 
-  void emitUpdateDriverStatus({required String status}) async {
-    emit(UpdateStatusTripLoadingState());
-    final response = await _homeRepo.updateDriverStatus(
-      updateStatusTripRequestBody: UpdateStatusDriverRequestBody(
-          trip_id: tripAcceptedResponse!.TripID, status: status),
-    );
-    response.when(success: (data) {
-      emit(UpdateStatusTripSuccessState(data));
-    }, failure: (error) {
-      emit(UpdateStatusTripFailureState(error.toString()));
-    });
-  }
-
   void emitRateClientStates() async {
     emit(RateClientLoadingState());
     final response = await _homeRepo.rateClient(
@@ -539,6 +506,60 @@ class HomeCubit extends Cubit<HomeStates> {
       emit(RateClientSuccessState(data));
     }, failure: (error) {
       emit(RateClientFailureState(error.toString()));
+    });
+  }
+
+  // chat logic
+  void emitGetMessagesState() async {
+    messages = [];
+    emit(GetMessageLoadingState());
+    final getMessagesResponse = await _homeRepo.getMessages(
+      getMessagesRequestBody: GetMessagesRequestBody(
+        driverId: SharedPreferencesManager.getData(key: PrefsManager.driverId)
+            .toString(),
+        clientId: tripAcceptedResponse!.Client.Client_id.toString(),
+      ),
+    );
+    getMessagesResponse.when(
+      success: (GetMessagesResponse getMessagesResponse) {
+        messages = getMessagesResponse.messages;
+        emit(GetMessageSuccessState(getMessagesResponse));
+      },
+      failure: (error) {
+        emit(GetMessageFailureState(error.apiErrorModel.message));
+      },
+    );
+  }
+
+  void emitAddMessageState({required MessageInfo messageInfo}) {
+    messages.add(messageInfo);
+    emit(AddMessageState());
+  }
+
+  void emitSendMessageState() async {
+    emit(SendMessageLoadingState());
+    final response = await _homeRepo.sendMessage(
+      sendMessageRequestBody: SendMessageRequestBody(
+        sender: 'driver',
+        message: messageController.text,
+        // TODO: add client id
+        client_id: tripAcceptedResponse!.Client.Client_id.toString(),
+        driver_id: SharedPreferencesManager.getData(key: PrefsManager.driverId)
+            .toString(),
+      ),
+    );
+    response.when(success: (MassageResponse message) {
+      emitAddMessageState(
+        messageInfo: MessageInfo(
+          sender: "driver",
+          id: SharedPreferencesManager.getData(key: PrefsManager.driverId),
+          message: messageController.text,
+        ),
+      );
+      messageController.clear();
+      emit(SendMessageSuccessState(message));
+    }, failure: (errorMessage) {
+      emit(SendMessageFailureState(errorMessage.apiErrorModel.message));
     });
   }
 }

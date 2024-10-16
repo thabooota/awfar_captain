@@ -99,7 +99,7 @@ class AppRouter {
       case Routes.captainGate:
         return AnimationRoute(
             page: BlocProvider.value(
-                value: getIt<CaptainGateCubit>()..emitGetMyBalance()..emitGetTripsState(),
+                value: getIt<CaptainGateCubit>()..emitGetTripsState(),
                  child:
                  const CaptainGateScreen()));
         case Routes.reportMyTrips:

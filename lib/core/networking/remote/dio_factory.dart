@@ -52,6 +52,10 @@ class DioFactory {
         },
         onError: (DioException error, handler) {
           if (error.response?.statusCode == 401) {
+            SharedPreferencesManager.removeData(key: PrefsManager.token);
+            SharedPreferencesManager.removeData(key: PrefsManager.verifyCode);
+            SharedPreferencesManager.removeData(key: PrefsManager.completeAddDecuments);
+            SharedPreferencesManager.removeData(key: PrefsManager.completeAddDetails);
             SharedPreferencesManager.removeData(key: PrefsManager.token).then(
                   (_) => getIt.reset().then(
                     (_) {

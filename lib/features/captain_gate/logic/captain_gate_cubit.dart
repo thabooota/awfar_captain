@@ -1,19 +1,14 @@
-import 'dart:developer';
 import 'package:awfar_captain/core/networking/local/prefs_manager.dart';
 import 'package:awfar_captain/core/networking/local/shared_preferences.dart';
-import 'package:awfar_captain/core/utils/pusher_config.dart';
 import 'package:awfar_captain/features/captain_gate/data/model/response/get_all_trips_response.dart';
 import 'package:awfar_captain/features/captain_gate/data/model/response/get_my_balance_response.dart';
 import 'package:awfar_captain/features/captain_gate/data/repo/repo.dart';
 import 'package:awfar_captain/features/captain_gate/logic/captain_gate_state.dart';
-import 'package:awfar_captain/features/home/data/models/response/trips_pending_response.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
-import '../../../core/networking/remote/api_error_model.dart';
 import '../../home/data/models/requests/upload_profile_request_body.dart';
 import '../../home/data/models/response/get_profile_response.dart';
-import '../../home/data/repo/routes_rep.dart';
+
 
 class CaptainGateCubit extends Cubit<CaptainGateStates> {
   final CaptainGateRepo _captainGateRepo;

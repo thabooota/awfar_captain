@@ -73,6 +73,12 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    initializeRoom();
+  }
+  @override
   void dispose() {
     pusherConfig.disconnect();
     super.dispose();
@@ -90,6 +96,7 @@ class _ChatScreenState extends State<ChatScreen> {
             mobileSnackBarPosition: MobileSnackBarPosition.top,
             duration: const Duration(milliseconds: 1200),
           ).show(context);
+          animateListToTheEnd();
         }
         if (state is SendMessageFailureState) {
           AnimatedSnackBar.material(
@@ -101,7 +108,7 @@ class _ChatScreenState extends State<ChatScreen> {
           ).show(context);
         }
         if (state is GetMessageSuccessState) {
-          initializeRoom();
+
         }
       },
       builder: (context, state) {

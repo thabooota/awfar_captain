@@ -95,7 +95,6 @@ class RatingScreen extends StatelessWidget {
                 ),
                 verticalSpace(80.h),
                 const RateBlocListener()
-
               ],
             ),
           ),

@@ -35,6 +35,10 @@ class CodegenLoader extends AssetLoader{
   "changePasswordHeader": "تغيير كلمة السر",
   "enterYourName": "اضف اسمك بالكامل",
   "email": "البريد الالكتروني",
+  "carColor": "لون السيارة",
+  "colorNumber": "رقم اللوحات",
+  "carBrand": "نوع السيارة",
+  "carModel": "موديل السيارة",
   "enterYourEmail": "اضف بريدك الالكتروني",
   "password": "الرقم السري",
   "enterPassword": "اضف الرقم السري",
@@ -101,7 +105,8 @@ class CodegenLoader extends AssetLoader{
   "tripNumber": "رقم الرحله",
   "reportForTrip": "الابلاغ عن الرحله",
   "coupon": "كوبون",
-  "totalTripCost": "اجمالي تكلفه الرحله"
+  "totalTripCost": "اجمالي تكلفه الرحله",
+  "errorText": "حدث خطأ ما برجاء اعاده المحاولة"
 };
 static const Map<String,dynamic> en = {
   "btnNext": "Next",
@@ -115,6 +120,10 @@ static const Map<String,dynamic> en = {
   "noAccount": "Don't have account? ",
   "subscription": "Subscription now",
   "registerHeader": "Register by phone",
+  "carColor": "Car brand",
+  "colorNumber": "Car number",
+  "carBrand": "car brand",
+  "carModel": "car model",
   "haveAccount": "Have account? ",
   "loginNow": "Login now",
   "enterOTPCode": "Enter verification code",
@@ -190,7 +199,8 @@ static const Map<String,dynamic> en = {
   "tripNumber": "Trip Number",
   "reportForTrip": "Report for trip",
   "coupon": "Coupon",
-  "totalTripCost": "Total trip cost"
+  "totalTripCost": "Total trip cost",
+  "errorText": "Something went wrong, please try again."
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ar": ar, "en": en};
 }

@@ -30,6 +30,10 @@ class RegisterCubit extends Cubit<RegisterStates> {
   final GlobalKey<FormState> otpFormKey = GlobalKey<FormState>();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
+  final TextEditingController carColorController = TextEditingController();
+  final TextEditingController carNumberController = TextEditingController();
+  final TextEditingController carModelController = TextEditingController();
+  final TextEditingController carBrandController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController =
       TextEditingController();
@@ -96,7 +100,9 @@ class RegisterCubit extends Cubit<RegisterStates> {
         email: emailController.text,
         password: passwordController.text,
         password_confirmation: confirmPasswordController.text,
-        full_name: nameController.text,
+        full_name: nameController.text, car_model: carModelController.text,
+        car_brand: carBrandController.text,car_color: carColorController.text,
+        car_number: carNumberController.text
       ),
     );
 

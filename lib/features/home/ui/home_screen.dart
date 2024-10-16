@@ -1,5 +1,8 @@
 import 'package:awfar_captain/core/helpers/extensions.dart';
 import 'package:awfar_captain/core/helpers/spacing.dart';
+import 'package:awfar_captain/core/networking/local/prefs_manager.dart';
+import 'package:awfar_captain/core/networking/local/shared_preferences.dart';
+import 'package:awfar_captain/core/networking/remote/dio_factory.dart';
 import 'package:awfar_captain/core/theming/color_manager.dart';
 import 'package:awfar_captain/core/theming/text_style_manager.dart';
 import 'package:awfar_captain/features/captain_gate/logic/captain_gate_cubit.dart';
@@ -28,7 +31,7 @@ class HomeScreen extends StatelessWidget {
           return Scaffold(
           appBar: AppBar(
             centerTitle: true,
-            title: BlocBuilder<HomeCubit, HomeStates>(builder: (context, state) => Row(
+            title: BlocBuilder< HomeCubit, HomeStates >( builder: (context, state) => Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
@@ -56,7 +59,8 @@ class HomeScreen extends StatelessWidget {
                       context.read<HomeCubit>().chaneConnectionState(value),
                 ),
               ],
-            ),),
+            ),
+            ),
             actions: [
               IconButton(
                 icon: SvgPicture.asset(AssetsManager.icNotification),
@@ -64,7 +68,10 @@ class HomeScreen extends StatelessWidget {
               ),
             ],
           ),
-          drawer: const DrawerView(),
+          drawer:  DrawerView(
+            onChangeLang: (String value) {
+              context.read<HomeCubit>().onSelectLang(context, value);
+            },),
           body: const HomeMapView(),
           bottomSheet: BlocBuilder<HomeCubit, HomeStates>( builder: (context, state) => Wrap(
               children: [
@@ -92,7 +99,9 @@ class HomeScreen extends StatelessWidget {
                       left: 18.0,
                       bottom: 25.0
                   ),
-                  child: context.read<HomeCubit>().bottomSheets(),
+                  child: SingleChildScrollView(
+                      child: context.read<HomeCubit>().bottomSheets()
+                  ),
                 ),
               ],
             ),
@@ -101,7 +110,18 @@ class HomeScreen extends StatelessWidget {
         } else {
           if(state is GetProfileError)
           {
-            return const Scaffold(body: Center(child: Text('An error occurred!')));
+            return  Scaffold(
+                body: Center(
+                    child: Column(
+                      children: [
+                        Text(LocaleKeys.errorText.tr()),
+                        TextButton(
+                            onPressed: () {
+                              DioFactory.handleUnauthorized();
+                            },
+                            child: Text(LocaleKeys.loginNow.tr() , style: TextStyleManager.font20TextColor600,))
+                      ],
+                    )), );
           } else {
           return const Scaffold(body: Center(child: CircularProgressIndicator(
             color: ColorManager.green,
