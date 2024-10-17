@@ -23,6 +23,18 @@ class LoginBlocListener extends StatelessWidget {
       listener: (context, state) {
         if (state is LoginSuccessState) {
           SharedPreferencesManager.saveData(
+            key: PrefsManager.completeAddDecuments,
+            value: true,
+          );
+          SharedPreferencesManager.saveData(
+            key: PrefsManager.completeAddDetails,
+            value: true,
+          );
+          SharedPreferencesManager.saveData(
+            key: PrefsManager.verifyCode,
+            value: true,
+          );
+          SharedPreferencesManager.saveData(
             key: PrefsManager.token,
             value: state.response.token,
           ).then(

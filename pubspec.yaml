@@ -48,7 +48,7 @@ dependencies:
   gradient_borders: ^1.0.0
   google_maps_flutter: ^2.2.8
   calendar_date_picker2: ^1.1.5
-  location: ^6.0.2
+  location: ^7.0.1
   flutter_rating_bar: ^4.0.1
   flutter_secure_storage: ^9.2.2
   firebase_core: ^3.4.1
@@ -57,12 +57,13 @@ dependencies:
   pusher_channels_flutter: ^2.2.1
   flutter_polyline_points: ^2.1.0
   dropdown_button2: ^2.3.9
+  change_app_package_name: ^1.4.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^4.0.0
+  flutter_lints: ^5.0.0
 
 flutter:
 
