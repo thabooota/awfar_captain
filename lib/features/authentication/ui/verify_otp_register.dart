@@ -10,6 +10,7 @@ import '../../../core/theming/color_manager.dart';
 import '../../../core/theming/text_style_manager.dart';
 import '../../../core/widgets/back_icon_button.dart';
 import '../../../lang/locale_keys.g.dart';
+import 'widgets/resend_code.dart';
 
 class VerifyOtpRegister extends StatelessWidget {
   final String phone;
@@ -51,6 +52,9 @@ class VerifyOtpRegister extends StatelessWidget {
               controller: context.read<RegisterCubit>().otpController,
               formKey: context.read<RegisterCubit>().otpFormKey,
             ),
+            verticalSpace(32.0),
+            const ResendCodeView(),
+            verticalSpace(42.0),
             VerifyOtpBlocListener(phone: phone),
           ],
         ),

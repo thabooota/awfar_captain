@@ -31,6 +31,8 @@
   "btnSend": "Send",
   "addDecuments": "Add decuments",
   "enterPhoneNumber": "Enter your phone number",
+  "noCode": "لم استلم رمز",
+  "btnNewCode": "اعاده ارسال",
   "captainGate": "Captain's gate",
   "currency": "EGP",
   "withDrawMyBalance": "Withdraw my balance",

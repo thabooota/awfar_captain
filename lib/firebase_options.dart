@@ -50,21 +50,19 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAuIi-QZjSD0LyRus1tnqX7S5Aq2s8tJTI',
-    appId: '1:494337702068:android:7407eed2a376eb538a3fe1',
-    messagingSenderId: '494337702068',
-    projectId: 'awfarcar-53b26',
-    databaseURL: 'https://awfarcar-53b26-default-rtdb.firebaseio.com',
-    storageBucket: 'awfarcar-53b26.appspot.com',
+    apiKey: 'AIzaSyADFeWhFQwjakVpg5u4CZN4HOHWResrkmo',
+    appId: '1:884052873048:android:496f089c5c911a2e461f2d',
+    messagingSenderId: '884052873048',
+    projectId: 'awfar-car-63be9',
+    storageBucket: 'awfar-car-63be9.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCUBkkH_jSFebLNZftZ8ntQi4vl6nfUnuQ',
-    appId: '1:494337702068:ios:d97c71f25f87f5bf8a3fe1',
-    messagingSenderId: '494337702068',
-    projectId: 'awfarcar-53b26',
-    databaseURL: 'https://awfarcar-53b26-default-rtdb.firebaseio.com',
-    storageBucket: 'awfarcar-53b26.appspot.com',
-    iosBundleId: 'com.example.awfarClient',
+    apiKey: 'AIzaSyBtIteJBrWur7qI7I9-wWLvjRNkOHGQCfY',
+    appId: '1:884052873048:ios:b64e1a7d90031f5f461f2d',
+    messagingSenderId: '884052873048',
+    projectId: 'awfar-car-63be9',
+    storageBucket: 'awfar-car-63be9.appspot.com',
+    iosBundleId: 'com.awfarcar.awfarCaptain',
   );
 }

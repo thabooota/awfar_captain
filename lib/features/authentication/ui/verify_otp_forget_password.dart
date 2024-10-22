@@ -10,6 +10,7 @@ import '../../../core/theming/color_manager.dart';
 import '../../../core/theming/text_style_manager.dart';
 import '../../../core/widgets/back_icon_button.dart';
 import '../logic/forget_password/forget_password_cubit.dart';
+import 'widgets/resend_code.dart';
 
 class VerifyOtpForgetPassword extends StatelessWidget {
   final String phone;
@@ -49,6 +50,9 @@ class VerifyOtpForgetPassword extends StatelessWidget {
           CustomPinCodeTextField(
              formKey: context.read<ForgotPasswordCubit>().verifyCodeFormKey,
             controller: context.read<ForgotPasswordCubit>().otpController,),
+          verticalSpace(32.0),
+          const ResendCodeView(),
+          verticalSpace(42.0),
           VerifyCodeBlocListener(phone: phone),
         ],
       ),

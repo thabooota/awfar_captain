@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "884052873048",
+    "project_id": "awfar-car-63be9",
+    "storage_bucket": "awfar-car-63be9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:884052873048:android:496f089c5c911a2e461f2d",
+        "android_client_info": {
+          "package_name": "com.awfarcar.awfar_captain"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADFeWhFQwjakVpg5u4CZN4HOHWResrkmo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:884052873048:android:e46a41ff9f395a67461f2d",
+        "android_client_info": {
+          "package_name": "com.awfarcar.awfar_client"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADFeWhFQwjakVpg5u4CZN4HOHWResrkmo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
