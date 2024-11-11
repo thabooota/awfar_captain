@@ -36,16 +36,20 @@ class DrawerView extends StatelessWidget {
                 child: const CustomAccountViewRow()
               ),
               DrawerItem(
-                title: LocaleKeys.drawerItemHome.tr(),
-                icon: AssetsManager.icHome,
+                title: LocaleKeys.notifications.tr(),
+                icon: AssetsManager.icNotification,
                 onTap: () {
-                  context.pushNamedAndRemoveUntil(Routes.home, predicate: (route) => false,);
+                  context.pop();
+                  context.pushNamed(Routes.notification,);
                 },
               ),
               DrawerItem(
                 title: LocaleKeys.captainGate.tr(),
                 icon: AssetsManager.icHome,
-                onTap: () => context.pushNamed(Routes.captainGate),
+                onTap: () {
+                  context.pop();
+                  context.pushNamed(Routes.captainGate);
+                },
               ),
               DrawerItem(
                 title: LocaleKeys.drawerItemLang.tr(),
@@ -59,16 +63,20 @@ class DrawerView extends StatelessWidget {
                   );
                 },
               ),
-              // DrawerItem(
-              //   title: LocaleKeys.drawerItemNotifications.tr(),
-              //   icon: AssetsManager.icNotification,
-              //   onTap: () => context.pushNamed(Routes.notification),
-              // ),
+              DrawerItem(
+                title: LocaleKeys.scheduleTrip.tr(),
+                icon: AssetsManager.icNotification,
+                onTap: () {
+                  context.pop();
+                  context.pushNamed(Routes.schudleTrip);
+                },
+              ),
               DrawerItem(
                 title: LocaleKeys.drawerItemSupport.tr(),
                 icon: AssetsManager.icSupport,
                 png: true,
                 onTap: () {
+                  context.pop();
                   context.pushNamed(Routes.technicalSupport);
                 },
               ),
@@ -76,6 +84,7 @@ class DrawerView extends StatelessWidget {
                 title: LocaleKeys.accountSettings.tr(),
                 icon: AssetsManager.icSettings,
                 onTap: () {
+                  context.pop();
                   context.pushNamed(Routes.accountSettings);
                   },
               ),

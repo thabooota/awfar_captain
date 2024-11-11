@@ -2,8 +2,9 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../core/helpers/navigation_service.dart';
+import '../core/helpers/snackbar_service.dart';
 import '../core/routing/app_router.dart';
-import '../core/routing/routes.dart';
 import '../core/theming/theme_manager.dart';
 import '../core/utils/internet_connection.dart';
 
@@ -41,12 +42,15 @@ class _AwfarCaptainAppState extends State<AwfarCaptainApp> {
             if (snapshot.data == ConnectivityResult.none) {
               return const LostConnection();
             } else {
+
               return MaterialApp(
                 debugShowCheckedModeBanner: false,
                 title: 'Awfar-Captain',
                 initialRoute: widget.initialRoute,
                 theme: ThemeManager.getLightTheme(),
                 darkTheme: ThemeManager.getDarkTheme(),
+                navigatorKey: NavigationService.navigatorKey,
+                scaffoldMessengerKey: SnackBarService.messengerKey,
                 themeMode: ThemeMode.light,
                 supportedLocales: context.supportedLocales,
                 localizationsDelegates: context.localizationDelegates,

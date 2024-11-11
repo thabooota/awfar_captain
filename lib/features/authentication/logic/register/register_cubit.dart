@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:awfar_captain/features/authentication/data/models/requests/add_details_request_body.dart';
 import 'package:awfar_captain/features/authentication/data/models/requests/verify_phone_request_body.dart';
 import 'package:awfar_captain/features/authentication/data/models/responses/add_details_response.dart';
@@ -12,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
-
 import '../../../../core/networking/local/prefs_manager.dart';
 import '../../../../core/networking/local/shared_preferences.dart';
 import '../../../../core/networking/remote/api_error_handler.dart';
@@ -57,7 +55,9 @@ class RegisterCubit extends Cubit<RegisterStates> {
 
     final registerResponse = await _registerRepo.register(
       registerRequestBody:
-          RegisterRequestBody(phone: "+2${phoneController.text}", fcmToken: SharedPreferencesManager.getData(key: PrefsManager.fcmToken)),
+          RegisterRequestBody(
+              phone: "+2${phoneController.text}",
+              device_id : SharedPreferencesManager.getData(key: PrefsManager.fcmToken)),
     );
 
     registerResponse.when(
@@ -92,7 +92,6 @@ class RegisterCubit extends Cubit<RegisterStates> {
 
   void emitAddDetailsState() async {
     emit(AddDetailsLoadingState());
-
     print(nameController.text);
     final registerResponse = await _registerRepo.addDetails(
       token: SharedPreferencesManager.getData(key: PrefsManager.token),
@@ -314,4 +313,5 @@ class RegisterCubit extends Cubit<RegisterStates> {
       },
     );
   }
+
 }

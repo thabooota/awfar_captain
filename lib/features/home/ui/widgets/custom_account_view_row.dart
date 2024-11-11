@@ -15,12 +15,20 @@ class CustomAccountViewRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-         CircleAvatar(
+        CircleAvatar(
           backgroundColor: ColorManager.originalWhite,
           radius: 37.0.h,
           child: CircleAvatar(
-            backgroundImage:context.read<CaptainGateCubit>().myProfile!.media!.isNotEmpty ? NetworkImage(
-                context.read<CaptainGateCubit>().myProfile!.media![0].path) : const AssetImage(AssetsManager.imgProfileUser,),
+            backgroundImage: context
+                    .read<CaptainGateCubit>()
+                    .myProfile!
+                    .media!
+                    .isNotEmpty
+                ? NetworkImage(
+                    context.read<CaptainGateCubit>().myProfile!.media![0].path)
+                : const AssetImage(
+                    AssetsManager.imgProfileUser,
+                  ),
             radius: 35.5.h,
           ),
         ),
@@ -35,8 +43,8 @@ class CustomAccountViewRow extends StatelessWidget {
             ),
             verticalSpace(8.0),
             Container(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: 10.0, vertical: 3.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 3.0),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(18.0),
                   color: ColorManager.originalWhite,
@@ -52,7 +60,7 @@ class CustomAccountViewRow extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    "4.6",
+                    "${context.read<CaptainGateCubit>().myRate ?? "0"}",
                     style: TextStyleManager.font13Black700,
                   ),
                   horizontalSpace(4.0),

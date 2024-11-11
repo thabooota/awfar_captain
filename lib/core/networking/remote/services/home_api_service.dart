@@ -1,12 +1,15 @@
 import 'package:awfar_captain/core/networking/remote/api_constants.dart';
 import 'package:awfar_captain/features/chat/data/models/response/get_meassage_response.dart';
 import 'package:awfar_captain/features/home/data/models/requests/accept_trip_request_body.dart';
+import 'package:awfar_captain/features/home/data/models/requests/change_password_request_body.dart';
 import 'package:awfar_captain/features/home/data/models/requests/rate_client_request_body.dart';
 import 'package:awfar_captain/features/captain_gate/data/model/response/get_my_trip_response.dart';
 import 'package:awfar_captain/features/home/data/models/requests/store_driver_trip_request_body.dart';
 import 'package:awfar_captain/features/home/data/models/requests/update_status_driver_request_body.dart';
+import 'package:awfar_captain/features/home/data/models/response/get_all_scheduled_trips_response.dart';
 import 'package:awfar_captain/features/home/data/models/response/get_trip_response.dart';
 import 'package:awfar_captain/features/home/data/models/response/trip_accepted_response.dart';
+import 'package:awfar_captain/features/notification/data/response/get_all_notifications_response.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
@@ -70,4 +73,19 @@ abstract class HomeApiService {
   Future<GetMessagesResponse> getMessages({
     @Body() required GetMessagesRequestBody getMessagesRequestBody,
   });
+  
+  @GET(ApiConstants.allScheduledTrips)
+  Future<List<GetAllScheduledTripsResponse>> getAllScheduledTrips({
+    @Header('Authorization') required String token,
+});
+ @GET(ApiConstants.notifications)
+  Future<List<GetAllNotificationsResponse>> getAllNotifications({
+    @Header('Authorization') required String token,
+});
+@POST(ApiConstants.changePassword)
+ Future<MassageResponse> changePassword ({
+    @Body() required ChangePasswordRequestBody changePasswordRequestBody,
+    @Header('Authorization') required String token,
+
+});
 }

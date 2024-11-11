@@ -19,7 +19,7 @@ class ArrivedMeetingPlaceBottomSheet extends StatelessWidget {
       children: [
         Expanded(
           child: Text(
-            context.read<HomeCubit>().tripAcceptedResponse!.From,
+            context.read<HomeCubit>().scheduleTrip == true? context.read<HomeCubit>().scheduledTripsResponse!.from : context.read<HomeCubit>().tripAcceptedResponse!.From!,
             style: TextStyleManager.font17TextColor400,
             overflow: TextOverflow.ellipsis,
           ),

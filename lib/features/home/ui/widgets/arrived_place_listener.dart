@@ -11,25 +11,55 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/theming/text_style_manager.dart';
 import '../../../../core/utils/enums.dart';
 
-class ArrivedPlaceListener extends StatelessWidget {
+class ArrivedPlaceListener extends StatefulWidget {
   const ArrivedPlaceListener({super.key});
+
+  @override
+  State<ArrivedPlaceListener> createState() => _ArrivedPlaceListenerState();
+}
+
+class _ArrivedPlaceListenerState extends State<ArrivedPlaceListener> {
+  @override
+  void initState() {
+    // context
+    //     .read<HomeCubit>()
+    //     .getRoutes(
+    //       first: false,
+    //       latTo: double.parse(
+    //           context.read<HomeCubit>().tripAcceptedResponse!.From_lat),
+    //       longTo: double.parse(
+    //           context.read<HomeCubit>().tripAcceptedResponse!.From_long),
+    //     )
+    //     .then((_) => {
+    //           context.read<HomeCubit>().displayRoute(
+    //               lat1: double.parse(
+    //                   context.read<HomeCubit>().tripAcceptedResponse!.From_lat),
+    //               long1: double.parse(context
+    //                   .read<HomeCubit>()
+    //                   .tripAcceptedResponse!
+    //                   .From_long))
+    //         });
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<HomeCubit, HomeStates>(
       listener: (context, state) {
-        if(state is UpdateStatusTripLoadingState)
-        {
-          showDialog(context: context, builder: (context) => const Center(child: CircularProgressIndicator(
-            color: ColorManager.green,
-          )));
-        } else if(state is UpdateStatusTripSuccessState)
-        {
+        if (state is UpdateStatusTripLoadingState) {
+          showDialog(
+              context: context,
+              builder: (context) => const Center(
+                      child: CircularProgressIndicator(
+                    color: ColorManager.green,
+                  )));
+        } else if (state is UpdateStatusTripSuccessState) {
           Navigator.pop(context);
-          context.read<HomeCubit>().changeBottomSheetState(BottomSheetStates.startTrip);
-        }
-        else if(state is UpdateStatusTripFailureState)
-        {
+          context
+              .read<HomeCubit>()
+              .changeBottomSheetState(state: BottomSheetStates.startTrip,);
+        } else if (state is UpdateStatusTripFailureState) {
           Navigator.pop(context);
           AnimatedSnackBar.material(
             state.errorMessage,
@@ -41,7 +71,35 @@ class ArrivedPlaceListener extends StatelessWidget {
       },
       child: GestureDetector(
         onTap: () {
-          context.read<HomeCubit>().emitUpdateDriverStatus(status: "meeting");
+          context
+              .read<HomeCubit>()
+              .emitUpdateDriverStatus(status: "meeting")
+              .then((_)  {
+                    context
+                        .read<HomeCubit>()
+                        .getRoutes(
+                          first: false,
+                          latTo: double.parse(context
+                              .read<HomeCubit>()
+                              .tripAcceptedResponse!
+                              .To_lat!),
+                          longTo: double.parse(context
+                              .read<HomeCubit>()
+                              .tripAcceptedResponse!
+                              .To_long!),
+                        )
+                        .then((_)  {
+                              context.read<HomeCubit>().displayRoute(
+                                  lat1: double.parse(context
+                                      .read<HomeCubit>()
+                                      .tripAcceptedResponse!
+                                      .To_lat!),
+                                  long1: double.parse(context
+                                      .read<HomeCubit>()
+                                      .tripAcceptedResponse!
+                                      .To_long!));
+                            });
+                  });
         },
         child: Container(
           width: 90.w,
@@ -50,8 +108,11 @@ class ArrivedPlaceListener extends StatelessWidget {
             color: ColorManager.cyan,
             borderRadius: BorderRadius.circular(15.0),
           ),
-          child: Text(LocaleKeys.arriveLocation.tr(), style: TextStyleManager.font15Black600,
-            textAlign: TextAlign.center,),
+          child: Text(
+            LocaleKeys.arriveLocation.tr(),
+            style: TextStyleManager.font15Black600,
+            textAlign: TextAlign.center,
+          ),
         ),
       ),
     );

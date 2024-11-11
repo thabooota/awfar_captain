@@ -24,7 +24,9 @@ class AccountSettings extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 15.h),
+              padding: EdgeInsets.symmetric(
+                  horizontal: 15.h,
+              ),
               color: ColorManager.green,
               child: Column(
                 children: [
@@ -33,7 +35,11 @@ class AccountSettings extends StatelessWidget {
                       LocaleKeys.accountSettings.tr(),
                       style: TextStyleManager.font17White500,
                     ),
-                    leading: SvgPicture.asset(AssetsManager.icSettings, colorFilter: const ColorFilter.mode(ColorManager.originalWhite, BlendMode.srcIn),),
+                    leading: SvgPicture.asset(
+                      AssetsManager.icSettings,
+                      colorFilter: const ColorFilter.mode(
+                          ColorManager.originalWhite, BlendMode.srcIn),
+                    ),
                   ),
                   verticalSpace(20.h),
                   const CustomAccountViewRow(),
@@ -47,13 +53,22 @@ class AccountSettings extends StatelessWidget {
               ),
             ),
             verticalSpace(10.h),
-            AccountSettingsItem(onPressed: () => context.pushNamed(Routes.editAccount), text: LocaleKeys.editAccount.tr(),),
-            AccountSettingsItem(onPressed: () {}, text: LocaleKeys.changePassword.tr(),),
+            AccountSettingsItem(
+              onPressed: () => context.pushNamed(
+                Routes.editAccount,
+              ),
+              text: LocaleKeys.editAccount.tr(),
+            ),
+            AccountSettingsItem(
+              onPressed: () {},
+              text: LocaleKeys.changePassword.tr(),
+            ),
             Padding(
-              padding:  EdgeInsets.symmetric(horizontal: 10.w),
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
               child: Row(
                 children: [
-                  Text(LocaleKeys.notifications.tr(), style: TextStyleManager.font17TextColor400),
+                  Text(LocaleKeys.notifications.tr(),
+                      style: TextStyleManager.font17TextColor400),
                   const Spacer(),
                   Switch(
                       trackOutlineColor: WidgetStateProperty.resolveWith(
@@ -73,7 +88,10 @@ class AccountSettings extends StatelessWidget {
                 ],
               ),
             ),
-            AccountSettingsItem(onPressed: () => context.pushNamed(Routes.myRides), text: LocaleKeys.myRides.tr(),),
+            AccountSettingsItem(
+              onPressed: () => context.pushNamed(Routes.myRides),
+              text: LocaleKeys.myRides.tr(),
+            ),
             verticalSpace(20.h),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -83,8 +101,14 @@ class AccountSettings extends StatelessWidget {
               ),
             ),
             verticalSpace(10.h),
-            AccountSettingsItem(onPressed: () {}, text: LocaleKeys.aboutApp.tr(),),
-            AccountSettingsItem(onPressed: () {}, text: LocaleKeys.privacyPolicy.tr(),),
+            AccountSettingsItem(
+              onPressed: () {},
+              text: LocaleKeys.aboutApp.tr(),
+            ),
+            AccountSettingsItem(
+              onPressed: () {},
+              text: LocaleKeys.privacyPolicy.tr(),
+            ),
           ],
         ),
       ),

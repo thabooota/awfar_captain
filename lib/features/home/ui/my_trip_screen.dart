@@ -5,8 +5,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import '../../../core/helpers/spacing.dart';
 import '../../../core/theming/color_manager.dart';
+import '../../../core/widgets/back_icon_button.dart';
 import '../../../lang/locale_keys.g.dart';
 import '../data/entity/trip_entity.dart';
 
@@ -32,6 +34,7 @@ class _MyTripScreenState extends State<MyTripScreen> {
           systemNavigationBarIconBrightness: Brightness.dark,
         ),
         elevation: 0.0,
+        leading: BackIconButton(),
         shape: const Border(
           bottom: BorderSide(color: ColorManager.transparent, width: 0.0),
         ),
@@ -41,7 +44,12 @@ class _MyTripScreenState extends State<MyTripScreen> {
           // TODO: implement listener
         },
         builder: (context, state) {
-          if (state is GetAllTripsSuccess) {
+          if (state is GetAllTripsLoading) {
+            return Center(
+                child: LoadingAnimationWidget.fourRotatingDots(
+                    color: ColorManager.green, size: 35.0));
+          }else {
+          if (context.read<CaptainGateCubit>().trips.isNotEmpty) {
             return ListView.separated(
               padding: const EdgeInsets.symmetric(horizontal: 22.0),
               itemBuilder: (context, index) => MyTripsItem(
@@ -87,11 +95,9 @@ class _MyTripScreenState extends State<MyTripScreen> {
                   .read<CaptainGateCubit>()
                   .trips.length,
             );
-          } else if (state is GetAllTripsLoading) {
-            return const Center(child: Text('Loading...'));
           } else {
-            return const Center(child: Text('Error...'));
-          }
+            return  Center(child: Text(LocaleKeys.noTripsFound.tr()));
+          }}
         },
       ),
     );

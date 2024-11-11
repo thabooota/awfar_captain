@@ -13,6 +13,8 @@ class TripInfo {
   final String to_long;
   final String to_lat;
   final String Client_Name;
+  final String ?time;
+  final String ?date;
   TripInfo(
       {
         required this.from_long,
@@ -24,5 +26,7 @@ class TripInfo {
       required this.to_lat,
       required this.tripId,
       required this.Client_Name,
+      required this.time,
+      required this.date,
       });
 }

@@ -9,15 +9,19 @@ part of 'trip_accepted_response.dart';
 TripAcceptedResponse _$TripAcceptedResponseFromJson(
         Map<String, dynamic> json) =>
     TripAcceptedResponse(
-      Client: ClintInfo.fromJson(json['Client'] as Map<String, dynamic>),
-      To: json['To'] as String,
-      From: json['From'] as String,
-      Price: (json['Price'] as num).toInt(),
-      TripID: (json['TripID'] as num).toInt(),
-      From_lat: json['From_lat'] as String,
-      To_lat: json['To_lat'] as String,
-      From_long: json['From_long'] as String,
-      To_long: json['To_long'] as String,
+      Client: json['Client'] == null
+          ? null
+          : ClintInfo.fromJson(json['Client'] as Map<String, dynamic>),
+      To: json['To'] as String?,
+      From: json['From'] as String?,
+      Price: (json['Price'] as num?)?.toInt(),
+      TripID: (json['TripID'] as num?)?.toInt(),
+      From_lat: json['From_lat'] as String?,
+      To_lat: json['To_lat'] as String?,
+      From_long: json['From_long'] as String?,
+      To_long: json['To_long'] as String?,
+      data: json['data'] as String?,
+      message: json['message'] as String?,
     );
 
 Map<String, dynamic> _$TripAcceptedResponseToJson(
@@ -31,6 +35,8 @@ Map<String, dynamic> _$TripAcceptedResponseToJson(
       'To_long': instance.To_long,
       'To_lat': instance.To_lat,
       'From_lat': instance.From_lat,
+      'data': instance.data,
+      'message': instance.message,
       'Client': instance.Client,
     };
 

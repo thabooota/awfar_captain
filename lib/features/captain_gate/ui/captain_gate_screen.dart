@@ -6,6 +6,7 @@ import 'package:awfar_captain/features/captain_gate/logic/captain_gate_cubit.dar
 import 'package:awfar_captain/features/captain_gate/logic/captain_gate_state.dart';
 import 'package:awfar_captain/features/captain_gate/ui/widgets/my_trips_widget.dart';
 import 'package:awfar_captain/lang/locale_keys.g.dart';
+import 'package:custom_date_range_picker/custom_date_range_picker.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -35,7 +36,7 @@ class CaptainGateScreen extends StatelessWidget {
         elevation: 0.0,
         centerTitle: true,
         title: Text(
-          "${LocaleKeys.captainGate.tr()} \n Youssef Thabet",
+          "${LocaleKeys.captainGate.tr()} \n ${context.read<CaptainGateCubit>().myProfile!.name}",
           style: TextStyleManager.font17blackBold,
           textAlign: TextAlign.center,
         ),
@@ -44,10 +45,10 @@ class CaptainGateScreen extends StatelessWidget {
       body: BlocBuilder<CaptainGateCubit, CaptainGateStates>(
         builder: (context, state) {
           CaptainGateCubit cubit = context.read<CaptainGateCubit>();
-          if(state is GetAllTripsLoading)
+          if(state is GetReportLoading)
             {
               return const Center(child: CircularProgressIndicator(color: ColorManager.green,));
-            } if (state is GetAllTripsError ) {
+            } if (state is GetReportError ) {
             return Center(child: Text(LocaleKeys.errorText.tr() ,style:  TextStyleManager.font20TextColor600,),);
           }else  {
             return ListView(
@@ -101,7 +102,7 @@ class CaptainGateScreen extends StatelessWidget {
                             ),
                             const Spacer(),
                             Text(
-                              "جيد",
+                            cubit.myRate! > 1 ? LocaleKeys.good.tr() : LocaleKeys.bad.tr(),
                               style: TextStyleManager.font17TextColor600,
                             ),
                           ],
@@ -115,27 +116,13 @@ class CaptainGateScreen extends StatelessWidget {
                             ),
                             const Spacer(),
                             Text(
-                              "مقبول",
+                              int.parse(cubit.myReport!.Percentage_completed_trips.replaceAll('%', '')) > 50 ? LocaleKeys.good.tr() : LocaleKeys.satisfactory.tr(),
                               style: TextStyleManager.font17TextColor600
                                   .copyWith(color: ColorManager.orange),
                             ),
                           ],
                         ),
                         verticalSpace(10.0.h),
-                        Row(
-                          children: [
-                            Text(
-                              LocaleKeys.acceptanceRate.tr(),
-                              style: TextStyleManager.font17TextColor600,
-                            ),
-                            const Spacer(),
-                            Text(
-                              "0 %",
-                              style: TextStyleManager.font17TextColor600
-                                  .copyWith(color: ColorManager.orange),
-                            ),
-                          ],
-                        ),
                         verticalSpace(10.0.h),
                         Row(
                           children: [
@@ -145,7 +132,7 @@ class CaptainGateScreen extends StatelessWidget {
                             ),
                             const Spacer(),
                             Text(
-                              "0 %",
+                              cubit.myReport!.Percentage_completed_trips,
                               style: TextStyleManager.font17TextColor600
                                   .copyWith(color: ColorManager.red),
                             ),
@@ -156,53 +143,51 @@ class CaptainGateScreen extends StatelessWidget {
                   ),
                 ),
                 verticalSpace(15.h),
-                Card(
-                  color: ColorManager.originalWhite,
-                  elevation: 2,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16.0, vertical: 6.0),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            IconButton(
-                                onPressed: () {},
-                                icon: const Icon(Icons.arrow_back_ios)),
-                            Text(
-                              '28-1-2025 : 21-4-2025',
-                              style: TextStyleManager.font20BlackBold,
-                            ),
-                            IconButton(
-                                onPressed: () {},
-                                icon: const Icon(Icons.arrow_forward_ios)),
-                          ],
+                GestureDetector(
+                  onTap: () {
+                    showCustomDateRangePicker(
+                      context,
+                      dismissible: true,
+                      minimumDate: DateTime.now().subtract(const Duration(days: 300)),
+                      maximumDate: DateTime.now(),
+                      endDate: cubit.secaundDateTime,
+                      startDate: cubit.firstDateTime,
+                      backgroundColor: Colors.white,
+                      primaryColor: Colors.green,
+                      onApplyClick: (start, end) {
+                        cubit.firstDateTime = start;
+                        cubit.secaundDateTime = end;
+                        cubit.emitGetReport(to: end.toString(), from: start.toString());
+                      },
+                      onCancelClick: () {
+                        cubit.firstDateTime = DateTime.now().subtract(Duration(days: 7));
+                        cubit.secaundDateTime = DateTime.now();
+                      },
+                    );
+                    print('youssef');
+                  },
+                  child: Card(
+                    color: ColorManager.originalWhite,
+                    elevation: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 10.0),
+                      child: Center(
+                        child: Text(
+                          '${DateFormat('dd-MM-yyyy').format(cubit.secaundDateTime)} : ${DateFormat('dd-MM-yyyy').format(cubit.firstDateTime)}',
+                          style: TextStyleManager.font20BlackBold,
                         ),
-                        verticalSpace(20.h),
-                        Row(
-                          children: [
-                            Text(
-                              LocaleKeys.workingHours.tr(),
-                              style: TextStyleManager.font17TextColor600,
-                            ),
-                            const Spacer(),
-                            Text(
-                              '0 H 0 M',
-                              style: TextStyleManager.font17TextColor600,
-                            ),
-                          ],
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
-                verticalSpace(10.h),
+                verticalSpace(30.h),
                 Text(
                   LocaleKeys.myRides.tr(),
                   style: TextStyleManager.font20BlackBold,
                 ),
                 verticalSpace(10.h),
-                if(cubit.trips.isNotEmpty)
+                if(cubit.myReport != null)
                 const MyTripsWidget(),
               ],
             );

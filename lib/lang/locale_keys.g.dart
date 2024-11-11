@@ -33,6 +33,8 @@ abstract class  LocaleKeys {
   static const btnSend = 'btnSend';
   static const addDecuments = 'addDecuments';
   static const enterPhoneNumber = 'enterPhoneNumber';
+  static const noCode = 'noCode';
+  static const btnNewCode = 'btnNewCode';
   static const captainGate = 'captainGate';
   static const currency = 'currency';
   static const withDrawMyBalance = 'withDrawMyBalance';
@@ -96,5 +98,19 @@ abstract class  LocaleKeys {
   static const en = 'en';
   static const ar = 'ar';
   static const selectLang = 'selectLang';
+  static const accountUnderReview = 'accountUnderReview';
+  static const scheduleTrip = 'scheduleTrip';
+  static const time = 'time';
+  static const date = 'date';
+  static const ScheduledClientName = 'ScheduledClientName';
+  static const noNotificationsFounded = 'noNotificationsFounded';
+  static const noTripsFound = 'noTripsFound';
+  static const oldPassword = 'oldPassword';
+  static const newPassword = 'newPassword';
+  static const confirmNewPassword = 'confirmNewPassword';
+  static const userCanceledTrip = 'userCanceledTrip';
+  static const good = 'good';
+  static const bad = 'bad';
+  static const satisfactory = 'satisfactory';
 
 }

@@ -8,6 +8,8 @@ import 'package:awfar_captain/core/theming/text_style_manager.dart';
 import 'package:awfar_captain/features/captain_gate/logic/captain_gate_cubit.dart';
 import 'package:awfar_captain/features/captain_gate/logic/captain_gate_state.dart';
 import 'package:awfar_captain/features/home/logic/home_state.dart';
+import 'package:awfar_captain/features/home/ui/account_under_review_screen.dart';
+import 'package:awfar_captain/features/home/ui/home_screen_view.dart';
 import 'package:awfar_captain/features/home/ui/widgets/drawer_view.dart';
 import 'package:awfar_captain/features/home/ui/widgets/home_map_view.dart';
 import 'package:awfar_captain/lang/locale_keys.g.dart';
@@ -27,105 +29,40 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<CaptainGateCubit, CaptainGateStates>(
       builder: (context, state) {
-        if(context.read<CaptainGateCubit>().myProfile != null) {
-          return Scaffold(
-          appBar: AppBar(
-            centerTitle: true,
-            title: BlocBuilder< HomeCubit, HomeStates >( builder: (context, state) => Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  context.read<HomeCubit>().isOnline
-                      ? LocaleKeys.homeAppBarTitle1.tr()
-                      : LocaleKeys.homeAppBarTitle2.tr(),
-                  style: TextStyleManager.font17TextColor600,
-                ),
-                horizontalSpace(5.w),
-                Switch(
-                  trackOutlineColor: WidgetStateProperty.resolveWith(
-                        (final Set<WidgetState> states) {
-                      if (states.contains(WidgetState.selected)) {
-                        return ColorManager.green;
-                      }
-                      return ColorManager.darkGrey;
-                    },
-                  ),
-                  inactiveThumbColor: ColorManager.darkGrey,
-                  activeColor: ColorManager.green,
-                  activeTrackColor: ColorManager.originalWhite,
-                  inactiveTrackColor: ColorManager.originalWhite,
-                  value: context.read<HomeCubit>().isOnline,
-                  onChanged: (value) =>
-                      context.read<HomeCubit>().chaneConnectionState(value),
-                ),
-              ],
-            ),
-            ),
-            // actions: [
-            //   IconButton(
-            //     icon: SvgPicture.asset(AssetsManager.icNotification),
-            //     onPressed: () => context.pushNamed(Routes.notification),
-            //   ),
-            // ],
-          ),
-          drawer:  DrawerView(
-            onChangeLang: (String value) {
-              context.read<HomeCubit>().onSelectLang(context, value);
-            },),
-          body: const HomeMapView(),
-          bottomSheet: BlocBuilder<HomeCubit, HomeStates>( builder: (context, state) => Wrap(
-              children: [
-                Container(
-                  decoration: const BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                            color: ColorManager.darkGrey,
-                            blurRadius: 12,
-                            blurStyle: BlurStyle.normal,
-                            spreadRadius: 1,
-                            offset: Offset(
-                              0,
-                              -5,
-                            ),
-                        ),
-                      ],
-                      color: ColorManager.originalWhite,
-                      borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(10),
-                          topLeft: Radius.circular(10.0))),
-                  padding: const EdgeInsets.only(
-                      top: 15.0,
-                      right: 18.0,
-                      left: 18.0,
-                      bottom: 25.0
-                  ),
-                  child: SingleChildScrollView(
-                      child: context.read<HomeCubit>().bottomSheets()
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-        } else {
-          if(state is GetProfileError)
-          {
-            return  Scaffold(
-                body: Center(
-                    child: Column(
-                      children: [
-                        Text(LocaleKeys.errorText.tr()),
-                        TextButton(
-                            onPressed: () {
-                              DioFactory.handleUnauthorized();
-                            },
-                            child: Text(LocaleKeys.loginNow.tr() , style: TextStyleManager.font20TextColor600,))
-                      ],
-                    )), );
+        if (context.read<CaptainGateCubit>().myProfile != null) {
+          if (context.read<CaptainGateCubit>().accountStatus == true) {
+            return HomeScreenView();
           } else {
-          return const Scaffold(body: Center(child: CircularProgressIndicator(
-            color: ColorManager.green,
-          ))); }
+            return AccountUnderReviewScreen();
+          }
+        } else {
+          if (state is GetProfileError) {
+            return Scaffold(
+              body: Center(
+                child: Column(
+                  children: [
+                    Text(LocaleKeys.errorText.tr()),
+                    TextButton(
+                        onPressed: () {
+                          DioFactory.handleUnauthorized();
+                        },
+                        child: Text(
+                          LocaleKeys.loginNow.tr(),
+                          style: TextStyleManager.font20TextColor600,
+                        ))
+                  ],
+                ),
+              ),
+            );
+          } else {
+            return const Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(
+                  color: ColorManager.green,
+                ),
+              ),
+            );
+          }
         }
       },
     );

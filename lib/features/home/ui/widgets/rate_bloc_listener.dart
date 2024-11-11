@@ -22,9 +22,11 @@ class RateBlocListener extends StatelessWidget {
       listener: (context, state) {
         if(state is RateClientLoadingState)
         {
-          showDialog(context: context, builder: (context) => const Center(child: CircularProgressIndicator(
+          showDialog(context: context, builder: (context) => const Center(
+              child: CircularProgressIndicator(
             color: ColorManager.green,
-          )));
+          )
+            ,),);
         } else if(state is RateClientSuccessState)
         {
           Navigator.pop(context);
@@ -32,14 +34,16 @@ class RateBlocListener extends StatelessWidget {
                 (_) {
               setupGetIt().then(
                     (value) {
+                      print("anaaaaaaaaaaaaaaaa hena");
                   return NavigationService.navigateToAndRemoveAll(
-                      Routes.home);
+                      Routes.home
+                  );
                 },
               );
             },
           );
         }
-        else if(state is UpdateStatusTripFailureState)
+        else if(state is RateClientFailureState)
         {
           Navigator.pop(context);
           AnimatedSnackBar.material(

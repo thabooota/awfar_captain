@@ -1,5 +1,6 @@
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:awfar_captain/core/utils/enums.dart';
+import 'package:awfar_captain/features/home/data/models/response/trip_accepted_response.dart';
 import 'package:awfar_captain/features/home/logic/home_cubit.dart';
 import 'package:awfar_captain/features/home/logic/home_state.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -20,6 +21,17 @@ class RideRequestBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<HomeCubit,HomeStates>(
       listener: (context, state) {
+        if(state is UserRejectedTrip)
+          {
+            Navigator.pop(context);
+            AnimatedSnackBar.material(
+              LocaleKeys.userCanceledTrip.tr(),
+              type: AnimatedSnackBarType.warning,
+              animationCurve: Curves.fastEaseInToSlowEaseOut,
+              mobileSnackBarPosition: MobileSnackBarPosition.bottom,
+            ).show(context);
+            context.read<HomeCubit>().changeBottomSheetState(state: BottomSheetStates.searchForRides);
+          }
         if(state is AcceptedTripLoadingState || state is RejectedTripLoadingState)
           {
             showDialog(context: context, builder: (context) => const Center(child: CircularProgressIndicator(
@@ -27,7 +39,13 @@ class RideRequestBottomSheet extends StatelessWidget {
             )),);
           } else if(state is AcceptedTripSuccessState) {
           Navigator.pop(context);
-          context.read<HomeCubit>().changeBottomSheetState(BottomSheetStates.meetClient);
+          if(context.read<HomeCubit>().restTripResponse!.data.time == null && context.read<HomeCubit>().restTripResponse!.data.date == null) {
+              context.read<HomeCubit>().changeBottomSheetState(
+                    state: BottomSheetStates.meetClient,
+                  );
+          } else {
+            context.read<HomeCubit>().changeBottomSheetState(state :BottomSheetStates.searchForRides,);
+          }
         } else if(state is AcceptedTripFailureState || state is AcceptedTripFailureState ) {
           Navigator.pop(context);
           AnimatedSnackBar.material(
@@ -39,7 +57,7 @@ class RideRequestBottomSheet extends StatelessWidget {
         } else if (state is RejectedTripSuccessState)
           {
             Navigator.pop(context);
-            context.read<HomeCubit>().changeBottomSheetState(BottomSheetStates.searchForRides);
+            context.read<HomeCubit>().changeBottomSheetState(state : BottomSheetStates.searchForRides,);
           }
       },
       builder: (context, state) {
@@ -85,7 +103,7 @@ class RideRequestBottomSheet extends StatelessWidget {
               Column(
                 children: [
                   Text('${cubit.restTripResponse!.data.price}${LocaleKeys.currency.tr()}', style: TextStyleManager.font17TextColor600,),
-                  Text('${cubit.routesResponse!.routes[0].distanceMeters /1000}', style: TextStyleManager.font17DarkGrey400,),
+                  Text('${cubit.routesResponse.routes[0].distanceMeters /1000}', style: TextStyleManager.font17DarkGrey400,),
                 ],
               )
             ],
@@ -130,7 +148,31 @@ class RideRequestBottomSheet extends StatelessWidget {
             ],),
           verticalSpace(10.h),
           const Divider(),
-          verticalSpace(40.h),
+          if(cubit.restTripResponse!.data.time != null && cubit.restTripResponse!.data.date != null)
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(LocaleKeys.scheduleTrip.tr(), style:  TextStyleManager.font20TextColor600,),verticalSpace(10.0.h),
+                Row(
+                  children: [
+                    Text(LocaleKeys.time.tr(),style: TextStyleManager.font17Black700,),
+                    const Spacer(),
+                    Text('${
+                        int.parse(cubit.restTripResponse!.data.time!.substring(0,2)) > 12
+                            ? int.parse(cubit.restTripResponse!.data.time!.substring(0,2)) - 12 :
+                        cubit.restTripResponse!.data.time!.substring(0,2)} : '
+                        '${cubit.restTripResponse!.data.time!.substring(3,5)} ${
+                        int.parse(cubit.restTripResponse!.data.time!.substring(0,2)) > 12 ? 'pm' : 'am'}', style: TextStyleManager.font17Black700),
+                  ],),
+                Row(
+                  children: [
+                    Text(LocaleKeys.date.tr(),style: TextStyleManager.font17Black700,),
+                    const Spacer(),
+                    Text('${cubit.restTripResponse!.data.date}', style: TextStyleManager.font17Black700),
+                  ],),
+              ],
+            ),
+          verticalSpace(30.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [

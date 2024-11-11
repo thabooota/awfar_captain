@@ -1,28 +1,14 @@
+import 'package:awfar_captain/core/theming/text_style_manager.dart';
+import 'package:awfar_captain/features/home/logic/home_cubit.dart';
+import 'package:awfar_captain/features/home/logic/home_state.dart';
 import 'package:awfar_captain/features/notification/ui/widgets/notification_item.dart';
 import 'package:awfar_captain/lang/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import '../../../core/theming/color_manager.dart';
 import '../../../core/widgets/back_icon_button.dart';
-
-List<NotificationModel> notifications = const [
-  NotificationModel(
-      message: "لقد وصلت الى وجهتك يرجي دفع 75 جنية للسائق",
-      isSystemNotification: true),
-  NotificationModel(
-      message: "لديك كوبون خصم بنسبة 15 % بحد اقصي 20 جنية",
-      isSystemNotification: false),
-  NotificationModel(
-      message: "لديك كوبون خصم بنسبة 15 % بحد اقصي 20 جنية",
-      isSystemNotification: false),
-  NotificationModel(
-      message: "لديك كوبون خصم بنسبة 15 % بحد اقصي 20 جنية",
-      isSystemNotification: false),
-  NotificationModel(
-      message: "لقد وصلت الى وجهتك يرجي دفع 75 جنية للسائق",
-      isSystemNotification: true),
-];
 
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({super.key});
@@ -32,15 +18,28 @@ class NotificationScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: ColorManager.scaffold,
       appBar: AppBar(
-        title:  Text(LocaleKeys.notifications.tr()),
+        title:  Text(LocaleKeys.notifications.tr(), style: TextStyleManager.font20TextColor600,),
         leading: const BackIconButton(),
       ),
-      body: ListView.builder(
-        padding: const EdgeInsets.only(top: 20.0),
-        itemCount: notifications.length,
-        itemBuilder: (context, index) => NotificationItem(
-          notification: notifications[index],
-        ),
+      body: BlocBuilder<HomeCubit, HomeStates>(builder: (context, state) {
+        if(state is GetAllNotificationsLoadingState)
+          {
+            return Center(
+                child: LoadingAnimationWidget.fourRotatingDots(
+                    color: ColorManager.green, size: 35.0));
+          }else {
+          if(context.read<HomeCubit>().myNotifications.isNotEmpty) {
+            return ListView.builder(
+              itemCount: context.read<HomeCubit>().myNotifications.length,
+              itemBuilder: (context, index) => NotificationItem(
+                notification: context.read<HomeCubit>().myNotifications[index],
+              ),
+            );
+          } else {
+            return Center(child: Text(LocaleKeys.noNotificationsFounded.tr()));
+          }
+        }
+      },
       ),
     );
   }

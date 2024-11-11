@@ -22,7 +22,7 @@ import '../../../../lang/locale_keys.g.dart';
 import '../../logic/home_cubit.dart';
 
 class MeetClientBottomSheet extends StatelessWidget {
-  const MeetClientBottomSheet({super.key});
+  const MeetClientBottomSheet({super.key,});
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +44,7 @@ class MeetClientBottomSheet extends StatelessWidget {
                 horizontalSpace(3.w),
                 Expanded(
                     child: Text(
-                  cubit.tripAcceptedResponse!.Client.name,
+                  cubit.scheduleTrip == true ? cubit.scheduledTripsResponse!.client.name : cubit.tripAcceptedResponse!.Client!.name,
                   style: TextStyleManager.font17TextColor600
                       .copyWith(overflow: TextOverflow.fade),
                 )),
@@ -79,13 +79,13 @@ class MeetClientBottomSheet extends StatelessWidget {
                 Column(
                   children: [
                     Text(
-                      '${cubit.tripAcceptedResponse!.Price} ${LocaleKeys.currency.tr()}',
+                      '${cubit.scheduleTrip == true ? cubit.scheduledTripsResponse!.price : cubit.tripAcceptedResponse!.Price} ${LocaleKeys.currency.tr()}',
                       style: TextStyleManager.font17TextColor600,
                     ),
-                    Text(
-                      '${cubit.routesResponse!.routes[0].distanceMeters /1000} km',
-                      style: TextStyleManager.font17DarkGrey400,
-                    ),
+                    // Text(
+                    //   '${cubit.routesResponse.routes[0].distanceMeters /1000} km',
+                    //   style: TextStyleManager.font17DarkGrey400,
+                    // ),
                   ],
                 )
               ],
@@ -94,14 +94,14 @@ class MeetClientBottomSheet extends StatelessWidget {
             const Divider(),
             Text(LocaleKeys.meetingLocation.tr(),
                 style: TextStyleManager.font13Black600),
-            Text(cubit.tripAcceptedResponse!.From,
+            Text(  cubit.scheduleTrip == true ? cubit.scheduledTripsResponse!.from : cubit.tripAcceptedResponse!.From!,
                 style: TextStyleManager.font17TextColor400),
             verticalSpace(10.h),
             const Divider(),
             Text(LocaleKeys.arrivalLocation.tr(),
                 style: TextStyleManager.font13Black600),
             Text(
-              cubit.tripAcceptedResponse!.To,
+              cubit.scheduleTrip == true ? cubit.scheduledTripsResponse!.to : cubit.tripAcceptedResponse!.To!,
               style: TextStyleManager.font17TextColor400,
             ),
             verticalSpace(10.h),
@@ -118,7 +118,7 @@ class MeetClientBottomSheet extends StatelessWidget {
                 ),
                 const Spacer(),
                 Text(
-                    '${cubit.tripAcceptedResponse!.Price}${LocaleKeys.currency.tr()}',
+                    '${  cubit.scheduleTrip == true ? cubit.scheduledTripsResponse!.price : cubit.tripAcceptedResponse!.Price} ${LocaleKeys.currency.tr()}',
                     style: TextStyleManager.font17Black700),
                 horizontalSpace(50.w),
               ],
@@ -143,7 +143,7 @@ class MeetClientBottomSheet extends StatelessWidget {
                 ),
                 const Spacer(),
                 Text(
-                    '${cubit.tripAcceptedResponse!.Price} ${LocaleKeys.currency.tr()}',
+                    '${ cubit.scheduleTrip == true ? cubit.scheduledTripsResponse!.price : cubit.tripAcceptedResponse!.Price} ${LocaleKeys.currency.tr()}',
                     style: TextStyleManager.font17Black700),
                 horizontalSpace(50.w),
               ],
@@ -157,9 +157,9 @@ class MeetClientBottomSheet extends StatelessWidget {
                 GestureDetector(
                   onTap: () async {
                     if (await canLaunchUrl(Uri.parse(
-                    "tel:${cubit.tripAcceptedResponse!.Client.Phone}"))) {
+                    "tel:${ cubit.scheduleTrip == true ? cubit.scheduledTripsResponse!.client.Phone : cubit.tripAcceptedResponse!.Client!.Phone}}"))) {
                     await launchUrl(Uri.parse(
-                    "tel:${cubit.tripAcceptedResponse!.Client.Phone}"));
+                    "tel:${ cubit.scheduleTrip == true ? cubit.scheduledTripsResponse!.client.Phone : cubit.tripAcceptedResponse!.Client!.Phone}}"));
                     } else {
                     AnimatedSnackBar.material(
                     "can't launch this url, please try again later'",

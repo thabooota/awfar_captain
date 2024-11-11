@@ -4,6 +4,7 @@ class ApiConstants {
   static const String apiBaseURL = "https://dash.awfarcar.com/api/v1/driver/";
   static const String routesBaseUrl =
       "https://routes.googleapis.com/directions/v2:computeRoutes/";
+
   //Auth end points
   static const String loginEndPoint = 'auth/login';
   static const String registerEndPoint = 'auth/register';
@@ -15,7 +16,6 @@ class ApiConstants {
   static const String uploadFilesEndPoint = "/upload-files";
 
   // home end points
-
  static const String updateProfileEndPoint = 'profile';
  static const String getMyTrip = 'my-trips';
  static const String rateClient = 'rate-trip/{tripId}/{clientId}';
@@ -24,6 +24,9 @@ class ApiConstants {
  static const String storeDriverTrip = 'Store-Driver-Trip';
  static const String changeDriverStatus = 'ChangeStatusDriver';
  static const String tripCost = 'add-charge/{tripId}';
+ static const String allScheduledTrips = 'Driver-Trip-Date';
+ static const String notifications = 'Get-Notification';
+ static const String changePassword = 'change-password';
 
  //chat end points
  static const String getMessage = 'Get-Messages';
@@ -32,6 +35,7 @@ class ApiConstants {
  // captain gate end points
   static const String getMyBalance = 'my-balance';
   static const String getProfile = 'profile';
+  static const String getReport = 'Get-Report';
 
  // map api
   static const String locationBaseUrl = "https://maps.googleapis.com/maps/api/";

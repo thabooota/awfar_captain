@@ -1,8 +1,6 @@
 import 'dart:async';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-
 import '../../../../core/theming/color_manager.dart';
 import '../../../../core/theming/text_style_manager.dart';
 import '../../../../lang/locale_keys.g.dart';
@@ -42,9 +40,9 @@ class _ResendCodeViewState extends State<ResendCodeView> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
-          LocaleKeys.noCode,
+          LocaleKeys.noCode.tr(),
           style: TextStyleManager.font14Grey400,
-        ).tr(),
+        ),
         TextButton(
           onPressed: () {},
           child: Text(

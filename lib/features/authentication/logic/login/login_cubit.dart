@@ -26,7 +26,12 @@ class LoginCubit extends Cubit<LoginStates> {
     emit(LoginLoadingState());
     final response = await _loginRepo.login(
       LoginRequestBody(
-        phone: "+2${phoneController.text}", password: passwordController.text, fcmToken: PrefsManager.fcmToken),
+        phone: "+2${phoneController.text}",
+        password: passwordController.text,
+        fcmToken:  SharedPreferencesManager.getData(
+        key: PrefsManager.fcmToken,
+        ),
+      ),
     );
 
     response.when(

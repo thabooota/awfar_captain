@@ -4,7 +4,7 @@ part 'login_request_body.g.dart';
 class LoginRequestBody {
   final String phone;
   final String password;
-  @JsonKey(name: 'app_device')
+  @JsonKey(name: 'device_id')
   final String fcmToken;
 
   LoginRequestBody({

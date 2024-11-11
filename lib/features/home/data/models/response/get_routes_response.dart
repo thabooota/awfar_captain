@@ -4,7 +4,7 @@ part 'get_routes_response.g.dart';
 
 @JsonSerializable()
 class GetRoutesResponse {
-  final List<Routes> routes;
+  final List<Route> routes;
 
   const GetRoutesResponse({required this.routes});
 
@@ -13,17 +13,17 @@ class GetRoutesResponse {
 }
 
 @JsonSerializable()
-class Routes {
+class Route {
   final double distanceMeters;
   final String duration;
   final PolylineData polyline;
 
-  const Routes(
+  const Route(
       {required this.distanceMeters,
         required this.duration,
         required this.polyline});
 
-  factory Routes.fromJson(Map<String, dynamic> json) => _$RoutesFromJson(json);
+  factory Route.fromJson(Map<String, dynamic> json) => _$RouteFromJson(json);
 }
 
 @JsonSerializable()

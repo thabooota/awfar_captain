@@ -9,7 +9,7 @@ part of 'get_routes_response.dart';
 GetRoutesResponse _$GetRoutesResponseFromJson(Map<String, dynamic> json) =>
     GetRoutesResponse(
       routes: (json['routes'] as List<dynamic>)
-          .map((e) => Routes.fromJson(e as Map<String, dynamic>))
+          .map((e) => Route.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
@@ -18,13 +18,13 @@ Map<String, dynamic> _$GetRoutesResponseToJson(GetRoutesResponse instance) =>
       'routes': instance.routes,
     };
 
-Routes _$RoutesFromJson(Map<String, dynamic> json) => Routes(
+Route _$RouteFromJson(Map<String, dynamic> json) => Route(
       distanceMeters: (json['distanceMeters'] as num).toDouble(),
       duration: json['duration'] as String,
       polyline: PolylineData.fromJson(json['polyline'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$RoutesToJson(Routes instance) => <String, dynamic>{
+Map<String, dynamic> _$RouteToJson(Route instance) => <String, dynamic>{
       'distanceMeters': instance.distanceMeters,
       'duration': instance.duration,
       'polyline': instance.polyline,

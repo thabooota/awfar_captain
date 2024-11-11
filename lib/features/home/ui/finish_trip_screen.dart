@@ -65,9 +65,9 @@ class FinishTripScreen extends StatelessWidget {
                 children: [
                   Text(LocaleKeys.completeTripHeader.tr(),style: TextStyleManager.font30Black600,textAlign: TextAlign.center,),
                   verticalSpace(30.0.h),
-                  Text('${context.read<HomeCubit>().tripAcceptedResponse!.Client.name} ${LocaleKeys.willGiveYou.tr()}',style: TextStyleManager.font20BlackBold,),
+                  Text('${context.read<HomeCubit>().scheduleTrip == true? context.read<HomeCubit>().scheduledTripsResponse!.client.name : context.read<HomeCubit>().tripAcceptedResponse!.Client!.name} ${LocaleKeys.willGiveYou.tr()}',style: TextStyleManager.font20BlackBold,),
                   verticalSpace(8.0.h),
-                  Text('${context.read<HomeCubit>().tripAcceptedResponse!.Price}  ${LocaleKeys.currency.tr()}',style: TextStyleManager.font30Black600,),
+                  Text('${context.read<HomeCubit>().scheduleTrip == true? context.read<HomeCubit>().scheduledTripsResponse!.price : context.read<HomeCubit>().tripAcceptedResponse!.Price}  ${LocaleKeys.currency.tr()}',style: TextStyleManager.font30Black600,),
                   verticalSpace(40.0.h),
                   Container(
                     padding: const EdgeInsets.all(8),

@@ -24,6 +24,7 @@ import '../../features/chat/ui/chat_screen_view.dart';
 import '../../features/home/ui/account_settings.dart';
 import '../../features/home/ui/finish_trip_screen.dart';
 import '../../features/home/ui/rating_screen.dart';
+import '../../features/home/ui/scheduled_trips_screen.dart';
 import '../../features/home/ui/technical_support.dart';
 import '../../features/home/ui/withdraw_balance.dart';
 import '../../features/notification/ui/notification_screen.dart';
@@ -90,48 +91,66 @@ class AppRouter {
       // Home
       case Routes.home:
         return AnimationRoute(
-            page: MultiBlocProvider(
-    providers: [
-                BlocProvider<HomeCubit>(create: (context) => getIt<HomeCubit>()..bottomSheets()..initHomeCubit()),
-                 BlocProvider<CaptainGateCubit> (create: (context) => getIt<CaptainGateCubit>()..emitGetProfileStates(),)
-                ],
-                child: const HomeScreen()));
+            page: MultiBlocProvider(providers: [
+          BlocProvider<HomeCubit>(
+              create: (context) => getIt<HomeCubit>()
+                ..bottomSheets()..chaneConnectionState(true)
+                ..initHomeCubit()),
+          BlocProvider<CaptainGateCubit>(
+            create: (context) =>
+                getIt<CaptainGateCubit>()..emitGetProfileStates(),
+          )
+        ], child: const HomeScreen()));
       case Routes.captainGate:
         return AnimationRoute(
             page: BlocProvider.value(
-                value: getIt<CaptainGateCubit>()..emitGetTripsState(),
-                 child:
-                 const CaptainGateScreen()));
-        case Routes.reportMyTrips:
+                value: getIt<CaptainGateCubit>()..emitGetTripsState()..emitGetReport(
+                    to: DateTime.now().toString(),
+                    from: DateTime.now().subtract(Duration(days: 7)).toString(),
+                ),
+                child: const CaptainGateScreen()));
+      case Routes.reportMyTrips:
         return AnimationRoute(page: const ReportMyTrips());
       case Routes.notification:
-        return AnimationRoute(page: const NotificationScreen());
-        case Routes.myRides:
-        return AnimationRoute(page: BlocProvider.value(
-            value: getIt<CaptainGateCubit>(),
-            child: const MyTripScreen()));
+        return AnimationRoute(
+            page: BlocProvider.value(
+                value: getIt<HomeCubit>()..emitGetAllNotifications(),
+                child: const NotificationScreen()));
+      case Routes.myRides:
+        return AnimationRoute(
+            page: BlocProvider.value(
+                value: getIt<CaptainGateCubit>()..emitGetTripsState(), child: const MyTripScreen()));
       case Routes.rating:
-        return AnimationRoute(page: BlocProvider.value(
-            value: getIt<HomeCubit>(),
-            child: const RatingScreen()));
+        return AnimationRoute(
+            page: BlocProvider.value(
+                value: getIt<HomeCubit>(), child: const RatingScreen()));
       case Routes.finishTrip:
-        return AnimationRoute(page: BlocProvider.value(
-            value: getIt<HomeCubit>(),
-            child: const FinishTripScreen()));
+        return AnimationRoute(
+            page: BlocProvider.value(
+                value: getIt<HomeCubit>(), child: const FinishTripScreen()));
       case Routes.chat:
-        return AnimationRoute(page: BlocProvider.value(
-            value: getIt<HomeCubit>()..emitGetMessagesState(),
-            child:  const ChatScreen()));
+        return AnimationRoute(
+            page: BlocProvider.value(
+                value: getIt<HomeCubit>()..emitGetMessagesState(),
+                child: const ChatScreen()));
       case Routes.technicalSupport:
         return AnimationRoute(page: const TechnicalSupport());
+      case Routes.schudleTrip:
+        return AnimationRoute(
+            page: BlocProvider.value(
+                value: getIt<HomeCubit>()..emitGetAllScheduledTrips(),
+                child: const ScheduledTripScreen()));
       case Routes.accountSettings:
         return AnimationRoute(
             page: BlocProvider.value(
-                value: getIt<CaptainGateCubit>(), child: const AccountSettings()));
+                value: getIt<CaptainGateCubit>(),
+                child: const AccountSettings()));
       case Routes.editAccount:
         return AnimationRoute(
             page: BlocProvider(
-                create:(context) =>  getIt<CaptainGateCubit>()..emitGetMyBalance(), child: const EditAccountScreen()));
+                create: (context) =>
+                    getIt<CaptainGateCubit>()..emitGetMyBalance(),
+                child: const EditAccountScreen()));
       case Routes.withdrawBalance:
         return AnimationRoute(page: const WithdrawBalance());
       // undefined

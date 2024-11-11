@@ -3,10 +3,9 @@ part 'register_request_body.g.dart';
 @JsonSerializable()
 class RegisterRequestBody {
   final String phone;
-  @JsonKey(name: 'app_device')
-  final String fcmToken;
+  final String device_id;
 
-  RegisterRequestBody({required this.phone, required this.fcmToken});
+  RegisterRequestBody({required this.device_id, required this.phone,});
 
   Map<String, dynamic> toJson() => _$RegisterRequestBodyToJson(this);
 }

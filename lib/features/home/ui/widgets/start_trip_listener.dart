@@ -7,7 +7,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../../core/theming/text_style_manager.dart';
 import '../../../../core/utils/enums.dart';
 
@@ -18,29 +17,33 @@ class StartTripListener extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<HomeCubit, HomeStates>(
       listener: (context, state) {
-        if(state is UpdateStatusTripLoadingState)
-          {
-            showDialog(context: context, builder: (context) => const Center(child: CircularProgressIndicator(
-              color: ColorManager.green,
-            )));
-          } else if(state is UpdateStatusTripSuccessState)
-            {
-              Navigator.pop(context);
-              context.read<HomeCubit>().changeBottomSheetState(BottomSheetStates.endTrip);
-            }
-        else if(state is UpdateStatusTripFailureState)
-          {
-            Navigator.pop(context);
-            AnimatedSnackBar.material(
-              state.errorMessage,
-              type: AnimatedSnackBarType.error,
-              animationCurve: Curves.fastEaseInToSlowEaseOut,
-              mobileSnackBarPosition: MobileSnackBarPosition.bottom,
-            ).show(context);
-          }
+        if (state is UpdateStatusTripLoadingState) {
+          showDialog(
+              context: context,
+              builder: (context) => const Center(
+                      child: CircularProgressIndicator(
+                    color: ColorManager.green,
+                  ),
+              ),
+          );
+        } else if (state is UpdateStatusTripSuccessState) {
+          Navigator.pop(context);
+          context
+              .read<HomeCubit>()
+              .changeBottomSheetState(state : BottomSheetStates.endTrip,);
+        } else if (state is UpdateStatusTripFailureState) {
+          Navigator.pop(context);
+          AnimatedSnackBar.material(
+            state.errorMessage,
+            type: AnimatedSnackBarType.error,
+            animationCurve: Curves.fastEaseInToSlowEaseOut,
+            mobileSnackBarPosition: MobileSnackBarPosition.bottom,
+          ).show(context);
+        }
       },
-      child:   GestureDetector(
+      child: GestureDetector(
         onTap: () {
+          // 
           context.read<HomeCubit>().emitUpdateDriverStatus(status: "going");
         },
         child: Container(
@@ -50,8 +53,11 @@ class StartTripListener extends StatelessWidget {
             color: ColorManager.cyan,
             borderRadius: BorderRadius.circular(15.0),
           ),
-          child: Text(LocaleKeys.startTrip.tr(), style: TextStyleManager.font15Black600,
-            textAlign: TextAlign.center,),
+          child: Text(
+            LocaleKeys.startTrip.tr(),
+            style: TextStyleManager.font15Black600,
+            textAlign: TextAlign.center,
+          ),
         ),
       ),
     );

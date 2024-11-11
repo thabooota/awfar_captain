@@ -22,7 +22,9 @@ class StartTripBottomSheet extends StatelessWidget {
                 overflow: TextOverflow.fade,
               ),
               Text(
-                context.read<HomeCubit>().tripAcceptedResponse!.To,
+                context.read<HomeCubit>().scheduleTrip == true ?
+                context.read<HomeCubit>().scheduledTripsResponse!.to :
+                context.read<HomeCubit>().tripAcceptedResponse!.To!,
                 style: TextStyleManager.font17TextColor400,
                 overflow: TextOverflow.fade,
               ),

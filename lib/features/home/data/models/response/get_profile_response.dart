@@ -4,10 +4,13 @@ part 'get_profile_response.g.dart';
 @JsonSerializable()
 class GetProfileResponse {
   final String message;
+  final bool status;
+  final int ?rate;
   @JsonKey(name: 'data')
   final ProfileInfo profileInfo;
 
-  GetProfileResponse({required this.message, required this.profileInfo});
+  GetProfileResponse(
+      {required this.message, required this.profileInfo, required this.status,this.rate});
 
   factory GetProfileResponse.fromJson(Map<String, dynamic> json) =>
       _$GetProfileResponseFromJson(json);
@@ -21,6 +24,7 @@ class ProfileInfo {
   final String email;
   final String phone;
   final String? address;
+  final String? is_active;
   @JsonKey(name: 'work_area')
   final String? workArea;
   @JsonKey(name: 'car_brand')
@@ -33,16 +37,17 @@ class ProfileInfo {
 
   ProfileInfo({
     required this.id,
-      required this.name,
-      required this.email,
-      required this.phone,
-      this.carBrand,
-      this.carColor,
-      this.carModel,
-        this.address,
-        this.workArea,
-        this.media,
-      });
+    required this.name,
+    required this.email,
+    required this.phone,
+    this.carBrand,
+    this.is_active,
+    this.carColor,
+    this.carModel,
+    this.address,
+    this.workArea,
+    this.media,
+  });
 
   factory ProfileInfo.fromJson(Map<String, dynamic> json) =>
       _$ProfileInfoFromJson(json);
@@ -57,5 +62,4 @@ class Media {
   Media({required this.id, required this.name, required this.path});
 
   factory Media.fromJson(Map<String, dynamic> json) => _$MediaFromJson(json);
-
 }

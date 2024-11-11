@@ -1,5 +1,6 @@
 import 'package:awfar_captain/core/networking/local/prefs_manager.dart';
 import 'package:awfar_captain/core/networking/local/shared_preferences.dart';
+import 'package:awfar_captain/features/captain_gate/data/model/requests/get_report_request_body.dart';
 import 'package:awfar_captain/features/captain_gate/data/model/response/get_all_trips_response.dart';
 import 'package:awfar_captain/features/captain_gate/data/model/response/get_my_balance_response.dart';
 import 'package:awfar_captain/features/captain_gate/data/repo/repo.dart';
@@ -8,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../home/data/models/requests/upload_profile_request_body.dart';
 import '../../home/data/models/response/get_profile_response.dart';
+import '../data/model/response/get_report_response.dart';
 
 
 class CaptainGateCubit extends Cubit<CaptainGateStates> {
@@ -32,6 +34,8 @@ class CaptainGateCubit extends Cubit<CaptainGateStates> {
   String token = SharedPreferencesManager.getData( key: PrefsManager.token,);
 
   ProfileInfo ?myProfile;
+  bool ?accountStatus;
+  int ?myRate;
   void emitGetProfileStates() async {
     emit(GetProfileLoading());
     final response = await _captainGateRepo.getProfile(
@@ -40,6 +44,8 @@ class CaptainGateCubit extends Cubit<CaptainGateStates> {
     response.when(
         success: (data) {
           myProfile = data.profileInfo;
+          accountStatus = data.status;
+          myRate = data.rate;
           SharedPreferencesManager.saveData(key: PrefsManager.driverId, value: data.profileInfo.id);
           emit(GetProfileSuccess(profile: data));
         },
@@ -106,4 +112,31 @@ class CaptainGateCubit extends Cubit<CaptainGateStates> {
       },
     );
   }
+
+  GetReportResponse ?myReport;
+
+  void emitGetReport({required String to, required String from}) async {
+    emit(GetReportLoading());
+    final response = await _captainGateRepo.getReport(
+      token: token,
+      getReportRequestBody: GetReportRequestBody(
+        to: to,
+        from: from,
+      ),
+    );
+
+    response.when(
+      success: (data) {
+        myReport = data;
+        print('Report fetched successfully');
+        emit(GetReportSuccess(myReport: data));
+      },
+      failure: (error) {
+        print(error.toString());
+        emit(GetReportError(error: error.apiErrorModel.message));
+      },
+    );
+  }
+  DateTime firstDateTime = DateTime.now().subtract(Duration(days: 7));
+  DateTime secaundDateTime = DateTime.now();
 }

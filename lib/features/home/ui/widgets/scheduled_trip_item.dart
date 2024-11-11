@@ -1,22 +1,25 @@
+import 'package:awfar_captain/core/app_cubit/app_cubit.dart';
 import 'package:awfar_captain/core/helpers/extensions.dart';
+import 'package:awfar_captain/core/routing/routes.dart';
+import 'package:awfar_captain/features/home/data/models/response/get_all_scheduled_trips_response.dart';
+import 'package:awfar_captain/features/home/logic/home_cubit.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../../core/helpers/spacing.dart';
-import '../../../../core/routing/routes.dart';
 import '../../../../core/theming/color_manager.dart';
 import '../../../../core/theming/text_style_manager.dart';
+import '../../../../core/utils/enums.dart';
 import '../../../../core/widgets/app_text_button.dart';
 import '../../../../lang/locale_keys.g.dart';
-import '../../data/entity/trip_entity.dart';
 
-class MyTripsItem extends StatelessWidget {
+class ScheduledTripItem extends StatelessWidget {
   final bool isEnabled;
   final void Function()? onTap;
-  final TripEntity tripEntity;
+  final GetAllScheduledTripsResponse tripEntity;
 
-  const MyTripsItem({
+  const ScheduledTripItem({
     super.key,
     required this.isEnabled,
     required this.onTap,
@@ -39,30 +42,34 @@ class MyTripsItem extends StatelessWidget {
               const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
               child: Row(
                 children: [
-                  Column(
-                    children: [
-                      Text(
-                        tripEntity.date,
-                        style: TextStyleManager.font14TextColor500,
-                      ),
-                      verticalSpace(8.0),
-                      Text(
-                        tripEntity.time,
-                        style: TextStyleManager.font10Grey400,
-                      ),
-                      verticalSpace(4.0),
-                      Text(
-                        "${LocaleKeys.tripNumber.tr()} : ${tripEntity.tripNumber}",
-                        style: TextStyleManager.font12Grey400,
-                      ),
-                    ],
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "${LocaleKeys.date.tr()} : ${tripEntity.date}",
+                          style: TextStyleManager.font14TextColor500,
+                        ),
+                        verticalSpace(8.0),
+                        Text(
+                          "${LocaleKeys.date.tr()} : ${int.parse(tripEntity.time.substring(0,2)) > 12
+                              ? int.parse(tripEntity.time.substring(0,2)) - 12 : tripEntity.time.substring(0,2)} :"
+                              " ${tripEntity.time.substring(3,5)} ${int.parse(tripEntity.time.substring(0,2)) > 12 ? 'pm' : 'am' }",
+                          style: TextStyleManager.font10Grey400,
+                        ),
+                        verticalSpace(4.0),
+                        Text(
+                          "${LocaleKeys.ScheduledClientName.tr()} : ${tripEntity.client.name}",
+                          style: TextStyleManager.font12Grey400,
+                        ),
+                      ],
+                    ),
                   ),
-                  const Spacer(),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        "${tripEntity.finalTotalCost} ${LocaleKeys.currency.tr()}",
+                        "${tripEntity.price} ${LocaleKeys.currency.tr()}",
                         style: TextStyleManager.font14TextColor500,
                       ),
                       verticalSpace(20.0),
@@ -73,8 +80,8 @@ class MyTripsItem extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 8.0, vertical: 4.0),
                             decoration: BoxDecoration(
-                              color: tripEntity.status == "pending"
-                                  ? Colors.orangeAccent
+                              color: tripEntity.status == "accepted"
+                                  ? ColorManager.green
                                   : tripEntity.status == "canceled"
                                   ? Colors.redAccent
                                   : ColorManager.green,
@@ -103,6 +110,7 @@ class MyTripsItem extends StatelessWidget {
                 ],
               ),
             ),
+            verticalSpace(5.0),
             if (isEnabled) ...[
               const Divider(
                 color: Color(0xFFDBE9F5),
@@ -125,7 +133,7 @@ class MyTripsItem extends StatelessWidget {
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                               ),
-                              verticalSpace(15.h),
+                              verticalSpace(4.0),
                               Text(
                                 "- ${tripEntity.to}",
                                 style: TextStyleManager.font14Grey400,
@@ -135,17 +143,39 @@ class MyTripsItem extends StatelessWidget {
                             ],
                           ),
                         ),
-                        // AppTextButton(
-                        //   appText: LocaleKeys.reportForTrip.tr(),
-                        //   onTap: () => context.pushNamed(
-                        //     Routes.reportMyTrips,
-                        //     arguments: tripEntity.tripNumber,
-                        //   ),
-                        //   textStyle: TextStyleManager.font10White700,
-                        //   minimumSize: Size(70.w, 35.h),
-                        //   backgroundColor: const Color(0xFFFC4974),
-                        //   borderRadius: 15.0,
-                        // ),
+                        horizontalSpace(5.0),
+                        AppTextButton(
+                          appText: LocaleKeys.meetingClient.tr(),
+                          onTap: () {
+                            // todo: track order
+                            context.read<HomeCubit>().scheduledTripsResponse = tripEntity;
+                            context.read<HomeCubit>().scheduleTrip = true;
+                            context.pop();
+                              context.read<HomeCubit>().changeBottomSheetState(state :BottomSheetStates.meetClient,);
+                          },
+                          textStyle: TextStyleManager.font10White700,
+                          minimumSize: Size(70.w, 35.h),
+                          backgroundColor: Colors.teal,
+                          borderRadius: 15.0,
+                        ),
+                      ],
+                    ),
+                    const Divider(
+                      height: 20.0,
+                    ),
+                    Wrap(
+                      spacing: 50.0,
+                      crossAxisAlignment: WrapCrossAlignment.start,
+                      children: [
+                        Text(
+                          "${LocaleKeys.ScheduledClientName.tr()} : ${tripEntity.client.name}",
+                          style: TextStyleManager.font14Grey400,
+                        ),
+                        verticalSpace(13.h),
+                        Text(
+                          tripEntity.client.Phone,
+                          style: TextStyleManager.font14Grey400,
+                        ),
                       ],
                     ),
                     verticalSpace(4.0),
@@ -157,7 +187,7 @@ class MyTripsItem extends StatelessWidget {
                         ),
                         const Spacer(),
                         Text(
-                          "${tripEntity.finalTotalCost} ${LocaleKeys.currency.tr()} ",
+                          "${tripEntity.price} ${LocaleKeys.currency.tr()}",
                           style: TextStyleManager.font14TextColor500,
                         ),
                         horizontalSpace(12.0),

@@ -24,6 +24,7 @@ class Routes {
   static const String accountSettings = "accountSettings";
   static const String myRides = "myRides";
   static const String withdrawBalance = "withdrawBalance";
+  static const String schudleTrip = "schudleTrip";
 
   // Drawer
   static const String editAccount = "editAccount";

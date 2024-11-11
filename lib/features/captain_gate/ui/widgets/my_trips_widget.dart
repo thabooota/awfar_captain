@@ -26,14 +26,14 @@ class MyTripsWidget extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text(cubit.trips[index].price.toString(), style: TextStyleManager.font17Black700,),
+                Text(cubit.myReport!.TripCompleted[index].client.toString(), style: TextStyleManager.font17Black700,),
                 const Spacer(),
-                Text('${cubit.trips[index].price}${LocaleKeys.currency.tr()}', style: TextStyleManager.font17Black700,),
+                Text('${cubit.myReport!.TripCompleted[index].price}${LocaleKeys.currency.tr()}', style: TextStyleManager.font17Black700,),
               ],
             ),
             Align(
                 alignment: Alignment.centerLeft,
-                child: Text('#${cubit.trips[index].id}', style: TextStyleManager.font17Black700.copyWith(color:ColorManager.lighterGrey),))
+                child: Text('#${cubit.myReport!.TripCompleted[index].trip_number}', style: TextStyleManager.font17Black700.copyWith(color:ColorManager.lighterGrey),))
           ],
         ),
         separatorBuilder:(context, index) => const Divider(
@@ -41,7 +41,7 @@ class MyTripsWidget extends StatelessWidget {
           endIndent: 20,
           color: ColorManager.lightGrey,
         ),
-        itemCount: cubit.trips.length,
+        itemCount: cubit.myReport!.TripCompleted.length,
       ),
     );
   }

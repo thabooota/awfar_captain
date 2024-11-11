@@ -3,18 +3,31 @@ part 'trip_accepted_response.g.dart';
 
 @JsonSerializable()
 class TripAcceptedResponse {
-  final int TripID;
-  final String To;
-  final String From;
-  final int Price;
-  final String From_long;
-  final String To_long;
-  final String To_lat;
-  final String From_lat;
+  final int ?TripID;
+  final String ?To;
+  final String ?From;
+  final int ?Price;
+  final String ?From_long;
+  final String ?To_long;
+  final String ?To_lat;
+  final String ?From_lat;
+  final String ?data;
+  final String ?message;
+  final ClintInfo ?Client;
 
-  final ClintInfo Client;
-
-  TripAcceptedResponse({required this.Client, required this.To, required this.From, required this.Price, required this.TripID, required this.From_lat, required this.To_lat, required this.From_long, required this.To_long});
+  TripAcceptedResponse({
+    this.Client,
+    this.To,
+    this.From,
+    this.Price,
+    this.TripID,
+    this.From_lat,
+    this.To_lat,
+    this.From_long,
+    this.To_long,
+    this.data,
+    this.message
+  });
 
   factory TripAcceptedResponse.fromJson(Map<String, dynamic> json) => _$TripAcceptedResponseFromJson(json);
 }

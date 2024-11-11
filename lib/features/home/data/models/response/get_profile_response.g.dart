@@ -10,11 +10,15 @@ GetProfileResponse _$GetProfileResponseFromJson(Map<String, dynamic> json) =>
     GetProfileResponse(
       message: json['message'] as String,
       profileInfo: ProfileInfo.fromJson(json['data'] as Map<String, dynamic>),
+      status: json['status'] as bool,
+      rate: (json['rate'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$GetProfileResponseToJson(GetProfileResponse instance) =>
     <String, dynamic>{
       'message': instance.message,
+      'status': instance.status,
+      'rate': instance.rate,
       'data': instance.profileInfo,
     };
 
@@ -24,6 +28,7 @@ ProfileInfo _$ProfileInfoFromJson(Map<String, dynamic> json) => ProfileInfo(
       email: json['email'] as String,
       phone: json['phone'] as String,
       carBrand: json['car_brand'] as String?,
+      is_active: json['is_active'] as String?,
       carColor: json['car_color'] as String?,
       carModel: json['car_model'] as String?,
       address: json['address'] as String?,
@@ -40,6 +45,7 @@ Map<String, dynamic> _$ProfileInfoToJson(ProfileInfo instance) =>
       'email': instance.email,
       'phone': instance.phone,
       'address': instance.address,
+      'is_active': instance.is_active,
       'work_area': instance.workArea,
       'car_brand': instance.carBrand,
       'car_color': instance.carColor,

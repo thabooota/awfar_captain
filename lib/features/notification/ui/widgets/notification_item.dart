@@ -1,3 +1,4 @@
+import 'package:awfar_captain/features/notification/data/response/get_all_notifications_response.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -6,18 +7,8 @@ import '../../../../core/theming/color_manager.dart';
 import '../../../../core/theming/text_style_manager.dart';
 import '../../../../core/utils/assets_manager.dart';
 
-class NotificationModel {
-  final String message;
-  final bool isSystemNotification;
-
-  const NotificationModel({
-    required this.message,
-    required this.isSystemNotification,
-  });
-}
-
 class NotificationItem extends StatelessWidget {
-  final NotificationModel notification;
+  final GetAllNotificationsResponse notification;
 
   const NotificationItem({super.key, required this.notification});
 
@@ -30,9 +21,7 @@ class NotificationItem extends StatelessWidget {
       child: Row(
         children: [
           SvgPicture.asset(
-            notification.isSystemNotification
-                ? AssetsManager.icSystemNotification
-                : AssetsManager.icCouponNotification,
+            AssetsManager.icSystemNotification,
             width: 50.0,
           ),
           horizontalSpace(14.0),
@@ -41,12 +30,12 @@ class NotificationItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                notification.isSystemNotification ? "النظام" : "كوبون خصم",
+                 notification.title,
                 style: TextStyleManager.font17TextColor600,
               ),
               verticalSpace(8.0),
               Text(
-                notification.message,
+                notification.body,
                 style: TextStyleManager.font10Black600,
               ),
             ],
