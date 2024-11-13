@@ -62,7 +62,8 @@ class HomeCubit extends Cubit<HomeStates> {
   final TextEditingController oldPasswordController = TextEditingController();
   final TextEditingController newPasswordController = TextEditingController();
   final TextEditingController confirmNewPasswordController =
-  TextEditingController();
+                TextEditingController();
+
   bool hideOldPassword = true;
   bool hidePassword = true;
   bool hideConfirmPassword = true;
@@ -78,8 +79,9 @@ class HomeCubit extends Cubit<HomeStates> {
   late GoogleMapController googleMapController;
   Set<Marker> markers = {};
   late LatLng currentLocation;
-  bool ?scheduleTrip;
-  GetAllScheduledTripsResponse ?scheduledTripsResponse;
+  bool? scheduleTrip;
+  GetAllScheduledTripsResponse? scheduledTripsResponse;
+  LocationData ?_locationData;
 
   // Maps
 
@@ -117,19 +119,13 @@ class HomeCubit extends Cubit<HomeStates> {
     );
   }
 
-  void addCustomMapIcons() async {
-    BitmapDescriptor.fromAssetImage(
-            const ImageConfiguration(), "assets/icons/ic_my_location.png")
-        .then((icon) {
-      myLocationMarkerIcon = icon;
-    });
-    emit(ChangeMarkerState());
-  }
-
   void updateCurrentLocation() async {
     try {
-      LocationData locationData = await locationService.getLocation();
-      currentLocation = LatLng(locationData.latitude!, locationData.longitude!);
+      await locationService.checkAndRequestLocationPermission();
+      await locationService.checkAndRequestLocationService();
+      locationService.getRealTimeLocationData().listen((LocationData locationData) {
+        currentLocation = LatLng(locationData.latitude!, locationData.longitude!);
+      });
 
       Marker currentLocationMarker = Marker(
         markerId: const MarkerId('my location'),
@@ -139,7 +135,7 @@ class HomeCubit extends Cubit<HomeStates> {
 
       CameraPosition myCurrentCameraPosition = CameraPosition(
         target: currentLocation,
-        zoom: 15,
+        zoom: 16,
       );
 
       googleMapController.animateCamera(
@@ -160,10 +156,8 @@ class HomeCubit extends Cubit<HomeStates> {
 
   void getMyCurrentLocation() async {
     try {
-      addCustomMapIcons();
       LocationData locationData = await locationService.getLocation();
       currentLocation = LatLng(locationData.latitude!, locationData.longitude!);
-
       setCameraPosition();
       Marker myLocationMarker = Marker(
         markerId: const MarkerId('my-location-marker'),
@@ -187,9 +181,7 @@ class HomeCubit extends Cubit<HomeStates> {
       target: LatLng(26.691628121516544, 29.98142945921261),
       zoom: 6.0,
     );
-
     locationService = LocationService();
-    addCustomMapIcons();
     updateCurrentLocation();
   }
 
@@ -201,7 +193,7 @@ class HomeCubit extends Cubit<HomeStates> {
     if (isFirstCall) {
       CameraPosition cameraPosition = CameraPosition(
         target: currentLocation,
-        zoom: 16.4,
+        zoom: 17,
       );
       googleMapController
           .animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
@@ -266,11 +258,11 @@ class HomeCubit extends Cubit<HomeStates> {
     });
   }
 
-  void displayRoute(
+  Future<void> displayRoute(
       {required double lat1,
       required double long1,
       double? lat2,
-      double? long2}) {
+      double? long2}) async {
     locationMarker = Marker(
       markerId: const MarkerId('destination location'),
       position: LatLng(lat1, long1),
@@ -302,21 +294,25 @@ class HomeCubit extends Cubit<HomeStates> {
         markers.add(locationMarkerAnotherMarker!);
       }
       polyLines.add(route);
-      emit(DisplayRouteState());
+
     });
+    emit(DisplayRouteState());
   }
 
   void chaneConnectionState(bool value) {
     isOnline = value;
     if (value) {
       initializePusherNotifications(
-          channelName: 'TripsPending', onEvent: onEvent);
-      changeBottomSheetState(state: BottomSheetStates.searchForRides,);
+          pusher: _pusherConfig, channelName: 'TripsPending', onEvent: onEvent);
+      changeBottomSheetState(
+        state: BottomSheetStates.searchForRides,
+      );
       emit(ChangeConnectionState());
     } else {
-      _config.disconnect();
       _pusherConfig.disconnect();
-      changeBottomSheetState( state :BottomSheetStates.offline,);
+      changeBottomSheetState(
+        state: BottomSheetStates.offline,
+      );
       emit(ChangeConnectionState());
     }
     emit(ChangeConnectionState());
@@ -331,7 +327,7 @@ class HomeCubit extends Cubit<HomeStates> {
       case BottomSheetStates.rideRequest:
         return const RideRequestBottomSheet();
       case BottomSheetStates.meetClient:
-        return  MeetClientBottomSheet();
+        return MeetClientBottomSheet();
       case BottomSheetStates.arrivingPlace:
         return const ArrivedMeetingPlaceBottomSheet();
       case BottomSheetStates.startTrip:
@@ -349,17 +345,15 @@ class HomeCubit extends Cubit<HomeStates> {
   // home logic
 
   initializePusherNotifications(
-      {required onEvent, required String channelName}) async {
-    _pusherConfig = PusherConfig();
+      {
+        required onEvent,
+      required String channelName,
+      required PusherConfig pusher, }) async {
 
-    _pusherConfig.initPusher(onEvent, channelName: channelName);
-  }
+    pusher = PusherConfig();
 
-  initializePusherNotifications2(
-      {required onEvent, required String channelName}) async {
-    _config = PusherConfig();
+    pusher.initPusher(onEvent, channelName: channelName);
 
-    _config.initPusher(onEvent, channelName: channelName);
   }
 
   TripsPendingResponse? tripsPendingResponse;
@@ -398,10 +392,14 @@ class HomeCubit extends Cubit<HomeStates> {
                 SharedPreferencesManager.getData(key: PrefsManager.driverId),
             distance: distance));
     response.when(success: (data) {
-      initializePusherNotifications2(
+
+      initializePusherNotifications(
+          pusher: _config,
           onEvent: onResetTrip,
           channelName:
               'DriverNotification.${SharedPreferencesManager.getData(key: PrefsManager.driverId)}');
+        Future.delayed(Duration(seconds: 30),  initializePusherNotifications(
+            pusher: _pusherConfig, channelName: 'TripsPending', onEvent: onEvent));
       emit(StoreDriverTripSuccessState(data));
     }, failure: (error) {
       emit(StoreDriverTripFailureState(error.toString()));
@@ -428,7 +426,9 @@ class HomeCubit extends Cubit<HomeStates> {
                 date: json.decode(event.data)["data"]["date"],
                 Client_Name: json.decode(event.data)["data"]["Client_Name"]));
         print(restTripResponse!.data.Client_Name);
-        changeBottomSheetState(state :BottomSheetStates.rideRequest,);
+        changeBottomSheetState(
+          state: BottomSheetStates.rideRequest,
+        );
         getRoutes(
                 latTo: double.parse(restTripResponse!.data.to_lat),
                 longTo: double.parse(restTripResponse!.data.to_long),
@@ -461,7 +461,7 @@ class HomeCubit extends Cubit<HomeStates> {
                 SharedPreferencesManager.getData(key: PrefsManager.driverId)));
     response.when(success: (data) {
       tripAcceptedResponse = data;
-      if(data.message == null) {
+      if (data.message == null) {
         polyLines = {};
         markers.remove(locationMarker);
         markers.remove(locationMarkerAnotherMarker);
@@ -479,15 +479,19 @@ class HomeCubit extends Cubit<HomeStates> {
           });
         } else {
           initializePusherNotifications(
-              channelName: 'TripsPending', onEvent: onEvent);
+              pusher: _pusherConfig,
+              channelName: 'TripsPending',
+              onEvent: onEvent);
         }
         emit(AcceptedTripSuccessState(data));
       } else {
         initializePusherNotifications(
-            channelName: 'TripsPending', onEvent: onEvent);
+          pusher: _pusherConfig,
+          channelName: 'TripsPending',
+          onEvent: onEvent,
+        );
         emit(UserRejectedTrip());
       }
-
     }, failure: (error) {
       emit(AcceptedTripFailureState(error.toString()));
     });
@@ -502,9 +506,8 @@ class HomeCubit extends Cubit<HomeStates> {
             ),
             id: restTripResponse!.data.tripId));
     response.when(success: (data) {
-      _config.disconnect();
       initializePusherNotifications(
-          channelName: 'TripsPending', onEvent: onEvent);
+          pusher: _pusherConfig, channelName: 'TripsPending', onEvent: onEvent);
       emit(RejectedTripSuccessState(data));
     }, failure: (error) {
       print(error);
@@ -516,7 +519,10 @@ class HomeCubit extends Cubit<HomeStates> {
     emit(UpdateStatusTripLoadingState());
     final response = await _homeRepo.updateDriverStatus(
       updateStatusTripRequestBody: UpdateStatusDriverRequestBody(
-          trip_id: scheduleTrip == true ? scheduledTripsResponse!.trip_id : tripAcceptedResponse!.TripID!, status: status),
+          trip_id: scheduleTrip == true
+              ? scheduledTripsResponse!.trip_id
+              : tripAcceptedResponse!.TripID!,
+          status: status),
     );
     response.when(success: (data) {
       emit(UpdateStatusTripSuccessState(data));
@@ -532,7 +538,9 @@ class HomeCubit extends Cubit<HomeStates> {
         tripId: tripAcceptedResponse!.TripID!,
         charge: chargerController.hashCode);
     response.when(success: (data) {
-      changeBottomSheetState(state : BottomSheetStates.searchForRides,);
+      changeBottomSheetState(
+        state: BottomSheetStates.searchForRides,
+      );
       emit(CostTripSuccessState(data));
     }, failure: (error) {
       emit(CostTripFailureState(error.toString()));
@@ -542,13 +550,19 @@ class HomeCubit extends Cubit<HomeStates> {
   void emitRateClientStates() async {
     emit(RateClientLoadingState());
     final response = await _homeRepo.rateClient(
-        driverId: scheduleTrip == true ? scheduledTripsResponse!.client.Client_id  : tripAcceptedResponse!.Client!.Client_id,
+        driverId: scheduleTrip == true
+            ? scheduledTripsResponse!.client.Client_id
+            : tripAcceptedResponse!.Client!.Client_id,
         token: SharedPreferencesManager.getData(key: PrefsManager.token),
-        tripId: scheduleTrip == true ? scheduledTripsResponse!.trip_id  : tripAcceptedResponse!.TripID!,
+        tripId: scheduleTrip == true
+            ? scheduledTripsResponse!.trip_id
+            : tripAcceptedResponse!.TripID!,
         rateClientRequestBody: RateClientRequestBody(
             comment: commentRateController.text, rate: rate.toString()));
     response.when(success: (data) {
-      changeBottomSheetState(state : BottomSheetStates.searchForRides,);
+      changeBottomSheetState(
+        state: BottomSheetStates.searchForRides,
+      );
       emit(RateClientSuccessState(data));
     }, failure: (error) {
       emit(RateClientFailureState(error.toString()));
@@ -611,7 +625,9 @@ class HomeCubit extends Cubit<HomeStates> {
   }
 
   List<bool> myTripsActive = [];
+
   List<GetAllScheduledTripsResponse> scheduledTrips = [];
+
   void emitGetAllScheduledTrips() async {
     myTripsActive = [];
     emit(GetScheduledTripsLoadingState());
@@ -620,10 +636,9 @@ class HomeCubit extends Cubit<HomeStates> {
       token: SharedPreferencesManager.getData(key: PrefsManager.token),
     );
 
-    response.when(
-        success: (List<GetAllScheduledTripsResponse> getScheduledTripsResponse) {
-      getScheduledTripsResponse
-          .forEach((_) => myTripsActive.add(false));
+    response.when(success:
+        (List<GetAllScheduledTripsResponse> getScheduledTripsResponse) {
+      getScheduledTripsResponse.forEach((_) => myTripsActive.add(false));
       scheduledTrips = getScheduledTripsResponse
           .where((trip) => trip.status != "canceled")
           .toList();
@@ -634,6 +649,7 @@ class HomeCubit extends Cubit<HomeStates> {
   }
 
   List<GetAllNotificationsResponse> myNotifications = [];
+
   void emitGetAllNotifications() async {
     myNotifications = [];
     emit(GetAllNotificationsLoadingState());
@@ -651,6 +667,7 @@ class HomeCubit extends Cubit<HomeStates> {
   }
 
   // change password
+
   void emitChangeOldPasswordIconState() {
     hideOldPassword = !hideOldPassword;
     emit(ChangeOldPasswordIconState());

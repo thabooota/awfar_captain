@@ -1,10 +1,8 @@
-
 import 'package:awfar_captain/core/helpers/spacing.dart';
 import 'package:awfar_captain/core/utils/assets_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
 import '../../../../core/theming/color_manager.dart';
 import '../../../../core/theming/text_style_manager.dart';
 
@@ -39,7 +37,10 @@ class CustomCardAuth extends StatelessWidget {
             const SizedBox(
               height: 15.0,
             ),
-            SvgPicture.asset(AssetsManager.icAwfarLogo, width: 160.0,),
+            Image.asset(
+              AssetsManager.imgLogoPNG,
+              width: 160.0,
+            ),
             verticalSpace(30.h),
             Center(
               child: Text(

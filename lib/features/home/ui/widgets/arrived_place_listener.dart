@@ -55,10 +55,33 @@ class _ArrivedPlaceListenerState extends State<ArrivedPlaceListener> {
                     color: ColorManager.green,
                   )));
         } else if (state is UpdateStatusTripSuccessState) {
-          Navigator.pop(context);
           context
               .read<HomeCubit>()
-              .changeBottomSheetState(state: BottomSheetStates.startTrip,);
+              .getRoutes(
+                first: false,
+                latTo: double.parse(
+                    context.read<HomeCubit>().tripAcceptedResponse!.To_lat!),
+                longTo: double.parse(
+                    context.read<HomeCubit>().tripAcceptedResponse!.To_long!),
+              )
+              .then((_) {
+            context
+                .read<HomeCubit>()
+                .displayRoute(
+                    lat1: double.parse(context
+                        .read<HomeCubit>()
+                        .tripAcceptedResponse!
+                        .To_lat!),
+                    long1: double.parse(
+                      context.read<HomeCubit>().tripAcceptedResponse!.To_long!,
+                    ))
+                .then((_) {
+              Navigator.pop(context);
+              context.read<HomeCubit>().changeBottomSheetState(
+                    state: BottomSheetStates.startTrip,
+                  );
+            });
+          });
         } else if (state is UpdateStatusTripFailureState) {
           Navigator.pop(context);
           AnimatedSnackBar.material(
@@ -71,35 +94,7 @@ class _ArrivedPlaceListenerState extends State<ArrivedPlaceListener> {
       },
       child: GestureDetector(
         onTap: () {
-          context
-              .read<HomeCubit>()
-              .emitUpdateDriverStatus(status: "meeting")
-              .then((_)  {
-                    context
-                        .read<HomeCubit>()
-                        .getRoutes(
-                          first: false,
-                          latTo: double.parse(context
-                              .read<HomeCubit>()
-                              .tripAcceptedResponse!
-                              .To_lat!),
-                          longTo: double.parse(context
-                              .read<HomeCubit>()
-                              .tripAcceptedResponse!
-                              .To_long!),
-                        )
-                        .then((_)  {
-                              context.read<HomeCubit>().displayRoute(
-                                  lat1: double.parse(context
-                                      .read<HomeCubit>()
-                                      .tripAcceptedResponse!
-                                      .To_lat!),
-                                  long1: double.parse(context
-                                      .read<HomeCubit>()
-                                      .tripAcceptedResponse!
-                                      .To_long!));
-                            });
-                  });
+          context.read<HomeCubit>().emitUpdateDriverStatus(status: "meeting");
         },
         child: Container(
           width: 90.w,

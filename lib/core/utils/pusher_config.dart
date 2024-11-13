@@ -6,6 +6,7 @@ import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 // import 'package:http/http.dart' as http;
 
 class PusherConfig {
+
   late PusherChannelsFlutter _pusher;
 
   String APP_ID = "1766181";
@@ -13,7 +14,11 @@ class PusherConfig {
   String SECRET = "4c9e879ad8be49b3d304";
   String API_CLUSTER = "eu";
 
-  Future<void> initPusher(onEvent, {required String channelName }) async {
+  Future<void> initPusher(
+      onEvent, {
+        required String channelName
+      }) async {
+
     _pusher = PusherChannelsFlutter.getInstance();
 
     try {

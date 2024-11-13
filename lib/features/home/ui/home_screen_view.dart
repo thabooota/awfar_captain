@@ -19,35 +19,36 @@ class HomeScreenView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: BlocBuilder< HomeCubit, HomeStates >( builder: (context, state) => Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              context.read<HomeCubit>().isOnline
-                  ? LocaleKeys.homeAppBarTitle1.tr()
-                  : LocaleKeys.homeAppBarTitle2.tr(),
-              style: TextStyleManager.font17TextColor600,
-            ),
-            horizontalSpace(5.w),
-            Switch(
-              trackOutlineColor: WidgetStateProperty.resolveWith(
-                    (final Set<WidgetState> states) {
-                  if (states.contains(WidgetState.selected)) {
-                    return ColorManager.green;
-                  }
-                  return ColorManager.darkGrey;
-                },
+        title: BlocBuilder<HomeCubit, HomeStates>(
+          builder: (context, state) => Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                context.read<HomeCubit>().isOnline
+                    ? LocaleKeys.homeAppBarTitle1.tr()
+                    : LocaleKeys.homeAppBarTitle2.tr(),
+                style: TextStyleManager.font17TextColor600,
               ),
-              inactiveThumbColor: ColorManager.darkGrey,
-              activeColor: ColorManager.green,
-              activeTrackColor: ColorManager.originalWhite,
-              inactiveTrackColor: ColorManager.originalWhite,
-              value: context.read<HomeCubit>().isOnline,
-              onChanged: (value) =>
-                  context.read<HomeCubit>().chaneConnectionState(value),
-            ),
-          ],
-        ),
+              horizontalSpace(5.w),
+              Switch(
+                trackOutlineColor: WidgetStateProperty.resolveWith(
+                      (final Set<WidgetState> states) {
+                    if (states.contains(WidgetState.selected)) {
+                      return ColorManager.green;
+                    }
+                    return ColorManager.darkGrey;
+                  },
+                ),
+                inactiveThumbColor: ColorManager.darkGrey,
+                activeColor: ColorManager.green,
+                activeTrackColor: ColorManager.originalWhite,
+                inactiveTrackColor: ColorManager.originalWhite,
+                value: context.read<HomeCubit>().isOnline,
+                onChanged: (value) =>
+                    context.read<HomeCubit>().chaneConnectionState(value),
+              ),
+            ],
+          ),
         ),
         // actions: [
         //   IconButton(
@@ -56,43 +57,40 @@ class HomeScreenView extends StatelessWidget {
         //   ),
         // ],
       ),
-      drawer:  DrawerView(
+      drawer: DrawerView(
         onChangeLang: (String value) {
           context.read<HomeCubit>().onSelectLang(context, value);
-        },),
-      body: const HomeMapView(),
-      bottomSheet: BlocBuilder<HomeCubit, HomeStates>( builder: (context, state) => Wrap(
-        children: [
-          Container(
-            decoration: const BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: ColorManager.darkGrey,
-                    blurRadius: 12,
-                    blurStyle: BlurStyle.normal,
-                    spreadRadius: 1,
-                    offset: Offset(
-                      0,
-                      -5,
-                    ),
-                  ),
-                ],
-                color: ColorManager.originalWhite,
-                borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(10),
-                    topLeft: Radius.circular(10.0))),
-            padding: const EdgeInsets.only(
-                top: 15.0,
-                right: 18.0,
-                left: 18.0,
-                bottom: 25.0
-            ),
-            child: SingleChildScrollView(
-                child: context.read<HomeCubit>().bottomSheets()
-            ),
-          ),
-        ],
+        },
       ),
+      body: const HomeMapView(),
+      bottomSheet: BlocBuilder<HomeCubit, HomeStates>(
+        builder: (context, state) => Wrap(
+          children: [
+            Container(
+              decoration: const BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: ColorManager.darkGrey,
+                      blurRadius: 12,
+                      blurStyle: BlurStyle.normal,
+                      spreadRadius: 1,
+                      offset: Offset(
+                        0,
+                        -5,
+                      ),
+                    ),
+                  ],
+                  color: ColorManager.originalWhite,
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(10),
+                      topLeft: Radius.circular(10.0))),
+              padding: const EdgeInsets.only(
+                  top: 15.0, right: 18.0, left: 18.0, bottom: 25.0),
+              child: SingleChildScrollView(
+                  child: context.read<HomeCubit>().bottomSheets()),
+            ),
+          ],
+        ),
       ),
     );
   }

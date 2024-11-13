@@ -20,7 +20,7 @@ class LostConnection extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SvgPicture.asset(AssetsManager.imgLogo,
+              Image.asset(AssetsManager.imgLogoPNG,
               height: MediaQuery.of(context).size.height * 0.4,),
               const SizedBox(
                 height: 20.0,

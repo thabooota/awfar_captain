@@ -7,7 +7,6 @@ import 'package:awfar_captain/features/captain_gate/data/model/response/get_my_t
 import 'package:awfar_captain/features/home/data/models/requests/store_driver_trip_request_body.dart';
 import 'package:awfar_captain/features/home/data/models/requests/update_status_driver_request_body.dart';
 import 'package:awfar_captain/features/home/data/models/response/get_all_scheduled_trips_response.dart';
-import 'package:awfar_captain/features/home/data/models/response/get_trip_response.dart';
 import 'package:awfar_captain/features/home/data/models/response/trip_accepted_response.dart';
 import 'package:awfar_captain/features/notification/data/response/get_all_notifications_response.dart';
 import 'package:dio/dio.dart';
@@ -15,8 +14,6 @@ import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
 import '../../../../features/chat/data/models/request/get_message_request_body.dart';
 import '../../../../features/chat/data/models/request/send_message_request_body.dart';
-import '../../../../features/home/data/models/requests/get_routes_request_body.dart';
-import '../../../../features/home/data/models/response/get_routes_response.dart';
 import '../../../../features/home/data/models/response/massage_response.dart';
 part 'home_api_service.g.dart';
 

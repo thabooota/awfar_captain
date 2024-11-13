@@ -24,10 +24,37 @@ class ClientMeetingListener extends StatelessWidget {
                     color: ColorManager.green,
                   )));
         } else if (state is UpdateStatusTripSuccessState) {
-          Navigator.pop(context);
           context
               .read<HomeCubit>()
-              .changeBottomSheetState(state : BottomSheetStates.arrivingPlace,);
+              .getRoutes(
+                first: false,
+                latTo: double.parse(
+                    context.read<HomeCubit>().tripAcceptedResponse!.From_lat!),
+                longTo: double.parse(
+                    context.read<HomeCubit>().tripAcceptedResponse!.From_long!),
+              )
+              .then(
+            (_) {
+              context
+                  .read<HomeCubit>()
+                  .displayRoute(
+                    lat1: double.parse(context
+                        .read<HomeCubit>()
+                        .tripAcceptedResponse!
+                        .From_lat!),
+                    long1: double.parse(context
+                        .read<HomeCubit>()
+                        .tripAcceptedResponse!
+                        .From_long!),
+                  )
+                  .then((_) {
+                Navigator.pop(context);
+                context.read<HomeCubit>().changeBottomSheetState(
+                      state: BottomSheetStates.arrivingPlace,
+                    );
+              });
+            },
+          );
         } else if (state is UpdateStatusTripFailureState) {
           Navigator.pop(context);
           AnimatedSnackBar.material(
@@ -43,40 +70,7 @@ class ClientMeetingListener extends StatelessWidget {
         child: AppTextButton(
           appText: LocaleKeys.meetingClient.tr(),
           onTap: () {
-            context
-                .read<HomeCubit>()
-                .emitUpdateDriverStatus(status: "waiting")
-                .then(
-                  (_) {
-                    context
-                        .read<HomeCubit>()
-                        .getRoutes(
-                          first: false,
-                          latTo: double.parse(context
-                              .read<HomeCubit>()
-                              .tripAcceptedResponse!
-                              .From_lat!),
-                          longTo: double.parse(context
-                              .read<HomeCubit>()
-                              .tripAcceptedResponse!
-                              .From_long!),
-                        )
-                        .then(
-                      (_) {
-                        context.read<HomeCubit>().displayRoute(
-                              lat1: double.parse(context
-                                  .read<HomeCubit>()
-                                  .tripAcceptedResponse!
-                                  .From_lat!),
-                              long1: double.parse(context
-                                  .read<HomeCubit>()
-                                  .tripAcceptedResponse!
-                                  .From_long!),
-                            );
-                      },
-                    );
-                  },
-                );
+            context.read<HomeCubit>().emitUpdateDriverStatus(status: "waiting");
           },
         ),
       ),

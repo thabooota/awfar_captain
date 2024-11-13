@@ -5,13 +5,12 @@ class AssetsManager {
   // images
   static const String imgOnboardingOne = "${_imgPath}img_onboarding1.svg";
   static const String imgOnboardingTwo = "${_imgPath}img_onboarding2.svg";
-  static const String imgLogo = "${_imgPath}img_logo.svg";
   static const String imgChangePasswordDone = "${_imgPath}img_change_password_done.svg";
-  static const String imgLogoPNG = "${_imgPath}awfar-logo-1 1 (Traced).png";
+  static const String imgLogoPNG = "${_imgPath}img_logo.png";
   static const String imgProfileUser = "${_imgPath}img_profile-user.png";
 
   // icons
-  static const String icAwfarLogo = "${_icPath}ic_awfar_logo.svg";
+
   static const String icShow = "${_icPath}ic_eye.svg";
   static const String icHide = "${_icPath}ic_eye_closed.svg";
   static const String icArrowLeft = "${_icPath}ic_arrow_left.svg";
