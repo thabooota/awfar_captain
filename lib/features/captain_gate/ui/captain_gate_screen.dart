@@ -51,146 +51,149 @@ class CaptainGateScreen extends StatelessWidget {
             } if (state is GetReportError ) {
             return Center(child: Text(LocaleKeys.errorText.tr() ,style:  TextStyleManager.font20TextColor600,),);
           }else  {
-            return ListView(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-              children: [
-                Center(
-                  child: Text(
-                    '0 ${LocaleKeys.currency.tr()}',
-                    style: TextStyleManager.font25White600
-                        .copyWith(color: ColorManager.originalBlack),
-                  ),
-                ),
-                verticalSpace(20.h),
-                Card(
-                  elevation: 2,
-                  color: ColorManager.originalWhite,
-                  child: ListTile(
-                    title: Text(
-                      LocaleKeys.withDrawMyBalance.tr(),
-                      style: TextStyleManager.font20Gray400,
-                    ),
-                    leading: CircleAvatar(
-                        radius: 20.0,
-                        backgroundColor: ColorManager.lightGrey,
-                        child: SvgPicture.asset(AssetsManager.icMoney)),
-                    onTap: () {},
-                    contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 20.0, vertical: 8),
-                  ),
-                ),
-                verticalSpace(15.h),
-                Text(
-                  LocaleKeys.yourQualityReport.tr(),
-                  style: TextStyleManager.font20BlackBold,
-                ),
-                verticalSpace(15.h),
-                Card(
-                  elevation: 2,
-                  color: ColorManager.originalWhite,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16.0, vertical: 6.0),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              LocaleKeys.generalStatus.tr(),
-                              style: TextStyleManager.font17TextColor600,
-                            ),
-                            const Spacer(),
-                            Text(
-                            cubit.myRate! > 1 ? LocaleKeys.good.tr() : LocaleKeys.bad.tr(),
-                              style: TextStyleManager.font17TextColor600,
-                            ),
-                          ],
-                        ),
-                        verticalSpace(10.0.h),
-                        Row(
-                          children: [
-                            Text(
-                              LocaleKeys.customerExperience.tr(),
-                              style: TextStyleManager.font17TextColor600,
-                            ),
-                            const Spacer(),
-                            Text(
-                              int.parse(cubit.myReport!.Percentage_completed_trips.replaceAll('%', '')) > 50 ? LocaleKeys.good.tr() : LocaleKeys.satisfactory.tr(),
-                              style: TextStyleManager.font17TextColor600
-                                  .copyWith(color: ColorManager.orange),
-                            ),
-                          ],
-                        ),
-                        verticalSpace(10.0.h),
-                        verticalSpace(10.0.h),
-                        Row(
-                          children: [
-                            Text(
-                              LocaleKeys.percentageOfCompletedTrips.tr(),
-                              style: TextStyleManager.font17TextColor600,
-                            ),
-                            const Spacer(),
-                            Text(
-                              cubit.myReport!.Percentage_completed_trips,
-                              style: TextStyleManager.font17TextColor600
-                                  .copyWith(color: ColorManager.red),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                verticalSpace(15.h),
-                GestureDetector(
-                  onTap: () {
-                    showCustomDateRangePicker(
-                      context,
-                      dismissible: true,
-                      minimumDate: DateTime.now().subtract(const Duration(days: 300)),
-                      maximumDate: DateTime.now(),
-                      endDate: cubit.secaundDateTime,
-                      startDate: cubit.firstDateTime,
-                      backgroundColor: Colors.white,
-                      primaryColor: Colors.green,
-                      onApplyClick: (start, end) {
-                        cubit.firstDateTime = start;
-                        cubit.secaundDateTime = end;
-                        cubit.emitGetReport(to: end.toString(), from: start.toString());
-                      },
-                      onCancelClick: () {
-                        cubit.firstDateTime = DateTime.now().subtract(Duration(days: 7));
-                        cubit.secaundDateTime = DateTime.now();
-                      },
-                    );
-                    print('youssef');
-                  },
-                  child: Card(
-                    color: ColorManager.originalWhite,
-                    elevation: 2,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16.0, vertical: 10.0),
-                      child: Center(
-                        child: Text(
-                          '${DateFormat('dd-MM-yyyy').format(cubit.secaundDateTime)} : ${DateFormat('dd-MM-yyyy').format(cubit.firstDateTime)}',
-                          style: TextStyleManager.font20BlackBold,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                verticalSpace(30.h),
-                Text(
-                  LocaleKeys.myRides.tr(),
-                  style: TextStyleManager.font20BlackBold,
-                ),
-                verticalSpace(10.h),
-                if(cubit.myReport != null)
-                const MyTripsWidget(),
-              ],
-            );
+           if (cubit.myReport != null) {
+             return ListView(
+               padding:
+               const EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+               children: [
+                 Center(
+                   child: Text(
+                     '0 ${LocaleKeys.currency.tr()}',
+                     style: TextStyleManager.font25White600
+                         .copyWith(color: ColorManager.originalBlack),
+                   ),
+                 ),
+                 verticalSpace(20.h),
+                 Card(
+                   elevation: 2,
+                   color: ColorManager.originalWhite,
+                   child: ListTile(
+                     title: Text(
+                       LocaleKeys.withDrawMyBalance.tr(),
+                       style: TextStyleManager.font20Gray400,
+                     ),
+                     leading: CircleAvatar(
+                         radius: 20.0,
+                         backgroundColor: ColorManager.lightGrey,
+                         child: SvgPicture.asset(AssetsManager.icMoney)),
+                     onTap: () {},
+                     contentPadding: const EdgeInsets.symmetric(
+                         horizontal: 20.0, vertical: 8),
+                   ),
+                 ),
+                 verticalSpace(15.h),
+                 Text(
+                   LocaleKeys.yourQualityReport.tr(),
+                   style: TextStyleManager.font20BlackBold,
+                 ),
+                 verticalSpace(15.h),
+                 Card(
+                   elevation: 2,
+                   color: ColorManager.originalWhite,
+                   child: Padding(
+                     padding: const EdgeInsets.symmetric(
+                         horizontal: 16.0, vertical: 6.0),
+                     child: Column(
+                       children: [
+                         Row(
+                           children: [
+                             Text(
+                               LocaleKeys.generalStatus.tr(),
+                               style: TextStyleManager.font17TextColor600,
+                             ),
+                             const Spacer(),
+                             Text(
+                               cubit.myRate! > 1 ? LocaleKeys.good.tr() : LocaleKeys.bad.tr(),
+                               style: TextStyleManager.font17TextColor600,
+                             ),
+                           ],
+                         ),
+                         verticalSpace(10.0.h),
+                         Row(
+                           children: [
+                             Text(
+                               LocaleKeys.customerExperience.tr(),
+                               style: TextStyleManager.font17TextColor600,
+                             ),
+                             const Spacer(),
+                             Text(
+                               int.parse(cubit.myReport!.Percentage_completed_trips.replaceAll('%', '')) > 50 ? LocaleKeys.good.tr() : LocaleKeys.satisfactory.tr(),
+                               style: TextStyleManager.font17TextColor600
+                                   .copyWith(color: ColorManager.orange),
+                             ),
+                           ],
+                         ),
+                         verticalSpace(10.0.h),
+                         verticalSpace(10.0.h),
+                         Row(
+                           children: [
+                             Text(
+                               LocaleKeys.percentageOfCompletedTrips.tr(),
+                               style: TextStyleManager.font17TextColor600,
+                             ),
+                             const Spacer(),
+                             Text(
+                               cubit.myReport!.Percentage_completed_trips,
+                               style: TextStyleManager.font17TextColor600
+                                   .copyWith(color: ColorManager.red),
+                             ),
+                           ],
+                         ),
+                       ],
+                     ),
+                   ),
+                 ),
+                 verticalSpace(15.h),
+                 GestureDetector(
+                   onTap: () {
+                     showCustomDateRangePicker(
+                       context,
+                       dismissible: true,
+                       minimumDate: DateTime.now().subtract(const Duration(days: 300)),
+                       maximumDate: DateTime.now(),
+                       endDate: cubit.secaundDateTime,
+                       startDate: cubit.firstDateTime,
+                       backgroundColor: Colors.white,
+                       primaryColor: Colors.green,
+                       onApplyClick: (start, end) {
+                         cubit.firstDateTime = start;
+                         cubit.secaundDateTime = end;
+                         cubit.emitGetReport(to: end.toString(), from: start.toString());
+                       },
+                       onCancelClick: () {
+                         cubit.firstDateTime = DateTime.now().subtract(Duration(days: 7));
+                         cubit.secaundDateTime = DateTime.now();
+                       },
+                     );
+                   },
+                   child: Card(
+                     color: ColorManager.originalWhite,
+                     elevation: 2,
+                     child: Padding(
+                       padding: const EdgeInsets.symmetric(
+                           horizontal: 16.0, vertical: 10.0),
+                       child: Center(
+                         child: Text(
+                           '${DateFormat('dd-MM-yyyy').format(cubit.secaundDateTime)} : ${DateFormat('dd-MM-yyyy').format(cubit.firstDateTime)}',
+                           style: TextStyleManager.font20BlackBold,
+                         ),
+                       ),
+                     ),
+                   ),
+                 ),
+                 verticalSpace(30.h),
+                 Text(
+                   LocaleKeys.myRides.tr(),
+                   style: TextStyleManager.font20BlackBold,
+                 ),
+                 verticalSpace(10.h),
+                 if(cubit.myReport != null)
+                   const MyTripsWidget(),
+               ],
+             );
+           } else {
+             return Center(child: Text(LocaleKeys.noTripsFound.tr() ,style:  TextStyleManager.font20TextColor600,),);
+           }
           }
         },
       ),

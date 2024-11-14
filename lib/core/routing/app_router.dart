@@ -6,6 +6,7 @@ import 'package:awfar_captain/features/authentication/ui/verify_otp_forget_passw
 import 'package:awfar_captain/features/authentication/ui/verify_otp_register.dart';
 import 'package:awfar_captain/features/captain_gate/logic/captain_gate_cubit.dart';
 import 'package:awfar_captain/features/home/logic/home_cubit.dart';
+import 'package:awfar_captain/features/home/ui/change_password_screen.dart';
 import 'package:awfar_captain/features/home/ui/edit_account_screen.dart';
 import 'package:awfar_captain/features/home/ui/home_screen.dart';
 import 'package:awfar_captain/features/home/ui/my_trip_screen.dart';
@@ -104,7 +105,7 @@ class AppRouter {
       case Routes.captainGate:
         return AnimationRoute(
             page: BlocProvider.value(
-                value: getIt<CaptainGateCubit>()..emitGetTripsState()..emitGetReport(
+                value: getIt<CaptainGateCubit>()..emitGetReport(
                     to: DateTime.now().toString(),
                     from: DateTime.now().subtract(Duration(days: 7)).toString(),
                 ),
@@ -133,6 +134,11 @@ class AppRouter {
             page: BlocProvider.value(
                 value: getIt<HomeCubit>()..emitGetMessagesState(),
                 child: const ChatScreen()));
+      case Routes.changePassword:
+        return AnimationRoute(
+            page: BlocProvider.value(
+                value: getIt<HomeCubit>(),
+                child: const ChangeMyPasswordScreen()));
       case Routes.technicalSupport:
         return AnimationRoute(page: const TechnicalSupport());
       case Routes.schudleTrip:

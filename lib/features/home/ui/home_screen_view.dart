@@ -16,7 +16,11 @@ class HomeScreenView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BlocListener<HomeCubit, HomeStates>(listener: (context, state){
+      if(state is StoreDriverTripSuccessState){
+        Future.delayed(Duration(seconds: 40), context.read<HomeCubit>().configPusherConnectPendingAndDisconnect,);
+      }
+    }, child: Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: BlocBuilder<HomeCubit, HomeStates>(
@@ -92,6 +96,6 @@ class HomeScreenView extends StatelessWidget {
           ],
         ),
       ),
-    );
+    ),);
   }
 }

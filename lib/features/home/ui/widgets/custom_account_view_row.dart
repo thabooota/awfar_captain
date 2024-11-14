@@ -33,42 +33,45 @@ class CustomAccountViewRow extends StatelessWidget {
           ),
         ),
         horizontalSpace(22.0),
-        Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              context.read<CaptainGateCubit>().myProfile!.name,
-              style: TextStyleManager.font20TextColor600,
-            ),
-            verticalSpace(8.0),
-            Container(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 3.0),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(18.0),
-                  color: ColorManager.originalWhite,
-                  boxShadow: const [
-                    BoxShadow(
-                      color: ColorManager.yellow,
-                      blurRadius: 10.0,
-                      spreadRadius: 1.0,
-                      blurStyle: BlurStyle.normal,
-                    ),
-                  ]),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    "${context.read<CaptainGateCubit>().myRate ?? "0"}",
-                    style: TextStyleManager.font13Black700,
-                  ),
-                  horizontalSpace(4.0),
-                  SvgPicture.asset(AssetsManager.icFavorites),
-                ],
+        Expanded(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                context.read<CaptainGateCubit>().myProfile!.name,
+                style: TextStyleManager.font20TextColor600,
+                overflow: TextOverflow.fade,
               ),
-            ),
-          ],
+              verticalSpace(8.0),
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10.0, vertical: 3.0),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(18.0),
+                    color: ColorManager.originalWhite,
+                    boxShadow: const [
+                      BoxShadow(
+                        color: ColorManager.yellow,
+                        blurRadius: 10.0,
+                        spreadRadius: 1.0,
+                        blurStyle: BlurStyle.normal,
+                      ),
+                    ]),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "${context.read<CaptainGateCubit>().myRate ?? "0"}",
+                      style: TextStyleManager.font13Black700,
+                    ),
+                    horizontalSpace(4.0),
+                    SvgPicture.asset(AssetsManager.icFavorites),
+                  ],
+                ),
+              ),
+            ],
+          ),
         )
       ],
     );

@@ -139,7 +139,7 @@ static const Map<String,dynamic> en = {
   "noAccount": "Don't have account? ",
   "subscription": "Subscription now",
   "registerHeader": "Register by phone",
-  "carColor": "Car brand",
+  "carColor": "Car color",
   "colorNumber": "Car number",
   "carBrand": "car brand",
   "carModel": "car model",

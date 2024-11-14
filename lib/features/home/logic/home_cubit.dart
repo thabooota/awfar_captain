@@ -81,7 +81,7 @@ class HomeCubit extends Cubit<HomeStates> {
   late LatLng currentLocation;
   bool? scheduleTrip;
   GetAllScheduledTripsResponse? scheduledTripsResponse;
-  LocationData ?_locationData;
+   bool notification = true;
 
   // Maps
 
@@ -125,23 +125,16 @@ class HomeCubit extends Cubit<HomeStates> {
       await locationService.checkAndRequestLocationService();
       locationService.getRealTimeLocationData().listen((LocationData locationData) {
         currentLocation = LatLng(locationData.latitude!, locationData.longitude!);
+
+        CameraPosition myCurrentCameraPosition = CameraPosition(
+          target: currentLocation,
+          zoom: 17,
+        );
+
+        googleMapController.animateCamera(
+            CameraUpdate.newCameraPosition(myCurrentCameraPosition));
+        emit(GetCurrentLocationState());
       });
-
-      Marker currentLocationMarker = Marker(
-        markerId: const MarkerId('my location'),
-        position: currentLocation,
-        icon: myLocationMarkerIcon,
-      );
-
-      CameraPosition myCurrentCameraPosition = CameraPosition(
-        target: currentLocation,
-        zoom: 16,
-      );
-
-      googleMapController.animateCamera(
-          CameraUpdate.newCameraPosition(myCurrentCameraPosition));
-      markers.add(currentLocationMarker);
-      emit(GetCurrentLocationState());
     } on LocationServiceException catch (e) {
       debugPrint("\x1B[33m${e.toString()}\x1B[0m");
       SystemNavigator.pop();
@@ -186,8 +179,6 @@ class HomeCubit extends Cubit<HomeStates> {
   }
 
   late PusherConfig _pusherConfig;
-
-  late PusherConfig _config;
 
   void setCameraPosition() {
     if (isFirstCall) {
@@ -303,7 +294,7 @@ class HomeCubit extends Cubit<HomeStates> {
     isOnline = value;
     if (value) {
       initializePusherNotifications(
-          pusher: _pusherConfig, channelName: 'TripsPending', onEvent: onEvent);
+         channelName: 'TripsPending', onEvent: onEvent);
       changeBottomSheetState(
         state: BottomSheetStates.searchForRides,
       );
@@ -348,11 +339,11 @@ class HomeCubit extends Cubit<HomeStates> {
       {
         required onEvent,
       required String channelName,
-      required PusherConfig pusher, }) async {
+      }) async {
 
-    pusher = PusherConfig();
+    _pusherConfig = PusherConfig();
 
-    pusher.initPusher(onEvent, channelName: channelName);
+    _pusherConfig.initPusher(onEvent, channelName: channelName);
 
   }
 
@@ -360,7 +351,7 @@ class HomeCubit extends Cubit<HomeStates> {
 
   void onEvent(PusherEvent event) {
     try {
-      print("event name :${event.eventName}");
+      print("event name ggggggggggggggggggg:${event.eventName}");
       if (event.eventName == "event") {
         print("here");
         tripsPendingResponse =
@@ -392,18 +383,22 @@ class HomeCubit extends Cubit<HomeStates> {
                 SharedPreferencesManager.getData(key: PrefsManager.driverId),
             distance: distance));
     response.when(success: (data) {
-
       initializePusherNotifications(
-          pusher: _config,
           onEvent: onResetTrip,
-          channelName:
-              'DriverNotification.${SharedPreferencesManager.getData(key: PrefsManager.driverId)}');
-        Future.delayed(Duration(seconds: 30),  initializePusherNotifications(
-            pusher: _pusherConfig, channelName: 'TripsPending', onEvent: onEvent));
+          channelName: 'DriverNotification.${SharedPreferencesManager.getData(key: PrefsManager.driverId)}');
       emit(StoreDriverTripSuccessState(data));
     }, failure: (error) {
       emit(StoreDriverTripFailureState(error.toString()));
     });
+  }
+
+
+  void configPusherConnectPendingAndDisconnect(){
+    print("disconnecting ###################################################################################");
+    _pusherConfig.disconnect();
+    print("connecting %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%55%%%%");
+    initializePusherNotifications(
+        channelName: 'TripsPending', onEvent: onEvent);
   }
 
   RestTripResponse? restTripResponse;
@@ -461,6 +456,7 @@ class HomeCubit extends Cubit<HomeStates> {
                 SharedPreferencesManager.getData(key: PrefsManager.driverId)));
     response.when(success: (data) {
       tripAcceptedResponse = data;
+      _pusherConfig.disconnect();
       if (data.message == null) {
         polyLines = {};
         markers.remove(locationMarker);
@@ -479,14 +475,12 @@ class HomeCubit extends Cubit<HomeStates> {
           });
         } else {
           initializePusherNotifications(
-              pusher: _pusherConfig,
               channelName: 'TripsPending',
               onEvent: onEvent);
         }
         emit(AcceptedTripSuccessState(data));
       } else {
         initializePusherNotifications(
-          pusher: _pusherConfig,
           channelName: 'TripsPending',
           onEvent: onEvent,
         );
@@ -506,8 +500,7 @@ class HomeCubit extends Cubit<HomeStates> {
             ),
             id: restTripResponse!.data.tripId));
     response.when(success: (data) {
-      initializePusherNotifications(
-          pusher: _pusherConfig, channelName: 'TripsPending', onEvent: onEvent);
+      initializePusherNotifications(channelName: 'TripsPending', onEvent: onEvent);
       emit(RejectedTripSuccessState(data));
     }, failure: (error) {
       print(error);

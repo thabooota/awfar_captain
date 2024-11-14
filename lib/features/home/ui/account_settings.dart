@@ -1,20 +1,29 @@
+import 'package:awfar_captain/core/app_cubit/app_cubit.dart';
 import 'package:awfar_captain/core/helpers/extensions.dart';
 import 'package:awfar_captain/core/helpers/spacing.dart';
 import 'package:awfar_captain/core/routing/routes.dart';
 import 'package:awfar_captain/core/theming/color_manager.dart';
 import 'package:awfar_captain/core/theming/text_style_manager.dart';
 import 'package:awfar_captain/core/utils/assets_manager.dart';
+import 'package:awfar_captain/features/home/logic/home_cubit.dart';
 import 'package:awfar_captain/features/home/ui/widgets/account_settings_item.dart';
 import 'package:awfar_captain/features/home/ui/widgets/custom_account_view_row.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../lang/locale_keys.g.dart';
 
-class AccountSettings extends StatelessWidget {
+class AccountSettings extends StatefulWidget {
   const AccountSettings({super.key});
 
+  @override
+  State<AccountSettings> createState() => _AccountSettingsState();
+}
+
+class _AccountSettingsState extends State<AccountSettings> {
+  bool notification = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,7 +69,7 @@ class AccountSettings extends StatelessWidget {
               text: LocaleKeys.editAccount.tr(),
             ),
             AccountSettingsItem(
-              onPressed: () {},
+              onPressed: () => context.pushNamed(Routes.changePassword),
               text: LocaleKeys.changePassword.tr(),
             ),
             Padding(
@@ -83,8 +92,14 @@ class AccountSettings extends StatelessWidget {
                       activeColor: ColorManager.green,
                       activeTrackColor: ColorManager.originalWhite,
                       inactiveTrackColor: ColorManager.originalWhite,
-                      value: true,
-                      onChanged: (value) => {}),
+                      value: notification,
+                      onChanged: (value) => {
+                        setState(
+                          () {
+                            notification = value;
+                          }
+                        )
+                      }),
                 ],
               ),
             ),

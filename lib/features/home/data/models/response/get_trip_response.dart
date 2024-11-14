@@ -26,7 +26,7 @@ class TripInfo {
       required this.to_lat,
       required this.tripId,
       required this.Client_Name,
-      required this.time,
-      required this.date,
+       this.time,
+       this.date,
       });
 }
