@@ -51,7 +51,7 @@ class CaptainGateScreen extends StatelessWidget {
             } if (state is GetReportError ) {
             return Center(child: Text(LocaleKeys.errorText.tr() ,style:  TextStyleManager.font20TextColor600,),);
           }else  {
-           if (cubit.myReport != null) {
+           if (cubit.myReport != null && cubit.myReport!.TripCompleted.isNotEmpty) {
              return ListView(
                padding:
                const EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
