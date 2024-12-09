@@ -27,6 +27,7 @@ class ApiConstants {
  static const String allScheduledTrips = 'Driver-Trip-Date';
  static const String notifications = 'Get-Notification';
  static const String changePassword = 'change-password';
+ static const String getAboutPrivacy = 'About-privacy';
 
  //chat end points
  static const String getMessage = 'Get-Messages';

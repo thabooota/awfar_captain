@@ -6,6 +6,7 @@ import 'package:awfar_captain/features/home/data/models/requests/rate_client_req
 import 'package:awfar_captain/features/captain_gate/data/model/response/get_my_trip_response.dart';
 import 'package:awfar_captain/features/home/data/models/requests/store_driver_trip_request_body.dart';
 import 'package:awfar_captain/features/home/data/models/requests/update_status_driver_request_body.dart';
+import 'package:awfar_captain/features/home/data/models/response/get_about_privacy_response.dart';
 import 'package:awfar_captain/features/home/data/models/response/get_all_scheduled_trips_response.dart';
 import 'package:awfar_captain/features/home/data/models/response/trip_accepted_response.dart';
 import 'package:awfar_captain/features/notification/data/response/get_all_notifications_response.dart';
@@ -70,19 +71,21 @@ abstract class HomeApiService {
   Future<GetMessagesResponse> getMessages({
     @Body() required GetMessagesRequestBody getMessagesRequestBody,
   });
-  
+
   @GET(ApiConstants.allScheduledTrips)
   Future<List<GetAllScheduledTripsResponse>> getAllScheduledTrips({
     @Header('Authorization') required String token,
-});
- @GET(ApiConstants.notifications)
+  });
+  @GET(ApiConstants.notifications)
   Future<List<GetAllNotificationsResponse>> getAllNotifications({
     @Header('Authorization') required String token,
-});
-@POST(ApiConstants.changePassword)
- Future<MassageResponse> changePassword ({
+  });
+  @POST(ApiConstants.changePassword)
+  Future<MassageResponse> changePassword({
     @Body() required ChangePasswordRequestBody changePasswordRequestBody,
     @Header('Authorization') required String token,
+  });
 
-});
+  @GET(ApiConstants.getAboutPrivacy)
+  Future<List<GetAboutPrivacyResponse>> getAboutPrivacy();
 }

@@ -1,16 +1,13 @@
-import 'package:awfar_captain/core/app_cubit/app_cubit.dart';
 import 'package:awfar_captain/core/helpers/extensions.dart';
 import 'package:awfar_captain/core/helpers/spacing.dart';
 import 'package:awfar_captain/core/routing/routes.dart';
 import 'package:awfar_captain/core/theming/color_manager.dart';
 import 'package:awfar_captain/core/theming/text_style_manager.dart';
 import 'package:awfar_captain/core/utils/assets_manager.dart';
-import 'package:awfar_captain/features/home/logic/home_cubit.dart';
 import 'package:awfar_captain/features/home/ui/widgets/account_settings_item.dart';
 import 'package:awfar_captain/features/home/ui/widgets/custom_account_view_row.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../lang/locale_keys.g.dart';
@@ -117,11 +114,15 @@ class _AccountSettingsState extends State<AccountSettings> {
             ),
             verticalSpace(10.h),
             AccountSettingsItem(
-              onPressed: () {},
+              onPressed: () => context.pushNamed(
+                Routes.about
+              ),
               text: LocaleKeys.aboutApp.tr(),
             ),
             AccountSettingsItem(
-              onPressed: () {},
+              onPressed: () => context.pushNamed(
+                Routes.privacy
+              ),
               text: LocaleKeys.privacyPolicy.tr(),
             ),
           ],

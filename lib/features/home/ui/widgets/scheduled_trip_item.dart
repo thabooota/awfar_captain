@@ -1,6 +1,4 @@
-import 'package:awfar_captain/core/app_cubit/app_cubit.dart';
 import 'package:awfar_captain/core/helpers/extensions.dart';
-import 'package:awfar_captain/core/routing/routes.dart';
 import 'package:awfar_captain/features/home/data/models/response/get_all_scheduled_trips_response.dart';
 import 'package:awfar_captain/features/home/logic/home_cubit.dart';
 import 'package:easy_localization/easy_localization.dart';

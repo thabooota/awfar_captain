@@ -5,6 +5,7 @@ import 'package:awfar_captain/features/home/data/models/response/trip_accepted_r
 import 'package:awfar_captain/features/notification/data/response/get_all_notifications_response.dart';
 
 import '../../chat/data/models/response/get_meassage_response.dart';
+import '../data/models/response/get_about_privacy_response.dart';
 
 abstract class HomeStates {}
 
@@ -156,6 +157,7 @@ class ChangePasswordIconState extends HomeStates {}
 class UserRejectedTrip extends HomeStates {}
 
 class ChangeConfirmPasswordIconState extends HomeStates {}
+
 class ChangePasswordLoadingState extends HomeStates {}
 
 class ChangePasswordSuccessState extends HomeStates {
@@ -168,4 +170,17 @@ class ChangePasswordFailureState extends HomeStates {
   final String error;
 
   ChangePasswordFailureState({required this.error});
+}
+class GetAboutPrivacyLoadingState extends HomeStates {}
+
+class GetAboutPrivacySuccessState extends HomeStates {
+  final List<GetAboutPrivacyResponse> getAboutPrivacyResponse;
+
+  GetAboutPrivacySuccessState({required this.getAboutPrivacyResponse});
+}
+
+class GetAboutPrivacyFailureState extends HomeStates {
+  final String error;
+
+  GetAboutPrivacyFailureState({required this.error});
 }

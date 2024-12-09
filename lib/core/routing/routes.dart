@@ -26,6 +26,8 @@ class Routes {
   static const String withdrawBalance = "withdrawBalance";
   static const String schudleTrip = "schudleTrip";
   static const String changePassword = "changePassword";
+  static const String about = "about";
+  static const String privacy = "privacy";
 
   // Drawer
   static const String editAccount = "editAccount";

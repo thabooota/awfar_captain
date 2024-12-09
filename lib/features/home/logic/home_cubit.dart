@@ -9,6 +9,7 @@ import 'package:awfar_captain/features/chat/data/models/request/send_message_req
 import 'package:awfar_captain/features/chat/data/models/response/get_meassage_response.dart';
 import 'package:awfar_captain/features/home/data/models/requests/store_driver_trip_request_body.dart';
 import 'package:awfar_captain/features/home/data/models/requests/update_status_driver_request_body.dart';
+import 'package:awfar_captain/features/home/data/models/response/get_about_privacy_response.dart';
 import 'package:awfar_captain/features/home/data/models/response/get_all_scheduled_trips_response.dart';
 import 'package:awfar_captain/features/home/data/models/response/get_trip_response.dart';
 import 'package:awfar_captain/features/home/data/models/response/massage_response.dart';
@@ -392,7 +393,6 @@ class HomeCubit extends Cubit<HomeStates> {
     });
   }
 
-
   void configPusherConnectPendingAndDisconnect(){
     print("disconnecting ###################################################################################");
     _pusherConfig.disconnect();
@@ -560,6 +560,21 @@ class HomeCubit extends Cubit<HomeStates> {
     }, failure: (error) {
       emit(RateClientFailureState(error.toString()));
     });
+  }
+
+  List<GetAboutPrivacyResponse> aboutPrivacy = [];
+  void emitGetAboutPrivacy() async {
+    emit(GetAboutPrivacyLoadingState());
+    final getAboutPrivacyResponse = await _homeRepo.getAboutPrivacy();
+    getAboutPrivacyResponse.when(
+      success: (data) {
+        aboutPrivacy = data;
+        emit(GetAboutPrivacySuccessState(getAboutPrivacyResponse: data));
+      },
+      failure: (error) {
+        emit(GetAboutPrivacyFailureState(error : error.apiErrorModel.message));
+      },
+    );
   }
 
   // chat logic

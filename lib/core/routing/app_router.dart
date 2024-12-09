@@ -11,6 +11,8 @@ import 'package:awfar_captain/features/home/ui/edit_account_screen.dart';
 import 'package:awfar_captain/features/home/ui/home_screen.dart';
 import 'package:awfar_captain/features/home/ui/my_trip_screen.dart';
 import 'package:awfar_captain/features/home/ui/report_my_trips.dart';
+import 'package:awfar_captain/features/home/ui/widgets/about_screen.dart';
+import 'package:awfar_captain/features/home/ui/widgets/privacy_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../features/authentication/logic/forget_password/forget_password_cubit.dart';
@@ -159,6 +161,16 @@ class AppRouter {
                 child: const EditAccountScreen()));
       case Routes.withdrawBalance:
         return AnimationRoute(page: const WithdrawBalance());
+      case Routes.about:
+        return AnimationRoute(
+            page: BlocProvider.value(
+                value: getIt<HomeCubit>()..emitGetAboutPrivacy(),
+                child: const AboutScreen()));
+      case Routes.privacy:
+        return AnimationRoute(
+            page: BlocProvider.value(
+                value: getIt<HomeCubit>()..emitGetAboutPrivacy(),
+                child: const PrivacyScreen()));
       // undefined
       default:
         return unDefinitionRoute(settings);

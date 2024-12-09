@@ -4,10 +4,10 @@ import 'package:awfar_captain/features/chat/data/models/response/get_meassage_re
 import 'package:awfar_captain/features/home/data/models/requests/accept_trip_request_body.dart';
 import 'package:awfar_captain/features/home/data/models/requests/store_driver_trip_request_body.dart';
 import 'package:awfar_captain/features/home/data/models/requests/update_status_driver_request_body.dart';
+import 'package:awfar_captain/features/home/data/models/response/get_about_privacy_response.dart';
 import 'package:awfar_captain/features/home/data/models/response/get_all_scheduled_trips_response.dart';
 import 'package:awfar_captain/features/home/data/models/response/trip_accepted_response.dart';
 import 'package:awfar_captain/features/notification/data/response/get_all_notifications_response.dart';
-import 'package:easy_localization/easy_localization.dart';
 import '../../../../core/networking/remote/api_result.dart';
 import '../../../chat/data/models/request/get_message_request_body.dart';
 import '../../../chat/data/models/request/send_message_request_body.dart';
@@ -157,6 +157,15 @@ class HomeRepo {
       );
       return ApiResult.success(changePasswordResponse);
     } catch (error) {
+      return ApiResult.failure(ErrorHandler.handle(error));
+    }
+  }
+
+  Future<ApiResult<List<GetAboutPrivacyResponse>>> getAboutPrivacy() async {
+    try {
+      final getAboutPrivacyResponse = await _homeApiService.getAboutPrivacy();
+      return ApiResult.success(getAboutPrivacyResponse);
+    } on Exception catch (error) {
       return ApiResult.failure(ErrorHandler.handle(error));
     }
   }

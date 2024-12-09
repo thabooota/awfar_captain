@@ -21,6 +21,7 @@ abstract class CaptainApiServices {
   Future<GetMyBalanceResponse> getMyBalance({
     @Header('Authorization') required String token,
   });
+
   @GET(ApiConstants.getProfile)
   Future<GetProfileResponse> getProfile({
     @Header('Authorization') required String token,
@@ -36,6 +37,7 @@ abstract class CaptainApiServices {
   Future<GetTripsResponse> getAllTrips({
     @Header('Authorization') required String token,
   });
+
   @POST(ApiConstants.getReport)
   Future<GetReportResponse> getReport({
     @Header('Authorization') required String token,
